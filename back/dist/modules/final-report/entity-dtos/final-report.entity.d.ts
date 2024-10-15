@@ -9,4 +9,5 @@ export declare class FinalReportEntity {
     pallet: string;
     legend: string;
     images?: ImageEntity[];
+    mbl: string;
 }

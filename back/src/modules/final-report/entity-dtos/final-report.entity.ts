@@ -29,4 +29,7 @@ export class FinalReportEntity {
 
   @OneToMany(() => ImageEntity, (image) => image.finalReport)
   images?: ImageEntity[];
+
+  @Column({ nullable: true })
+  mbl: string;
 }

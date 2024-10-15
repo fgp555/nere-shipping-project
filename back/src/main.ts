@@ -19,7 +19,7 @@ async function bootstrap() {
   });
 
   // Configura la carpeta 'uploads' como pública
-  app.useStaticAssets(join(__dirname, '..', '..', '_doc', 'html'), {
+  app.useStaticAssets(join(__dirname, '..', '..', 'front'), {
     prefix: '/',
   });
 
