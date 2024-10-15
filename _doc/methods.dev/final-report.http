@@ -2,6 +2,18 @@
 GET http://localhost:3000/api/final-report
 Content-Type: application/json
 
+### 
+GET http://localhost:3000/api/final-report/byMBL/ONEYHAME90065700
+Content-Type: application/json
+
+### 
+GET http://localhost:3000/api/final-report/findAllByMBL/ONEYHAME90065700
+Content-Type: application/json
+
+### 
+GET http://localhost:3000/api/final-report/byMBL-pdf/ONEYHAME90065700
+Content-Type: application/json
+
 ###
 
 ### Obtener un informe final por ID

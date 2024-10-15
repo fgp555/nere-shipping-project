@@ -29,6 +29,7 @@ import { FinalReportEntity } from './modules/final-report/entity-dtos/final-repo
 import { PuppeteerModule } from './modules/puppeteer/puppeteer.module';
 import { ImageModule } from './modules/image/image.module';
 import { HtmlPdfModule } from './modules/html-pdf/html-pdf.module';
+import { FinalReportModule } from './modules/final-report/final-report.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { HtmlPdfModule } from './modules/html-pdf/html-pdf.module';
     SeederModule,
     PuppeteerModule,
     HtmlPdfModule,
+    FinalReportModule,
     ConfigModule.forRoot({
       isGlobal: true,
       load: [typeorm],
@@ -60,7 +62,7 @@ import { HtmlPdfModule } from './modules/html-pdf/html-pdf.module';
     BookingRefController,
     ClientController,
     ContainerController,
-    FinalReportController,
+    // FinalReportController,
     // ImageController,
     PackageController,
   ],
@@ -70,7 +72,7 @@ import { HtmlPdfModule } from './modules/html-pdf/html-pdf.module';
     BookingRefService,
     ClientService,
     ContainerService,
-    FinalReportService,
+    // FinalReportService,
     // ImageService,
     PackageService,
   ],

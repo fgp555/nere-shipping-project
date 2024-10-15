@@ -19,8 +19,6 @@ const client_controller_1 = require("./modules/client/client.controller");
 const client_service_1 = require("./modules/client/client.service");
 const container_controller_1 = require("./modules/container/container.controller");
 const container_service_1 = require("./modules/container/container.service");
-const final_report_controller_1 = require("./modules/final-report/final-report.controller");
-const final_report_service_1 = require("./modules/final-report/final-report.service");
 const package_controller_1 = require("./modules/package/package.controller");
 const package_service_1 = require("./modules/package/package.service");
 const seeder_module_1 = require("./seed/seeder.module");
@@ -36,6 +34,7 @@ const final_report_entity_1 = require("./modules/final-report/entity-dtos/final-
 const puppeteer_module_1 = require("./modules/puppeteer/puppeteer.module");
 const image_module_1 = require("./modules/image/image.module");
 const html_pdf_module_1 = require("./modules/html-pdf/html-pdf.module");
+const final_report_module_1 = require("./modules/final-report/final-report.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -46,6 +45,7 @@ exports.AppModule = AppModule = __decorate([
             seeder_module_1.SeederModule,
             puppeteer_module_1.PuppeteerModule,
             html_pdf_module_1.HtmlPdfModule,
+            final_report_module_1.FinalReportModule,
             config_1.ConfigModule.forRoot({
                 isGlobal: true,
                 load: [typeOrm_1.default],
@@ -70,7 +70,6 @@ exports.AppModule = AppModule = __decorate([
             booking_ref_controller_1.BookingRefController,
             client_controller_1.ClientController,
             container_controller_1.ContainerController,
-            final_report_controller_1.FinalReportController,
             package_controller_1.PackageController,
         ],
         providers: [
@@ -79,7 +78,6 @@ exports.AppModule = AppModule = __decorate([
             booking_ref_service_1.BookingRefService,
             client_service_1.ClientService,
             container_service_1.ContainerService,
-            final_report_service_1.FinalReportService,
             package_service_1.PackageService,
         ],
     })

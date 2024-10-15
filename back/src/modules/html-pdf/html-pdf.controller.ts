@@ -1,3 +1,5 @@
+// back/src/modules/html-pdf/html-pdf.controller.ts
+
 import { Body, Controller, Get, Param, Res } from '@nestjs/common';
 import { Response } from 'express';
 import * as path from 'path';
@@ -35,22 +37,6 @@ export class HtmlPdfController {
     // Obtener datos de las imágenes desde la base de datos por id
     const finalReportById = await this.finalReportServiceFindOne(id);
     console.log('finalReportById', finalReportById);
-    /* 
-    {
-  id: 1,
-  bLNo: 'BUE238550',
-  consignee: 'BIO ABA SA',
-  marks: '29119880',
-  qtyPkgs: 2,
-  remarks: '1 pallet: shrink-wrap film stretch torn off + torn paper bags',
-  pallet: 'shrink-wrap film stretch torn off + torn paper bags',
-  legend: 'I. Due to the poorly and/or improperly stuffed, the cargo required an extra handling. II. The load was un-palletized in order to safely handled and/or avoid damage to the cargo.',
-  images: [
-    ImageEntity { id: 1, path: 'uploads/favicon.png' },
-    ImageEntity { id: 2, path: 'uploads/favicon.png' }
-  ]
-}
-     */
 
     if (!finalReportById) {
       throw new Error('No se encontraron imágenes');
@@ -206,8 +192,6 @@ export class HtmlPdfController {
     
             <tr class="item last">
               <td colspan="2">
-                <!-- I. Debido a que la carga fue mal y/o incorrectamente embalada, se requirió un manejo adicional.<br /> -->
-                <!-- II. La carga fue despaletizada para manejarla de manera segura y/o evitar daños a la carga. -->
                 ${finalReportById.legend}
               </td>
             </tr>

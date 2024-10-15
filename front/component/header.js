@@ -10,8 +10,9 @@ let fgp_header_html = /* html */ `<section>
   </div>
   <nav>
     <ul id="navbar" class="display_none">
-      <li><a href="./">Home</a></li>
-      <li><a href="./final-report/">final-report</a></li>
+      <li><a href="/">Home</a></li>
+      <li><a href="/final-report/">final-report</a></li>
+      <li><a href="/final-report/mbl-download.html">mbl-download</a></li>
     </ul>
   </nav>
 </section>

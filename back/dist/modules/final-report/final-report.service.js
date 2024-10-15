@@ -26,6 +26,18 @@ let FinalReportService = class FinalReportService {
     findAll() {
         return this.finalReportRepository.find({ relations: ['images'] });
     }
+    findByMBL(mbl) {
+        return this.finalReportRepository.findOne({
+            where: { mbl },
+            relations: ['images'],
+        });
+    }
+    findAllByMBL(mbl) {
+        return this.finalReportRepository.find({
+            where: { mbl },
+            relations: ['images'],
+        });
+    }
     findOne(id) {
         return this.finalReportRepository.findOne({
             where: { id },

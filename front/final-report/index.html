@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="/component/layout.js"></script>
+    <script src="/component/layout.js?20241015_001"></script>
 
     <title>Final Report CRUD</title>
     <style>
@@ -43,6 +43,7 @@
         <input type="text" id="remarks" placeholder="Remarks" value="Handle with care" /><br />
         <input type="text" id="pallet" placeholder="Pallet" value="Pallet 1" /><br />
         <input type="text" id="legend" placeholder="Legend" value="Legend text" /><br />
+        <input type="text" id="mbl" placeholder="mbl" value="ONEYHAME90065700" /><br />
         <input type="file" id="images" multiple accept="image/*" /><br />
         <button type="submit">Create Report</button>
       </form>
@@ -139,6 +140,7 @@
           const remarks = document.getElementById("remarks").value;
           const pallet = document.getElementById("pallet").value;
           const legend = document.getElementById("legend").value;
+          const mbl = document.getElementById("mbl").value;
           const images = document.getElementById("images").files;
 
           const formData = new FormData();
@@ -149,6 +151,7 @@
           formData.append("remarks", remarks);
           formData.append("pallet", pallet);
           formData.append("legend", legend);
+          formData.append("mbl", mbl);
 
           for (const file of images) {
             const compressedFile = await compressImage(file);
@@ -190,6 +193,7 @@
             <strong>Remarks:</strong> ${report.remarks} <br />
             <strong>Pallet:</strong> ${report.pallet} <br />
             <strong>Legend:</strong> ${report.legend} <br />
+            <strong>mbl:</strong> ${report.mbl} <br />
             <strong>Images:</strong> ${
               report.images && report.images.length > 0 ? report.images.map((img) => `<img src="${apiUrlBase + "/" + img.path}" alt="Image" />`).join("") : "No images"
             }

@@ -18,13 +18,23 @@ const final_report_service_1 = require("./final-report.service");
 const final_report_entity_1 = require("./entity-dtos/final-report.entity");
 const platform_express_1 = require("@nestjs/platform-express");
 const multer_1 = require("multer");
-const fs = require("fs-extra");
+const fs_extra = require("fs-extra");
+const html_pdf_service_1 = require("../html-pdf/html-pdf.service");
+const fs = require("fs");
+const path = require("path");
 let FinalReportController = class FinalReportController {
-    constructor(finalReportService) {
+    constructor(pdfService, finalReportService) {
+        this.pdfService = pdfService;
         this.finalReportService = finalReportService;
     }
     findAll() {
         return this.finalReportService.findAll();
+    }
+    findByMBL(mbl) {
+        return this.finalReportService.findByMBL(mbl);
+    }
+    findAllByMBL(mbl) {
+        return this.finalReportService.findAllByMBL(mbl);
     }
     findOne(id) {
         return this.finalReportService.findOne(id);
@@ -38,6 +48,93 @@ let FinalReportController = class FinalReportController {
     remove(id) {
         return this.finalReportService.remove(id);
     }
+    async generatePdfByMBL(res, mbl) {
+        const finalReports = await this.finalReportService.findAllByMBL(mbl);
+        if (!finalReports || finalReports.length === 0) {
+            throw new Error('No se encontraron reportes con ese MBL');
+        }
+        const reportsHtml = finalReports
+            .map((report) => {
+            const imagesHtml = report.images
+                .map((image) => `<img src="data:image/png;base64,${this.getBase64Image(image.path)}" />`)
+                .join('');
+            return `
+        <div class="report-box">
+          <table cellpadding="0" cellspacing="0">
+            <tr class="heading">
+              <td colspan="2">Detalles del Reporte Final</td>
+            </tr>
+            <tr class="item">
+              <td>id:</td>
+              <td>${report.id}</td>
+            </tr>
+            <tr class="item">
+              <td>B/L No:</td>
+              <td>${report.bLNo}</td>
+            </tr>
+            <tr class="item">
+              <td>Consignee:</td>
+              <td>${report.consignee}</td>
+            </tr>
+            <tr class="item">
+              <td>Marks:</td>
+              <td>${report.marks}</td>
+            </tr>
+            <tr class="item">
+              <td>Qty. of pkgs.:</td>
+              <td>${report.qtyPkgs}</td>
+            </tr>
+            <tr class="item">
+              <td>Remarks:</td>
+              <td>${report.remarks}</td>
+            </tr>
+            <tr class="item">
+              <td>Pallet:</td>
+              <td>${report.pallet}</td>
+            </tr>
+            <tr class="item">
+              <td>Legend:</td>
+              <td>${report.legend}</td>
+            </tr>
+            <tr class="images">
+              <td colspan="2">${imagesHtml}</td>
+            </tr>
+          </table>
+        </div>
+        <hr />
+      `;
+        })
+            .join('');
+        const htmlContent = `
+      <html>
+      <head>
+        <style>
+          body { font-family: Arial, sans-serif; }
+          .report-box { margin: 20px; }
+          .heading { font-weight: bold; background: #eee; }
+          .item { margin-bottom: 10px; }
+          .images img { width: 200px; height: auto; margin: 10px; border: 1px solid #ddd; }
+        </style>
+      </head>
+      <body>
+        ${reportsHtml}
+      </body>
+      </html>
+    `;
+        const pdfBuffer = await this.pdfService.generatePdf({
+            content: htmlContent,
+        });
+        res.set({
+            'Content-Type': 'application/pdf',
+            'Content-Disposition': `attachment; filename="final-report-${mbl}.pdf"`,
+            'Content-Length': pdfBuffer.length,
+        });
+        res.end(pdfBuffer);
+    }
+    getBase64Image(imagePath) {
+        const image = fs.readFileSync(path.resolve(__dirname, '..', '..', '..', imagePath));
+        return Buffer.from(image).toString('base64');
+    }
 };
 exports.FinalReportController = FinalReportController;
 __decorate([
@@ -46,6 +143,20 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], FinalReportController.prototype, "findAll", null);
+__decorate([
+    (0, common_1.Get)('byMBL/:mbl'),
+    __param(0, (0, common_1.Param)('mbl')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], FinalReportController.prototype, "findByMBL", null);
+__decorate([
+    (0, common_1.Get)('findAllByMBL/:mbl'),
+    __param(0, (0, common_1.Param)('mbl')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], FinalReportController.prototype, "findAllByMBL", null);
 __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),
@@ -59,7 +170,7 @@ __decorate([
         storage: (0, multer_1.diskStorage)({
             destination: async (req, file, callback) => {
                 const uploadPath = './uploads/images';
-                await fs.ensureDir(uploadPath);
+                await fs_extra.ensureDir(uploadPath);
                 callback(null, uploadPath);
             },
             filename: (req, file, callback) => {
@@ -82,7 +193,7 @@ __decorate([
         storage: (0, multer_1.diskStorage)({
             destination: async (req, file, callback) => {
                 const uploadPath = './uploads/images';
-                await fs.ensureDir(uploadPath);
+                await fs_extra.ensureDir(uploadPath);
                 callback(null, uploadPath);
             },
             filename: (req, file, callback) => {
@@ -107,8 +218,17 @@ __decorate([
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", void 0)
 ], FinalReportController.prototype, "remove", null);
+__decorate([
+    (0, common_1.Get)('/byMBL-pdf/:mbl'),
+    __param(0, (0, common_1.Res)()),
+    __param(1, (0, common_1.Param)('mbl')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String]),
+    __metadata("design:returntype", Promise)
+], FinalReportController.prototype, "generatePdfByMBL", null);
 exports.FinalReportController = FinalReportController = __decorate([
     (0, common_1.Controller)('final-report'),
-    __metadata("design:paramtypes", [final_report_service_1.FinalReportService])
+    __metadata("design:paramtypes", [html_pdf_service_1.HtmlPdfService,
+        final_report_service_1.FinalReportService])
 ], FinalReportController);
 //# sourceMappingURL=final-report.controller.js.map

@@ -1,3 +1,5 @@
+// back/src/modules/final-report/entity-dtos/final-report.entity.ts
+
 import { ImageEntity } from 'src/modules/image/entity-dtos/image.entity';
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 

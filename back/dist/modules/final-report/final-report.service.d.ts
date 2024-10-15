@@ -6,6 +6,8 @@ export declare class FinalReportService {
     private imageRepository;
     constructor(finalReportRepository: Repository<FinalReportEntity>, imageRepository: Repository<ImageEntity>);
     findAll(): Promise<FinalReportEntity[]>;
+    findByMBL(mbl: string): Promise<FinalReportEntity | undefined>;
+    findAllByMBL(mbl: string): Promise<FinalReportEntity[]>;
     findOne(id: number): Promise<FinalReportEntity>;
     create(finalReport: FinalReportEntity, images: Express.Multer.File[]): Promise<FinalReportEntity>;
     update(id: number, finalReport: FinalReportEntity, images: Express.Multer.File[]): Promise<FinalReportEntity>;

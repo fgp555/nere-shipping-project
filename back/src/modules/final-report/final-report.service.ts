@@ -20,6 +20,22 @@ export class FinalReportService {
     return this.finalReportRepository.find({ relations: ['images'] });
   }
 
+  // Método para obtener un reporte final por MBL
+  findByMBL(mbl: string): Promise<FinalReportEntity | undefined> {
+    return this.finalReportRepository.findOne({
+      where: { mbl },
+      relations: ['images'],
+    });
+  }
+
+  // Método para obtener todos los reportes finales por MBL
+  findAllByMBL(mbl: string): Promise<FinalReportEntity[]> {
+    return this.finalReportRepository.find({
+      where: { mbl },
+      relations: ['images'],
+    });
+  }
+
   findOne(id: number): Promise<FinalReportEntity> {
     return this.finalReportRepository.findOne({
       where: { id },

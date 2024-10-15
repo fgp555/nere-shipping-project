@@ -80,6 +80,7 @@ let SeederModule = class SeederModule {
             remarks: '1 pallet: shrink-wrap film stretch torn off + torn paper bags',
             pallet: 'shrink-wrap film stretch torn off + torn paper bags',
             legend: 'I. Due to the poorly and/or improperly stuffed, the cargo required an extra handling. II. The load was un-palletized in order to safely handled and/or avoid damage to the cargo.',
+            mbl: "ONEYHAME90065700",
             images: [image1, image2],
         });
         await finalReportRepo.save(finalReport);

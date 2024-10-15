@@ -189,8 +189,6 @@ let HtmlPdfController = class HtmlPdfController {
     
             <tr class="item last">
               <td colspan="2">
-                <!-- I. Debido a que la carga fue mal y/o incorrectamente embalada, se requirió un manejo adicional.<br /> -->
-                <!-- II. La carga fue despaletizada para manejarla de manera segura y/o evitar daños a la carga. -->
                 ${finalReportById.legend}
               </td>
             </tr>
