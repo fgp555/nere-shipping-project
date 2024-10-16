@@ -18,7 +18,7 @@ const container_entity_1 = require("../modules/container/entity-dtos/container.e
 const client_entity_1 = require("../modules/client/entity-dtos/client.entity");
 const package_entity_1 = require("../modules/package/entity-dtos/package.entity");
 const image_entity_1 = require("../modules/image/entity-dtos/image.entity");
-const final_report_entity_1 = require("../modules/final-report/entity-dtos/final-report.entity");
+const _5pre_damage_entity_1 = require("../modules/5pre-damage/entity-dtos/5pre-damage.entity");
 let SeederModule = class SeederModule {
     constructor(dataSource) {
         this.dataSource = dataSource;
@@ -33,7 +33,7 @@ let SeederModule = class SeederModule {
         const clientRepo = this.dataSource.getRepository(client_entity_1.ClientEntity);
         const packageRepo = this.dataSource.getRepository(package_entity_1.PackageEntity);
         const imageRepo = this.dataSource.getRepository(image_entity_1.ImageEntity);
-        const finalReportRepo = this.dataSource.getRepository(final_report_entity_1.FinalReportEntity);
+        const finalReportRepo = this.dataSource.getRepository(_5pre_damage_entity_1.PreDamageEntity);
         const admin = adminRepo.create({
             email: 'admin@mail.com',
             password: 'admin123',
@@ -80,7 +80,7 @@ let SeederModule = class SeederModule {
             remarks: '1 pallet: shrink-wrap film stretch torn off + torn paper bags',
             pallet: 'shrink-wrap film stretch torn off + torn paper bags',
             legend: 'I. Due to the poorly and/or improperly stuffed, the cargo required an extra handling. II. The load was un-palletized in order to safely handled and/or avoid damage to the cargo.',
-            mbl: "ONEYHAME90065700",
+            mbl: 'ONEYHAME90065700',
             images: [image1, image2],
         });
         await finalReportRepo.save(finalReport);

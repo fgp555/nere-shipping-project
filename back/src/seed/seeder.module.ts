@@ -6,7 +6,7 @@ import { ContainerEntity } from '../modules/container/entity-dtos/container.enti
 import { ClientEntity } from '../modules/client/entity-dtos/client.entity';
 import { PackageEntity } from '../modules/package/entity-dtos/package.entity';
 import { ImageEntity } from '../modules/image/entity-dtos/image.entity';
-import { FinalReportEntity } from '../modules/final-report/entity-dtos/final-report.entity';
+import { PreDamageEntity } from 'src/modules/5pre-damage/entity-dtos/5pre-damage.entity';
 
 @Module({
   imports: [],
@@ -25,7 +25,7 @@ export class SeederModule implements OnModuleInit {
     const clientRepo = this.dataSource.getRepository(ClientEntity);
     const packageRepo = this.dataSource.getRepository(PackageEntity);
     const imageRepo = this.dataSource.getRepository(ImageEntity);
-    const finalReportRepo = this.dataSource.getRepository(FinalReportEntity);
+    const finalReportRepo = this.dataSource.getRepository(PreDamageEntity);
 
     // Seed Admin
     const admin = adminRepo.create({
@@ -85,8 +85,9 @@ export class SeederModule implements OnModuleInit {
       qtyPkgs: 2,
       remarks: '1 pallet: shrink-wrap film stretch torn off + torn paper bags',
       pallet: 'shrink-wrap film stretch torn off + torn paper bags',
-      legend: 'I. Due to the poorly and/or improperly stuffed, the cargo required an extra handling. II. The load was un-palletized in order to safely handled and/or avoid damage to the cargo.',
-      mbl: "ONEYHAME90065700",
+      legend:
+        'I. Due to the poorly and/or improperly stuffed, the cargo required an extra handling. II. The load was un-palletized in order to safely handled and/or avoid damage to the cargo.',
+      mbl: 'ONEYHAME90065700',
       images: [image1, image2],
     });
     await finalReportRepo.save(finalReport);

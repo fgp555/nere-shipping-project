@@ -1,6 +1,6 @@
-import { FinalReportEntity } from 'src/modules/final-report/entity-dtos/final-report.entity';
+import { PreDamageEntity } from 'src/modules/5pre-damage/entity-dtos/5pre-damage.entity';
 export declare class ImageEntity {
     id: number;
     path: string;
-    finalReport: FinalReportEntity;
+    finalReport: PreDamageEntity;
 }

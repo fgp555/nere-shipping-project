@@ -10,19 +10,19 @@ exports.HtmlPdfModule = void 0;
 const common_1 = require("@nestjs/common");
 const html_pdf_controller_1 = require("./html-pdf.controller");
 const html_pdf_service_1 = require("./html-pdf.service");
-const final_report_service_1 = require("../final-report/final-report.service");
 const image_service_1 = require("../image/image.service");
 const typeorm_1 = require("@nestjs/typeorm");
 const image_entity_1 = require("../image/entity-dtos/image.entity");
-const final_report_entity_1 = require("../final-report/entity-dtos/final-report.entity");
+const _5pre_damage_service_1 = require("../5pre-damage/5pre-damage.service");
+const _5pre_damage_entity_1 = require("../5pre-damage/entity-dtos/5pre-damage.entity");
 let HtmlPdfModule = class HtmlPdfModule {
 };
 exports.HtmlPdfModule = HtmlPdfModule;
 exports.HtmlPdfModule = HtmlPdfModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([image_entity_1.ImageEntity, final_report_entity_1.FinalReportEntity])],
+        imports: [typeorm_1.TypeOrmModule.forFeature([image_entity_1.ImageEntity, _5pre_damage_entity_1.PreDamageEntity])],
         controllers: [html_pdf_controller_1.HtmlPdfController],
-        providers: [html_pdf_service_1.HtmlPdfService, final_report_service_1.FinalReportService, image_service_1.ImageService],
+        providers: [html_pdf_service_1.HtmlPdfService, _5pre_damage_service_1.PreDamageService, image_service_1.ImageService],
         exports: [],
     })
 ], HtmlPdfModule);

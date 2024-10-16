@@ -4,14 +4,14 @@ import { Body, Controller, Get, Param, Res } from '@nestjs/common';
 import { Response } from 'express';
 import * as path from 'path';
 import { HtmlPdfService } from './html-pdf.service';
-import { FinalReportService } from '../final-report/final-report.service'; // Asegúrate de ajustar la ruta según tu estructura
 import * as fs from 'fs';
+import { PreDamageService } from '../5pre-damage/5pre-damage.service';
 
 @Controller('html-pdf')
 export class HtmlPdfController {
   constructor(
     private readonly pdfService: HtmlPdfService,
-    private readonly finalReportService: FinalReportService, // Inyección del servicio
+    private readonly finalReportService: PreDamageService, // Inyección del servicio
   ) {}
 
   @Get()

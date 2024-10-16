@@ -16,8 +16,8 @@ exports.HtmlPdfController = void 0;
 const common_1 = require("@nestjs/common");
 const path = require("path");
 const html_pdf_service_1 = require("./html-pdf.service");
-const final_report_service_1 = require("../final-report/final-report.service");
 const fs = require("fs");
+const _5pre_damage_service_1 = require("../5pre-damage/5pre-damage.service");
 let HtmlPdfController = class HtmlPdfController {
     constructor(pdfService, finalReportService) {
         this.pdfService = pdfService;
@@ -243,6 +243,6 @@ __decorate([
 exports.HtmlPdfController = HtmlPdfController = __decorate([
     (0, common_1.Controller)('html-pdf'),
     __metadata("design:paramtypes", [html_pdf_service_1.HtmlPdfService,
-        final_report_service_1.FinalReportService])
+        _5pre_damage_service_1.PreDamageService])
 ], HtmlPdfController);
 //# sourceMappingURL=html-pdf.controller.js.map

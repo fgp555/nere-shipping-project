@@ -10,10 +10,6 @@ import { ClientController } from './modules/client/client.controller';
 import { ClientService } from './modules/client/client.service';
 import { ContainerController } from './modules/container/container.controller';
 import { ContainerService } from './modules/container/container.service';
-import { FinalReportController } from './modules/final-report/final-report.controller';
-import { FinalReportService } from './modules/final-report/final-report.service';
-import { ImageController } from './modules/image/image.controller';
-import { ImageService } from './modules/image/image.service';
 import { PackageController } from './modules/package/package.controller';
 import { PackageService } from './modules/package/package.service';
 import { SeederModule } from './seed/seeder.module';
@@ -25,19 +21,17 @@ import { ContainerEntity } from './modules/container/entity-dtos/container.entit
 import { ClientEntity } from './modules/client/entity-dtos/client.entity';
 import { PackageEntity } from './modules/package/entity-dtos/package.entity';
 import { ImageEntity } from './modules/image/entity-dtos/image.entity';
-import { FinalReportEntity } from './modules/final-report/entity-dtos/final-report.entity';
-import { PuppeteerModule } from './modules/puppeteer/puppeteer.module';
 import { ImageModule } from './modules/image/image.module';
 import { HtmlPdfModule } from './modules/html-pdf/html-pdf.module';
-import { FinalReportModule } from './modules/final-report/final-report.module';
+import { PreDamageModule } from './modules/5pre-damage/5pre-damage.module';
+import { PreDamageEntity } from './modules/5pre-damage/entity-dtos/5pre-damage.entity';
 
 @Module({
   imports: [
     ImageModule,
     SeederModule,
-    PuppeteerModule,
     HtmlPdfModule,
-    FinalReportModule,
+    PreDamageModule,
     ConfigModule.forRoot({
       isGlobal: true,
       load: [typeorm],
@@ -53,7 +47,7 @@ import { FinalReportModule } from './modules/final-report/final-report.module';
       ClientEntity,
       PackageEntity,
       ImageEntity,
-      FinalReportEntity,
+      PreDamageEntity,
     ]),
   ],
   controllers: [
@@ -62,8 +56,6 @@ import { FinalReportModule } from './modules/final-report/final-report.module';
     BookingRefController,
     ClientController,
     ContainerController,
-    // FinalReportController,
-    // ImageController,
     PackageController,
   ],
   providers: [
@@ -72,8 +64,6 @@ import { FinalReportModule } from './modules/final-report/final-report.module';
     BookingRefService,
     ClientService,
     ContainerService,
-    // FinalReportService,
-    // ImageService,
     PackageService,
   ],
 })

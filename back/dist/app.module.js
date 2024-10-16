@@ -30,11 +30,10 @@ const container_entity_1 = require("./modules/container/entity-dtos/container.en
 const client_entity_1 = require("./modules/client/entity-dtos/client.entity");
 const package_entity_1 = require("./modules/package/entity-dtos/package.entity");
 const image_entity_1 = require("./modules/image/entity-dtos/image.entity");
-const final_report_entity_1 = require("./modules/final-report/entity-dtos/final-report.entity");
-const puppeteer_module_1 = require("./modules/puppeteer/puppeteer.module");
 const image_module_1 = require("./modules/image/image.module");
 const html_pdf_module_1 = require("./modules/html-pdf/html-pdf.module");
-const final_report_module_1 = require("./modules/final-report/final-report.module");
+const _5pre_damage_module_1 = require("./modules/5pre-damage/5pre-damage.module");
+const _5pre_damage_entity_1 = require("./modules/5pre-damage/entity-dtos/5pre-damage.entity");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -43,9 +42,8 @@ exports.AppModule = AppModule = __decorate([
         imports: [
             image_module_1.ImageModule,
             seeder_module_1.SeederModule,
-            puppeteer_module_1.PuppeteerModule,
             html_pdf_module_1.HtmlPdfModule,
-            final_report_module_1.FinalReportModule,
+            _5pre_damage_module_1.PreDamageModule,
             config_1.ConfigModule.forRoot({
                 isGlobal: true,
                 load: [typeOrm_1.default],
@@ -61,7 +59,7 @@ exports.AppModule = AppModule = __decorate([
                 client_entity_1.ClientEntity,
                 package_entity_1.PackageEntity,
                 image_entity_1.ImageEntity,
-                final_report_entity_1.FinalReportEntity,
+                _5pre_damage_entity_1.PreDamageEntity,
             ]),
         ],
         controllers: [
