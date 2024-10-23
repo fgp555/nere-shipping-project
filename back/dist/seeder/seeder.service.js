@@ -42,8 +42,6 @@ let SeederService = class SeederService {
         await this.seedContainers();
         await this.seedDetailsShipment();
         await this.seedSecuringSeals();
-        await this.seedUnstuffingContainers();
-        await this.seedPreExistingDamages();
         await this.seedImagesPathimg();
         await this.seedImagesGroup();
         await this.seedDescriptionsGroup();
@@ -101,7 +99,7 @@ let SeederService = class SeederService {
     }
     async seedUnstuffingContainers() {
         const descriptions = await this.descriptionRepository.find({
-            where: { id: (0, typeorm_2.In)([1]) },
+            where: { id: (0, typeorm_2.In)([1, 2]) },
         });
         if (!descriptions || descriptions.length === 0) {
             throw new Error('Descriptions not found. Please ensure descriptions with id 1 and 2 exist.');
@@ -113,25 +111,10 @@ let SeederService = class SeederService {
             throw new Error('DetailsShipment not found. Please ensure DetailsShipment with id 1 exists.');
         }
         const unstuffingContainer = this.unstuffingContainerRepository.create({
-            descriptions: descriptions,
+            descriptionsGroup: descriptions,
             detailsShipment: detailsShipment,
         });
         await this.unstuffingContainerRepository.save(unstuffingContainer);
-    }
-    async seedPreExistingDamages() {
-        const preExistingDamage = this.preExistingDamageRepository.create({
-            blNo: 'BL123',
-            consignee: 'Consignee A',
-            marks: 'Mark A',
-            qtyOfPkgs: 5,
-            goods: 'Goods A',
-            remarks: 'Some remarks',
-            damageDescription: await this.descriptionRepository.findOneBy({ id: 1 }),
-            detailsShipment: await this.detailsShipmentRepository.findOneBy({
-                id: 1,
-            }),
-        });
-        await this.preExistingDamageRepository.save(preExistingDamage);
     }
     async seedImagesPathimg() {
         const imagesPathimg = this.imagesPathimgRepository.create({

@@ -1,3 +1,12 @@
+### Create a new Descriptions Group
+POST http://localhost:3000/api/descriptions-groups
+Content-Type: application/json
+
+{
+  "title": "New Descriptions Group Title",
+  "descriptions": [{"id": 1}, {"id": 2}]
+}
+
 ### Get all Descriptions Groups
 GET http://localhost:3000/api/descriptions-groups
 Accept: application/json
@@ -7,17 +16,6 @@ Accept: application/json
 ### Get a specific Descriptions Group by ID
 GET http://localhost:3000/api/descriptions-groups/1
 Accept: application/json
-
-###
-
-### Create a new Descriptions Group
-POST http://localhost:3000/api/descriptions-groups
-Content-Type: application/json
-
-{
-  "title": "New Descriptions Group Title",
-  "descriptions": [{"id": 2}, {"id": 3}, {"id": 4}]  
-}
 
 ###
 

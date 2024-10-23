@@ -50,7 +50,7 @@ import { UnstuffingContainerModule } from './modules/unstuffing-container/unstuf
       Description,
       DescriptionsGroup,
     ]),
-    SeederModule,
+    // SeederModule,
     ContainersModule,
     DescriptionModule,
     DescriptionsGroupModule,
@@ -68,11 +68,11 @@ import { UnstuffingContainerModule } from './modules/unstuffing-container/unstuf
   providers: [],
 })
 export class AppModule {
-  constructor(private readonly seederService: SeederService) {
-    this.runSeeders();
-  }
+  // constructor(private readonly seederService: SeederService) {
+  //   this.runSeeders();
+  // }
 
-  async runSeeders() {
-    await this.seederService.seed();
-  }
+  // async runSeeders() {
+  //   await this.seederService.seed();
+  // }
 }

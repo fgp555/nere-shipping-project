@@ -1,8 +1,13 @@
 // src/entities/Description.entity.ts
 
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  ManyToOne,
+} from 'typeorm';
 import { DescriptionsGroup } from './DescriptionsGroup.entity';
-import { UnstuffingContainer } from './UnstuffingContainer.entity';
 import { PreExistingDamage } from './PreExistingDamage.entity';
 
 @Entity('t9_description_entity')
@@ -16,9 +21,6 @@ export class Description {
   @ManyToOne(() => DescriptionsGroup, (group) => group.descriptions)
   descriptionsGroups: DescriptionsGroup;
 
-  @OneToMany(() => UnstuffingContainer, (unstuffing) => unstuffing.descriptions)
-  unstuffingContainers: UnstuffingContainer;
-
-  @OneToMany(() => PreExistingDamage, (damage) => damage.damageDescription)
-  preExistingDamages: PreExistingDamage[];
+  // @OneToMany(() => PreExistingDamage, (damage) => damage.descriptions)
+  // preExistingDamages: PreExistingDamage[];
 }

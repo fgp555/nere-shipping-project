@@ -18,14 +18,12 @@ Content-Type: application/json
   "reportMv": "m.v. XIN CHANG SHA COMPLETAR",
   "containersReporte": "¨IMPORT CONTAINERS UNSTUFFING REPORT¨",
   "containersLeyenda": "GROUPAGE CONTAINERS",
-  "containers": [{"id": 1}],
+  "containers": [{"id": 1}, {"id": 2}],
   "containersDescripcion": "1 x 40-ft non-operating reefer container & 1 x 40-ft DV container stuffed with consolidated cargo",
   "containersDestino": "Buenos Aires - Argentina",
   "reportDescription": "In compliance with the instructions given by Messrs. ¨SACO Shipping GmbH¨ - Hamburg, the acting cargo surveyor of this bureau attended at the customs bonded warehouse (CFS) ¨Gemez S.A.¨, Buenos Aires - Argentina, on 25th September 2024 with the purpose of monitoring the whole stripping operation of the ISO (45G1 & 45R1) multi-modal shipping containers.",
   "reportNote": "given the great amount of pictures taken during this survey, few of them are shown just for illustrative purposes.",
-  "detailsShipment": {
-    "id": 1
-  }
+  "detailsShipment": {"id": 1}
 }
 
 

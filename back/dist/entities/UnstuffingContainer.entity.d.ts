@@ -1,7 +1,8 @@
-import { Description } from './Description.entity';
 import { DetailsShipment } from './DetailsShipment.entity';
+import { DescriptionsGroup } from './DescriptionsGroup.entity';
 export declare class UnstuffingContainer {
     id: number;
-    descriptions: Description[];
+    descriptionsGroup: DescriptionsGroup[];
     detailsShipment: DetailsShipment;
+    note: string;
 }

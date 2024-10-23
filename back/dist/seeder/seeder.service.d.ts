@@ -25,7 +25,6 @@ export declare class SeederService {
     private seedContainers;
     private seedSecuringSeals;
     private seedUnstuffingContainers;
-    private seedPreExistingDamages;
     private seedImagesPathimg;
     private seedImagesGroup;
     private seedDescriptionsGroup;

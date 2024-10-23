@@ -1,3 +1,15 @@
+### Create a new Images Group
+POST http://localhost:3000/api/images-groups
+Content-Type: application/json
+
+{
+  "title": "New Group Title",
+  "description": "Description of the group",
+  "imagesPathimg": [{"id": 1}, {"id": 2}]
+}
+
+###
+
 ### Get all Images Groups
 GET http://localhost:3000/api/images-groups
 Accept: application/json
@@ -7,18 +19,6 @@ Accept: application/json
 ### Get a specific Images Group by ID
 GET http://localhost:3000/api/images-groups/1
 Accept: application/json
-
-###
-
-### Create a new Images Group
-POST http://localhost:3000/api/images-groups
-Content-Type: application/json
-
-{
-  "title": "New Group Title",
-  "description": "Description of the group",
-  "imagesPathimg": [{"id": 2}, {"id": 3}, {"id": 4}]
-}
 
 ###
 

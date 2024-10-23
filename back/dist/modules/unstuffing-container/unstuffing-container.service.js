@@ -21,22 +21,18 @@ let UnstuffingContainerService = class UnstuffingContainerService {
     constructor(unstuffingContainerRepository) {
         this.unstuffingContainerRepository = unstuffingContainerRepository;
     }
-    async createUnstuffingContainer(data) {
-        const unstuffingContainer = this.unstuffingContainerRepository.create(data);
-        return this.unstuffingContainerRepository.save(unstuffingContainer);
-    }
-    async findAllUnstuffingContainers() {
+    findAll() {
         return this.unstuffingContainerRepository.find();
     }
-    async findUnstuffingContainerById(id) {
-        return this.unstuffingContainerRepository.findOne({ where: { id } });
+    findOne(id) {
+        return this.unstuffingContainerRepository.findOne({
+            where: { id },
+            relations: ['descriptions', 'detailsShipment'],
+        });
     }
-    async updateUnstuffingContainer(id, data) {
-        await this.unstuffingContainerRepository.update(id, data);
-        return this.unstuffingContainerRepository.findOne({ where: { id } });
-    }
-    async deleteUnstuffingContainer(id) {
-        await this.unstuffingContainerRepository.delete(id);
+    create(createUnstuffingContainerDto) {
+        const unstuffingContainer = this.unstuffingContainerRepository.create(createUnstuffingContainerDto);
+        return this.unstuffingContainerRepository.save(unstuffingContainer);
     }
 };
 exports.UnstuffingContainerService = UnstuffingContainerService;

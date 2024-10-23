@@ -1,0 +1,29 @@
+### Crear un nuevo UnstuffingContainer
+POST http://localhost:3000/api/unstuffing-containers
+Content-Type: application/json
+
+{
+  "descriptionsGroup": [{"id": 1}, {"id": 2}], 
+  "detailsShipment": {"id": 1},
+  "note": "Some note"
+}
+
+### Obtener todos los UnstuffingContainers
+GET http://localhost:3000/api/unstuffing-containers
+
+### Obtener un UnstuffingContainer por ID
+GET http://localhost:3000/api/unstuffing-containers/1
+
+### Actualizar un UnstuffingContainer por ID
+PUT http://localhost:3000/api/unstuffing-containers/1
+Content-Type: application/json
+
+{
+  "descriptions": [3, 4],  // Nuevas descripciones para actualizar
+  "detailsShipment": {
+    "id": 2  // Nuevo DetailsShipment para actualizar
+  } 
+}
+
+### Eliminar un UnstuffingContainer por ID
+DELETE http://localhost:3000/api/unstuffing-containers/1

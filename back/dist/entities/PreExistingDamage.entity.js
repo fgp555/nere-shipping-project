@@ -11,8 +11,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PreExistingDamage = void 0;
 const typeorm_1 = require("typeorm");
-const Description_entity_1 = require("./Description.entity");
 const DetailsShipment_entity_1 = require("./DetailsShipment.entity");
+const DescriptionsGroup_entity_1 = require("./DescriptionsGroup.entity");
 let PreExistingDamage = class PreExistingDamage {
 };
 exports.PreExistingDamage = PreExistingDamage;
@@ -45,12 +45,14 @@ __decorate([
     __metadata("design:type", String)
 ], PreExistingDamage.prototype, "remarks", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => Description_entity_1.Description, (description) => description.preExistingDamages, { eager: true }),
+    (0, typeorm_1.ManyToOne)(() => DescriptionsGroup_entity_1.DescriptionsGroup, (description) => description.preExistingDamages, { eager: true }),
     (0, typeorm_1.JoinColumn)({ name: 'damage_description_id' }),
-    __metadata("design:type", Description_entity_1.Description)
-], PreExistingDamage.prototype, "damageDescription", void 0);
+    __metadata("design:type", Array)
+], PreExistingDamage.prototype, "descriptionsGroup", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => DetailsShipment_entity_1.DetailsShipment, (details) => details.preExistingDamages, { eager: true }),
+    (0, typeorm_1.ManyToOne)(() => DetailsShipment_entity_1.DetailsShipment, (details) => details.preExistingDamages, {
+        eager: true,
+    }),
     (0, typeorm_1.JoinColumn)({ name: 'details_shipment_id' }),
     __metadata("design:type", DetailsShipment_entity_1.DetailsShipment)
 ], PreExistingDamage.prototype, "detailsShipment", void 0);

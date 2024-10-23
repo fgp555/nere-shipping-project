@@ -1,5 +1,5 @@
-import { Description } from './Description.entity';
 import { DetailsShipment } from './DetailsShipment.entity';
+import { DescriptionsGroup } from './DescriptionsGroup.entity';
 export declare class PreExistingDamage {
     id: number;
     blNo: string;
@@ -8,6 +8,6 @@ export declare class PreExistingDamage {
     qtyOfPkgs: number;
     goods: string;
     remarks: string;
-    damageDescription: Description;
+    descriptionsGroup: DescriptionsGroup[];
     detailsShipment: DetailsShipment;
 }

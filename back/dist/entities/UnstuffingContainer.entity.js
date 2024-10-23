@@ -11,8 +11,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UnstuffingContainer = void 0;
 const typeorm_1 = require("typeorm");
-const Description_entity_1 = require("./Description.entity");
 const DetailsShipment_entity_1 = require("./DetailsShipment.entity");
+const DescriptionsGroup_entity_1 = require("./DescriptionsGroup.entity");
 let UnstuffingContainer = class UnstuffingContainer {
 };
 exports.UnstuffingContainer = UnstuffingContainer;
@@ -21,14 +21,28 @@ __decorate([
     __metadata("design:type", Number)
 ], UnstuffingContainer.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => Description_entity_1.Description, (description) => description.unstuffingContainers, { eager: true, onDelete: 'CASCADE' }),
+    (0, typeorm_1.ManyToMany)(() => DescriptionsGroup_entity_1.DescriptionsGroup, (group) => group.unstuffingContainers, {
+        eager: true,
+        cascade: true,
+    }),
+    (0, typeorm_1.JoinTable)({
+        name: 'unstuffing_container_descriptions_group',
+        joinColumn: { name: 'unstuffing_container_id', referencedColumnName: 'id' },
+        inverseJoinColumn: { name: 'descriptions_group_id', referencedColumnName: 'id' },
+    }),
     __metadata("design:type", Array)
-], UnstuffingContainer.prototype, "descriptions", void 0);
+], UnstuffingContainer.prototype, "descriptionsGroup", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => DetailsShipment_entity_1.DetailsShipment, (details) => details.unstuffingContainers, { eager: true }),
+    (0, typeorm_1.ManyToOne)(() => DetailsShipment_entity_1.DetailsShipment, (details) => details.unstuffingContainers, {
+        eager: true,
+    }),
     (0, typeorm_1.JoinColumn)({ name: 'details_shipment_id' }),
     __metadata("design:type", DetailsShipment_entity_1.DetailsShipment)
 ], UnstuffingContainer.prototype, "detailsShipment", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'text' }),
+    __metadata("design:type", String)
+], UnstuffingContainer.prototype, "note", void 0);
 exports.UnstuffingContainer = UnstuffingContainer = __decorate([
     (0, typeorm_1.Entity)('t4_unstuffing_container_entity')
 ], UnstuffingContainer);

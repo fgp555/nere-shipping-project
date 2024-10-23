@@ -15,62 +15,42 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UnstuffingContainerController = void 0;
 const common_1 = require("@nestjs/common");
 const unstuffing_container_service_1 = require("./unstuffing-container.service");
+const create_unstuffing_container_dto_1 = require("./dto/create-unstuffing-container.dto");
 let UnstuffingContainerController = class UnstuffingContainerController {
     constructor(unstuffingContainerService) {
         this.unstuffingContainerService = unstuffingContainerService;
     }
-    async create(createUnstuffingContainerDto) {
-        return this.unstuffingContainerService.createUnstuffingContainer(createUnstuffingContainerDto);
+    findAll() {
+        return this.unstuffingContainerService.findAll();
     }
-    async findAll() {
-        return this.unstuffingContainerService.findAllUnstuffingContainers();
+    findOne(id) {
+        return this.unstuffingContainerService.findOne(+id);
     }
-    async findOne(id) {
-        return this.unstuffingContainerService.findUnstuffingContainerById(id);
-    }
-    async update(id, updateUnstuffingContainerDto) {
-        return this.unstuffingContainerService.updateUnstuffingContainer(id, updateUnstuffingContainerDto);
-    }
-    async remove(id) {
-        return this.unstuffingContainerService.deleteUnstuffingContainer(id);
+    create(createUnstuffingContainerDto) {
+        return this.unstuffingContainerService.create(createUnstuffingContainerDto);
     }
 };
 exports.UnstuffingContainerController = UnstuffingContainerController;
 __decorate([
-    (0, common_1.Post)(),
-    __param(0, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", Promise)
-], UnstuffingContainerController.prototype, "create", null);
-__decorate([
     (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Promise)
+    __metadata("design:returntype", void 0)
 ], UnstuffingContainerController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
-    __metadata("design:returntype", Promise)
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
 ], UnstuffingContainerController.prototype, "findOne", null);
 __decorate([
-    (0, common_1.Put)(':id'),
-    __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, common_1.Body)()),
+    (0, common_1.Post)(),
+    __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, Object]),
-    __metadata("design:returntype", Promise)
-], UnstuffingContainerController.prototype, "update", null);
-__decorate([
-    (0, common_1.Delete)(':id'),
-    __param(0, (0, common_1.Param)('id')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
-    __metadata("design:returntype", Promise)
-], UnstuffingContainerController.prototype, "remove", null);
+    __metadata("design:paramtypes", [create_unstuffing_container_dto_1.CreateUnstuffingContainerDto]),
+    __metadata("design:returntype", void 0)
+], UnstuffingContainerController.prototype, "create", null);
 exports.UnstuffingContainerController = UnstuffingContainerController = __decorate([
     (0, common_1.Controller)('unstuffing-containers'),
     __metadata("design:paramtypes", [unstuffing_container_service_1.UnstuffingContainerService])

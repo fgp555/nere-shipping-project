@@ -12,8 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Description = void 0;
 const typeorm_1 = require("typeorm");
 const DescriptionsGroup_entity_1 = require("./DescriptionsGroup.entity");
-const UnstuffingContainer_entity_1 = require("./UnstuffingContainer.entity");
-const PreExistingDamage_entity_1 = require("./PreExistingDamage.entity");
 let Description = class Description {
 };
 exports.Description = Description;
@@ -29,14 +27,6 @@ __decorate([
     (0, typeorm_1.ManyToOne)(() => DescriptionsGroup_entity_1.DescriptionsGroup, (group) => group.descriptions),
     __metadata("design:type", DescriptionsGroup_entity_1.DescriptionsGroup)
 ], Description.prototype, "descriptionsGroups", void 0);
-__decorate([
-    (0, typeorm_1.OneToMany)(() => UnstuffingContainer_entity_1.UnstuffingContainer, (unstuffing) => unstuffing.descriptions),
-    __metadata("design:type", UnstuffingContainer_entity_1.UnstuffingContainer)
-], Description.prototype, "unstuffingContainers", void 0);
-__decorate([
-    (0, typeorm_1.OneToMany)(() => PreExistingDamage_entity_1.PreExistingDamage, (damage) => damage.damageDescription),
-    __metadata("design:type", Array)
-], Description.prototype, "preExistingDamages", void 0);
 exports.Description = Description = __decorate([
     (0, typeorm_1.Entity)('t9_description_entity')
 ], Description);

@@ -12,14 +12,18 @@ const typeorm_1 = require("@nestjs/typeorm");
 const unstuffing_container_service_1 = require("./unstuffing-container.service");
 const unstuffing_container_controller_1 = require("./unstuffing-container.controller");
 const UnstuffingContainer_entity_1 = require("../../entities/UnstuffingContainer.entity");
+const DescriptionsGroup_entity_1 = require("../../entities/DescriptionsGroup.entity");
+const DetailsShipment_entity_1 = require("../../entities/DetailsShipment.entity");
 let UnstuffingContainerModule = class UnstuffingContainerModule {
 };
 exports.UnstuffingContainerModule = UnstuffingContainerModule;
 exports.UnstuffingContainerModule = UnstuffingContainerModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([UnstuffingContainer_entity_1.UnstuffingContainer])],
-        providers: [unstuffing_container_service_1.UnstuffingContainerService],
+        imports: [
+            typeorm_1.TypeOrmModule.forFeature([UnstuffingContainer_entity_1.UnstuffingContainer, DescriptionsGroup_entity_1.DescriptionsGroup, DetailsShipment_entity_1.DetailsShipment]),
+        ],
         controllers: [unstuffing_container_controller_1.UnstuffingContainerController],
+        providers: [unstuffing_container_service_1.UnstuffingContainerService],
     })
 ], UnstuffingContainerModule);
 //# sourceMappingURL=unstuffing-container.module.js.map

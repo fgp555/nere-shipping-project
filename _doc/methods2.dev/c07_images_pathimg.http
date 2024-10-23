@@ -1,3 +1,12 @@
+### Create a new Image Pathimg
+POST http://localhost:3000/api/images-pathimgs
+Content-Type: application/json
+
+{
+  "path": "/path/to/image1.jpg",
+  "description": "Description for the first image"
+}
+
 ### Get all Images Pathimg
 GET http://localhost:3000/api/images-pathimgs
 Accept: application/json
@@ -7,17 +16,6 @@ Accept: application/json
 ### Get a specific Image Pathimg by ID
 GET http://localhost:3000/api/images-pathimgs/1
 Accept: application/json
-
-###
-
-### Create a new Image Pathimg
-POST http://localhost:3000/api/images-pathimgs
-Content-Type: application/json
-
-{
-  "path": "/path/to/image1.jpg",
-  "description": "Description for the first image"
-}
 
 ###
 

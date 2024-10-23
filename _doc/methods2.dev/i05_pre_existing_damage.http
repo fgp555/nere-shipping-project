@@ -9,12 +9,8 @@ Content-Type: application/json
   "qtyOfPkgs": 10,
   "goods": "Electronics",
   "remarks": "Damage found on arrival",
-  "damageDescription": {
-    "id": 1
-  },
-  "detailsShipment": {
-    "id": 1
-  }
+  "descriptions": [{"id": 1}],
+  "detailsShipment": {"id": 1}
 }
 
 ### Get all PreExistingDamage entries

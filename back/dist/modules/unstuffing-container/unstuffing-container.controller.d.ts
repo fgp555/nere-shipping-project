@@ -1,11 +1,9 @@
 import { UnstuffingContainerService } from './unstuffing-container.service';
-import { UnstuffingContainer } from '../../entities/UnstuffingContainer.entity';
+import { CreateUnstuffingContainerDto } from './dto/create-unstuffing-container.dto';
 export declare class UnstuffingContainerController {
     private readonly unstuffingContainerService;
     constructor(unstuffingContainerService: UnstuffingContainerService);
-    create(createUnstuffingContainerDto: Partial<UnstuffingContainer>): Promise<UnstuffingContainer>;
-    findAll(): Promise<UnstuffingContainer[]>;
-    findOne(id: number): Promise<UnstuffingContainer>;
-    update(id: number, updateUnstuffingContainerDto: Partial<UnstuffingContainer>): Promise<UnstuffingContainer>;
-    remove(id: number): Promise<void>;
+    findAll(): Promise<import("../../entities/UnstuffingContainer.entity").UnstuffingContainer[]>;
+    findOne(id: string): Promise<import("../../entities/UnstuffingContainer.entity").UnstuffingContainer>;
+    create(createUnstuffingContainerDto: CreateUnstuffingContainerDto): Promise<import("../../entities/UnstuffingContainer.entity").UnstuffingContainer[]>;
 }

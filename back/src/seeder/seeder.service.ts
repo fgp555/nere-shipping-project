@@ -41,8 +41,8 @@ export class SeederService {
     await this.seedContainers();
     await this.seedDetailsShipment(); // Add seedDetailsShipment
     await this.seedSecuringSeals();
-    await this.seedUnstuffingContainers();
-    await this.seedPreExistingDamages();
+    // await this.seedUnstuffingContainers();
+    // await this.seedPreExistingDamages();
     await this.seedImagesPathimg();
     await this.seedImagesGroup();
     await this.seedDescriptionsGroup();
@@ -115,7 +115,7 @@ export class SeederService {
   private async seedUnstuffingContainers() {
     // Obtenemos las descripciones
     const descriptions = await this.descriptionRepository.find({
-      where: { id: In([1]) }, // Verificamos que existan las descripciones con id 1 y 2
+      where: { id: In([1, 2]) }, // Verificamos que existan las descripciones con id 1 y 2
     });
 
     // Verificamos si las descripciones fueron encontradas
@@ -139,7 +139,7 @@ export class SeederService {
 
     // Creamos el UnstuffingContainer con las descripciones y el DetailsShipment
     const unstuffingContainer = this.unstuffingContainerRepository.create({
-      descriptions: descriptions, // Asignamos las descripciones
+      descriptionsGroup: descriptions, // Asignamos las descripciones
       detailsShipment: detailsShipment, // Asignamos el DetailsShipment
     });
 
@@ -147,21 +147,21 @@ export class SeederService {
     await this.unstuffingContainerRepository.save(unstuffingContainer);
   }
 
-  private async seedPreExistingDamages() {
-    const preExistingDamage = this.preExistingDamageRepository.create({
-      blNo: 'BL123',
-      consignee: 'Consignee A',
-      marks: 'Mark A',
-      qtyOfPkgs: 5,
-      goods: 'Goods A',
-      remarks: 'Some remarks',
-      damageDescription: await this.descriptionRepository.findOneBy({ id: 1 }),
-      detailsShipment: await this.detailsShipmentRepository.findOneBy({
-        id: 1,
-      }), // assuming detailsShipment with id 1 exists
-    });
-    await this.preExistingDamageRepository.save(preExistingDamage);
-  }
+  // private async seedPreExistingDamages() {
+  //   const preExistingDamage = this.preExistingDamageRepository.create({
+  //     blNo: 'BL123',
+  //     consignee: 'Consignee A',
+  //     marks: 'Mark A',
+  //     qtyOfPkgs: 5,
+  //     goods: 'Goods A',
+  //     remarks: 'Some remarks',
+  //     descriptions: await this.descriptionRepository.findOneBy({ id: 1 }),
+  //     detailsShipment: await this.detailsShipmentRepository.findOneBy({
+  //       id: 1,
+  //     }), // assuming detailsShipment with id 1 exists
+  //   });
+  //   await this.preExistingDamageRepository.save(preExistingDamage);
+  // }
 
   private async seedImagesPathimg() {
     const imagesPathimg = this.imagesPathimgRepository.create({

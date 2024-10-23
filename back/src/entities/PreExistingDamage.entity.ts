@@ -1,8 +1,14 @@
 // src/entities/PreExistingDamage.entity.ts
 
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
-import { Description } from './Description.entity';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 import { DetailsShipment } from './DetailsShipment.entity';
+import { DescriptionsGroup } from './DescriptionsGroup.entity';
 
 @Entity('t5_pre_existing_damage_entity')
 export class PreExistingDamage {
@@ -27,11 +33,19 @@ export class PreExistingDamage {
   @Column({ type: 'text' })
   remarks: string;
 
-  @ManyToOne(() => Description, (description) => description.preExistingDamages, { eager: true })
+  @ManyToOne(
+    () => DescriptionsGroup,
+    (description) => description.preExistingDamages,
+    { eager: true },
+  )
   @JoinColumn({ name: 'damage_description_id' })
-  damageDescription: Description;
+  descriptionsGroup: DescriptionsGroup[];
+  // @Column()
+  // descriptions: string;
 
-  @ManyToOne(() => DetailsShipment, (details) => details.preExistingDamages, { eager: true })
+  @ManyToOne(() => DetailsShipment, (details) => details.preExistingDamages, {
+    eager: true,
+  })
   @JoinColumn({ name: 'details_shipment_id' })
   detailsShipment: DetailsShipment;
 }

@@ -4,14 +4,12 @@ Content-Type: application/json
 
 {
   "date": "2024-10-22",
-  "containers": [{"id": 1}],
+  "containers": [{"id": 1}, {"id": 2}],
   "qtyOfPkgs": 100,
   "start": "09:00:00",
   "complete": "12:00:00",
   "timeUsedToSurvey": "03:00:00",
-  "detailsShipment": {
-    "id": 1
-  }
+  "detailsShipment": {"id": 1}
 }
 
 ### Get all RelevantTimes entries

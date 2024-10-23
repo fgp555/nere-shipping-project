@@ -5,9 +5,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
@@ -25,8 +22,6 @@ const ImagesPathimg_entity_1 = require("./entities/ImagesPathimg.entity");
 const ImagesGroup_entity_1 = require("./entities/ImagesGroup.entity");
 const Description_entity_1 = require("./entities/Description.entity");
 const DescriptionsGroup_entity_1 = require("./entities/DescriptionsGroup.entity");
-const seeder_module_1 = require("./seeder/seeder.module");
-const seeder_service_1 = require("./seeder/seeder.service");
 const containers_module_1 = require("./modules/containers/containers.module");
 const description_module_1 = require("./modules/description/description.module");
 const descriptions_group_module_1 = require("./modules/descriptions-group/descriptions-group.module");
@@ -39,13 +34,6 @@ const report_module_1 = require("./modules/report/report.module");
 const securing_seals_module_1 = require("./modules/securing-seals/securing-seals.module");
 const unstuffing_container_module_1 = require("./modules/unstuffing-container/unstuffing-container.module");
 let AppModule = class AppModule {
-    constructor(seederService) {
-        this.seederService = seederService;
-        this.runSeeders();
-    }
-    async runSeeders() {
-        await this.seederService.seed();
-    }
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
@@ -72,7 +60,6 @@ exports.AppModule = AppModule = __decorate([
                 Description_entity_1.Description,
                 DescriptionsGroup_entity_1.DescriptionsGroup,
             ]),
-            seeder_module_1.SeederModule,
             containers_module_1.ContainersModule,
             description_module_1.DescriptionModule,
             descriptions_group_module_1.DescriptionsGroupModule,
@@ -87,7 +74,6 @@ exports.AppModule = AppModule = __decorate([
         ],
         controllers: [],
         providers: [],
-    }),
-    __metadata("design:paramtypes", [seeder_service_1.SeederService])
+    })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map
