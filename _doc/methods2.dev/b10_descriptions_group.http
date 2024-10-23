@@ -1,0 +1,32 @@
+### Create a new DescriptionsGroup entry
+POST http://localhost:3000/api/descriptions-groups
+Content-Type: application/json
+
+{
+  "description": [
+    {
+    "id": 1
+  },
+  {
+    "id": 2
+  }
+  ],
+  "title": "Shipping Descriptions Group"
+}
+
+### Get all DescriptionsGroup entries
+GET http://localhost:3000/api/descriptions-groups
+
+### Get a DescriptionsGroup entry by ID
+GET http://localhost:3000/api/descriptions-groups/1
+
+### Update a DescriptionsGroup entry by ID
+PUT http://localhost:3000/api/descriptions-groups/1
+Content-Type: application/json
+
+{
+  "title": "Updated Shipping Descriptions Group"
+}
+
+### Delete a DescriptionsGroup entry by ID
+DELETE http://localhost:3000/api/descriptions-groups/1

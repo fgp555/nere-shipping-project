@@ -1,3 +1,5 @@
+// back/src/config/typeOrm.ts
+
 import { DataSource, DataSourceOptions } from "typeorm";
 import {config as dotevn} from "dotenv";
 import {registerAs} from '@nestjs/config';

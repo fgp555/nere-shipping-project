@@ -1,0 +1,35 @@
+### Create a new DetailsShipment
+POST http://localhost:3000/api/details-shipments
+Content-Type: application/json
+
+{
+  "vessel": "XIN CHANG SHA",
+  "voyage": "402S",
+  "mblCode": "ONEYHAME90065700",
+  "pol": "Hamburg, Germany",
+  "shipper": "SACO Shipping GmbH",
+  "pod": "Buenos Aires, Argentina",
+  "consignee": "SACO Shipping S.A.",
+  "qtyOfPkgs": 94,
+  "goods": "Consolidated cargo",
+  "grossWeight": "38,068.90 kg."
+}
+
+### Get all DetailsShipments
+GET http://localhost:3000/api/details-shipments
+
+### Get a DetailsShipment by ID
+GET http://localhost:3000/api/details-shipments/1
+
+### Update a DetailsShipment by ID
+PUT http://localhost:3000/api/details-shipments/1
+Content-Type: application/json
+
+{
+  "vessel": "Updated Vessel Name",
+  "voyage": "Updated Voyage 456",
+  "grossWeight": "2500 kg"
+}
+
+### Delete a DetailsShipment by ID
+DELETE http://localhost:3000/api/details-shipments/1

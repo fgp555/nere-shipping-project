@@ -1,0 +1,24 @@
+### Create a new Description
+POST http://localhost:3000/api/descriptions
+Content-Type: application/json
+
+{
+  "description": "Description for electronics shipment"
+}
+
+### Get all Descriptions
+GET http://localhost:3000/api/descriptions
+
+### Get a Description by ID
+GET http://localhost:3000/api/descriptions/1
+
+### Update a Description by ID
+PUT http://localhost:3000/api/descriptions/1
+Content-Type: application/json
+
+{
+  "description": "Updated description for electronics shipment"
+}
+
+### Delete a Description by ID
+DELETE http://localhost:3000/api/descriptions/1

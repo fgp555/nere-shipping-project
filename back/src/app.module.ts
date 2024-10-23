@@ -1,70 +1,78 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { AdminController } from './modules/admin/admin.controller';
-import { AdminService } from './modules/admin/admin.service';
-import { BookingRefController } from './modules/booking-ref/booking-ref.controller';
-import { BookingRefService } from './modules/booking-ref/booking-ref.service';
-import { ClientController } from './modules/client/client.controller';
-import { ClientService } from './modules/client/client.service';
-import { ContainerController } from './modules/container/container.controller';
-import { ContainerService } from './modules/container/container.service';
-import { PackageController } from './modules/package/package.controller';
-import { PackageService } from './modules/package/package.service';
-import { SeederModule } from './seed/seeder.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import typeorm from './config/typeOrm';
-import { AdminEntity } from './modules/admin/entity-dtos/admin.entity';
-import { BookingRefEntity } from './modules/booking-ref/entity-dtos/booking-ref.entity';
-import { ContainerEntity } from './modules/container/entity-dtos/container.entity';
-import { ClientEntity } from './modules/client/entity-dtos/client.entity';
-import { PackageEntity } from './modules/package/entity-dtos/package.entity';
-import { ImageEntity } from './modules/image/entity-dtos/image.entity';
-import { ImageModule } from './modules/image/image.module';
-import { HtmlPdfModule } from './modules/html-pdf/html-pdf.module';
-import { PreDamageModule } from './modules/5pre-damage/5pre-damage.module';
-import { PreDamageEntity } from './modules/5pre-damage/entity-dtos/5pre-damage.entity';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import typeOrm from './config/typeOrm';
+import { Report } from './entities/Report.entity';
+import { DetailsShipment } from './entities/DetailsShipment.entity';
+import { RelevantTimes } from './entities/RelevantTimes.entity';
+import { SecuringSeals } from './entities/SecuringSeals.entity';
+import { UnstuffingContainer } from './entities/UnstuffingContainer.entity';
+import { PreExistingDamage } from './entities/PreExistingDamage.entity';
+import { Containers } from './entities/Containers.entity';
+import { ImagesPathimg } from './entities/ImagesPathimg.entity';
+import { ImagesGroup } from './entities/ImagesGroup.entity';
+import { Description } from './entities/Description.entity';
+import { DescriptionsGroup } from './entities/DescriptionsGroup.entity';
+import { SeederModule } from './seeder/seeder.module';
+import { SeederService } from './seeder/seeder.service';
+import { ContainersModule } from './modules/containers/containers.module';
+import { DescriptionModule } from './modules/description/description.module';
+import { DescriptionsGroupModule } from './modules/descriptions-group/descriptions-group.module';
+import { DetailsShipmentModule } from './modules/details-shipment/details-shipment.module';
+import { ImagesGroupModule } from './modules/images-group/images-group.module';
+import { ImagesPathimgModule } from './modules/images-pathimg/images-pathimg.module';
+import { PreExistingDamageModule } from './modules/pre-existing-damage/pre-existing-damage.module';
+import { RelevantTimesModule } from './modules/relevant-times/relevant-times.module';
+import { ReportModule } from './modules/report/report.module';
+import { SecuringSealsModule } from './modules/securing-seals/securing-seals.module';
+import { UnstuffingContainerModule } from './modules/unstuffing-container/unstuffing-container.module';
 
 @Module({
   imports: [
-    ImageModule,
-    SeederModule,
-    HtmlPdfModule,
-    PreDamageModule,
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [typeorm],
+      load: [typeOrm],
     }),
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
       useFactory: (config: ConfigService) => config.get('typeorm'),
     }),
     TypeOrmModule.forFeature([
-      AdminEntity,
-      BookingRefEntity,
-      ContainerEntity,
-      ClientEntity,
-      PackageEntity,
-      ImageEntity,
-      PreDamageEntity,
+      Report,
+      DetailsShipment,
+      RelevantTimes,
+      SecuringSeals,
+      UnstuffingContainer,
+      PreExistingDamage,
+      Containers,
+      ImagesPathimg,
+      ImagesGroup,
+      Description,
+      DescriptionsGroup,
     ]),
+    SeederModule,
+    ContainersModule,
+    DescriptionModule,
+    DescriptionsGroupModule,
+    DetailsShipmentModule,
+    ImagesGroupModule,
+    ImagesPathimgModule,
+    PreExistingDamageModule,
+    RelevantTimesModule,
+    ReportModule,
+    SecuringSealsModule,
+    UnstuffingContainerModule,
+
   ],
-  controllers: [
-    AppController,
-    AdminController,
-    BookingRefController,
-    ClientController,
-    ContainerController,
-    PackageController,
-  ],
-  providers: [
-    AppService,
-    AdminService,
-    BookingRefService,
-    ClientService,
-    ContainerService,
-    PackageService,
-  ],
+  controllers: [],
+  providers: [],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(private readonly seederService: SeederService) {
+    this.runSeeders();
+  }
+
+  async runSeeders() {
+    await this.seederService.seed();
+  }
+}

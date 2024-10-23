@@ -87,22 +87,22 @@ id: 1
 container_code: "FSCU5726799"
 descripton: "FSCU5726799 x 40-ft non-operating reefer container"
 
-# ========== table 7 > images_group ==========
+# ========== table 7 > images_pathImg ==========
+id: 1
+pathimg: "/upload/images1.jpg"
+description: "description of images"
+
+# ========== table 8 > images_group ==========
 id: 1
 images_pathimg: [1,2,3] # (relation with images_pathImg > pathImg)
 title?: "images of containers"
 description: "description of container 123"
 
-# ========== table 8 > images_pathImg ==========
+# ========== table 9 > description ==========
 id: 1
-pathimg: "/upload/images1.jpg"
-description: "description of images"
+description: "this is a description"
 
-# ========== table 9 > descriptions_group ==========
+# ========== table 10 > descriptions_group ==========
 id: 1
 descriptions: [1,2,3]  # (relation with description > id)
 title: "title demo 1"
-
-# ========== table 10 > description ==========
-id: 1
-description: "this is a description"

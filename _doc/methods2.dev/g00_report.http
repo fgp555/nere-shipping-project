@@ -1,0 +1,50 @@
+### Create a new Report
+POST http://localhost:3000/api/reports
+Content-Type: application/json
+
+{
+  "headerName": "Header Test Name",
+  "headerAddress": "123 Street, City",
+  "headerMobile": "1234567890",
+  "headerEmail": "test@example.com",
+  "reportDate": "2024-10-22",
+  "clienteSenores": "Cliente Señor",
+  "clienteEmpresa": "Cliente Empresa",
+  "clienteDeposito": "Depósito Cliente",
+  "clientePostal": "12345",
+  "operadorArea": "Operador Área",
+  "operadorResponsables1": "Responsable 1",
+  "operadorResponsables2": "Responsable 2",
+  "reportMv": "Report MV",
+  "containersReporte": "Reporte Contenedor",
+  "containersLeyenda": "Leyenda Contenedor",
+  "container": {
+    "id": 1
+  },
+  "containersDescripcion": "Descripción del contenedor",
+  "containersDestino": "Destino del contenedor",
+  "reportDescription": "Descripción detallada del reporte",
+  "reportNote": "Notas adicionales",
+  "detailsShipment": {
+    "id": 1
+  }
+}
+
+### Get all Reports
+GET http://localhost:3000/api/reports
+
+### Get a Report by ID
+GET http://localhost:3000/api/reports/1
+
+### Update a Report by ID
+PUT http://localhost:3000/api/reports/1
+Content-Type: application/json
+
+{
+  "headerName": "Updated Header Name",
+  "headerAddress": "456 New Street, New City",
+  "reportNote": "Updated report note"
+}
+
+### Delete a Report by ID
+DELETE http://localhost:3000/api/reports/1

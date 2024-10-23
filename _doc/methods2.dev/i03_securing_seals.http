@@ -1,0 +1,35 @@
+### Create a new SecuringSeal entry
+POST http://localhost:3000/api/securing-seals
+Content-Type: application/json
+
+{
+  "container": {
+    "id": 1
+  },
+  "type": "Type A",
+  "wwasSafetySeals": "Seal A",
+  "argentineanCustomsSeal": "Custom Seal A",
+  "others": "Other seals",
+  "detailsShipment": {
+    "id": 1
+  }
+}
+
+### Get all SecuringSeal entries
+GET http://localhost:3000/api/securing-seals
+
+### Get a SecuringSeal entry by ID
+GET http://localhost:3000/api/securing-seals/1
+
+### Update a SecuringSeal entry by ID
+PUT http://localhost:3000/api/securing-seals/1
+Content-Type: application/json
+
+{
+  "type": "Type B",
+  "wwasSafetySeals": "Updated Seal",
+  "others": "Updated other seals"
+}
+
+### Delete a SecuringSeal entry by ID
+DELETE http://localhost:3000/api/securing-seals/1
