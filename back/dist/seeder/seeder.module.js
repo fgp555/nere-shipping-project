@@ -18,6 +18,7 @@ const ImagesPathimg_entity_1 = require("../entities/ImagesPathimg.entity");
 const ImagesGroup_entity_1 = require("../entities/ImagesGroup.entity");
 const Description_entity_1 = require("../entities/Description.entity");
 const DescriptionsGroup_entity_1 = require("../entities/DescriptionsGroup.entity");
+const DetailsShipment_entity_1 = require("../entities/DetailsShipment.entity");
 let SeederModule = class SeederModule {
 };
 exports.SeederModule = SeederModule;
@@ -28,11 +29,12 @@ exports.SeederModule = SeederModule = __decorate([
                 SecuringSeals_entity_1.SecuringSeals,
                 UnstuffingContainer_entity_1.UnstuffingContainer,
                 PreExistingDamage_entity_1.PreExistingDamage,
-                Containers_entity_1.Containers,
+                Containers_entity_1.Container,
                 ImagesPathimg_entity_1.ImagesPathimg,
                 ImagesGroup_entity_1.ImagesGroup,
                 Description_entity_1.Description,
                 DescriptionsGroup_entity_1.DescriptionsGroup,
+                DetailsShipment_entity_1.DetailsShipment,
             ]),
         ],
         providers: [seeder_service_1.SeederService],

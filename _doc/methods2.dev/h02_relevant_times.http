@@ -4,10 +4,8 @@ Content-Type: application/json
 
 {
   "date": "2024-10-22",
-  "container": {
-    "id": 1
-  },
-  "qtyOfPkgs": 50,
+  "containers": [{"id": 1}],
+  "qtyOfPkgs": 100,
   "start": "09:00:00",
   "complete": "12:00:00",
   "timeUsedToSurvey": "03:00:00",
@@ -28,8 +26,9 @@ Content-Type: application/json
 
 {
   "date": "2024-10-23",
-  "qtyOfPkgs": 75,
-  "complete": "13:00:00"
+  "qtyOfPkgs": 110,
+  "complete": "12:30:00",
+  "timeUsedToSurvey": "03:30:00"
 }
 
 ### Delete a RelevantTimes entry by ID

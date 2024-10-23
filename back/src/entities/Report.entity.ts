@@ -6,8 +6,9 @@ import {
   Column,
   ManyToOne,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
-import { Containers } from './Containers.entity';
+import { Container as Container } from './Containers.entity';
 import { DetailsShipment } from './DetailsShipment.entity';
 
 @Entity('t0_report_entity')
@@ -60,12 +61,6 @@ export class Report {
   @Column({ name: 'containers_leyenda', type: 'varchar', length: 255 })
   containersLeyenda: string;
 
-  @ManyToOne(() => Containers, (container) => container.reports, {
-    eager: true,
-  })
-  @JoinColumn({ name: 'container_id' })
-  container: Containers;
-
   @Column({ name: 'containers_descripcion', type: 'varchar', length: 255 })
   containersDescripcion: string;
 
@@ -77,6 +72,12 @@ export class Report {
 
   @Column({ name: 'report_note', type: 'text' })
   reportNote: string;
+
+  @OneToMany(() => Container, (container) => container.reports, {
+    eager: true,
+  })
+  // @JoinColumn({ name: 'container_id' })
+  containers: Container[];
 
   @ManyToOne(() => DetailsShipment, (details) => details.reports, {
     eager: true,

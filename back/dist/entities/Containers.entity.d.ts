@@ -1,11 +1,11 @@
 import { Report } from './Report.entity';
 import { RelevantTimes } from './RelevantTimes.entity';
 import { SecuringSeals } from './SecuringSeals.entity';
-export declare class Containers {
+export declare class Container {
     id: number;
     containerCode: string;
     description: string;
-    reports: Report[];
+    reports: Report;
     relevantTimes: RelevantTimes[];
-    securingSeals: SecuringSeals[];
+    securingSeals: SecuringSeals;
 }

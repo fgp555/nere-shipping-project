@@ -8,7 +8,7 @@ import { RelevantTimes } from './entities/RelevantTimes.entity';
 import { SecuringSeals } from './entities/SecuringSeals.entity';
 import { UnstuffingContainer } from './entities/UnstuffingContainer.entity';
 import { PreExistingDamage } from './entities/PreExistingDamage.entity';
-import { Containers } from './entities/Containers.entity';
+import { Container } from './entities/Containers.entity';
 import { ImagesPathimg } from './entities/ImagesPathimg.entity';
 import { ImagesGroup } from './entities/ImagesGroup.entity';
 import { Description } from './entities/Description.entity';
@@ -44,7 +44,7 @@ import { UnstuffingContainerModule } from './modules/unstuffing-container/unstuf
       SecuringSeals,
       UnstuffingContainer,
       PreExistingDamage,
-      Containers,
+      Container,
       ImagesPathimg,
       ImagesGroup,
       Description,

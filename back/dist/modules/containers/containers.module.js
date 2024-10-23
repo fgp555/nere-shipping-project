@@ -17,7 +17,7 @@ let ContainersModule = class ContainersModule {
 exports.ContainersModule = ContainersModule;
 exports.ContainersModule = ContainersModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([Containers_entity_1.Containers])],
+        imports: [typeorm_1.TypeOrmModule.forFeature([Containers_entity_1.Container])],
         providers: [containers_service_1.ContainersService],
         controllers: [containers_controller_1.ContainersController],
     })

@@ -13,11 +13,11 @@ export class Description {
   @Column({ type: 'text' })
   description: string;
 
-  @OneToMany(() => DescriptionsGroup, (group) => group.description)
-  descriptionsGroups: DescriptionsGroup[];
+  @ManyToOne(() => DescriptionsGroup, (group) => group.descriptions)
+  descriptionsGroups: DescriptionsGroup;
 
-  @OneToMany(() => UnstuffingContainer, (unstuffing) => unstuffing.description)
-  unstuffingContainers: UnstuffingContainer[];
+  @OneToMany(() => UnstuffingContainer, (unstuffing) => unstuffing.descriptions)
+  unstuffingContainers: UnstuffingContainer;
 
   @OneToMany(() => PreExistingDamage, (damage) => damage.damageDescription)
   preExistingDamages: PreExistingDamage[];

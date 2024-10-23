@@ -1,9 +1,9 @@
-import { Containers } from './Containers.entity';
+import { Container } from './Containers.entity';
 import { DetailsShipment } from './DetailsShipment.entity';
 export declare class RelevantTimes {
     id: number;
     date: Date;
-    container: Containers;
+    containers: Container;
     qtyOfPkgs: number;
     start: string;
     complete: string;

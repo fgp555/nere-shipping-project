@@ -3,32 +3,31 @@ POST http://localhost:3000/api/reports
 Content-Type: application/json
 
 {
-  "headerName": "Header Test Name",
-  "headerAddress": "123 Street, City",
-  "headerMobile": "1234567890",
-  "headerEmail": "test@example.com",
-  "reportDate": "2024-10-22",
-  "clienteSenores": "Cliente Señor",
-  "clienteEmpresa": "Cliente Empresa",
-  "clienteDeposito": "Depósito Cliente",
-  "clientePostal": "12345",
-  "operadorArea": "Operador Área",
-  "operadorResponsables1": "Responsable 1",
-  "operadorResponsables2": "Responsable 2",
-  "reportMv": "Report MV",
-  "containersReporte": "Reporte Contenedor",
-  "containersLeyenda": "Leyenda Contenedor",
-  "container": {
-    "id": 1
-  },
-  "containersDescripcion": "Descripción del contenedor",
-  "containersDestino": "Destino del contenedor",
-  "reportDescription": "Descripción detallada del reporte",
-  "reportNote": "Notas adicionales",
+  "headerName": "FLAVIO A. PREZIOSA",
+  "headerAddress": "Habana 2874 - 1419 - Buenos Aires - Argentina",
+  "headerMobile": "M +54 911 6677 2741",
+  "headerEmail": "flaviopreziosa@gmail.com / flaviopreziosa@fibertel.com.ar",
+  "reportDate": "2024-09-30",
+  "clienteSenores": "Messrs",
+  "clienteEmpresa": "SACO Shipping GmbH",
+  "clienteDeposito": "Wollkammereistr 1",
+  "clientePostal": "D-21107 Hamburg",
+  "operadorArea": "Export & Import operations",
+  "operadorResponsables1": "Arne Schulte / Lars Reil",
+  "operadorResponsables2": "Gisel Gimenez / Florencia Bavaro",
+  "reportMv": "m.v. XIN CHANG SHA COMPLETAR",
+  "containersReporte": "¨IMPORT CONTAINERS UNSTUFFING REPORT¨",
+  "containersLeyenda": "GROUPAGE CONTAINERS",
+  "containers": [{"id": 1}],
+  "containersDescripcion": "1 x 40-ft non-operating reefer container & 1 x 40-ft DV container stuffed with consolidated cargo",
+  "containersDestino": "Buenos Aires - Argentina",
+  "reportDescription": "In compliance with the instructions given by Messrs. ¨SACO Shipping GmbH¨ - Hamburg, the acting cargo surveyor of this bureau attended at the customs bonded warehouse (CFS) ¨Gemez S.A.¨, Buenos Aires - Argentina, on 25th September 2024 with the purpose of monitoring the whole stripping operation of the ISO (45G1 & 45R1) multi-modal shipping containers.",
+  "reportNote": "given the great amount of pictures taken during this survey, few of them are shown just for illustrative purposes.",
   "detailsShipment": {
     "id": 1
   }
 }
+
 
 ### Get all Reports
 GET http://localhost:3000/api/reports

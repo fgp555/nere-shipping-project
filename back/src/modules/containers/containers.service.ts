@@ -1,29 +1,29 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Containers } from '../../entities/Containers.entity';
+import { Container } from '../../entities/Containers.entity';
 
 @Injectable()
 export class ContainersService {
   constructor(
-    @InjectRepository(Containers)
-    private readonly containersRepository: Repository<Containers>,
+    @InjectRepository(Container)
+    private readonly containersRepository: Repository<Container>,
   ) {}
 
-  async createContainer(data: Partial<Containers>): Promise<Containers> {
+  async createContainer(data: Partial<Container>): Promise<Container> {
     const container = this.containersRepository.create(data);
     return this.containersRepository.save(container);
   }
 
-  async findAllContainers(): Promise<Containers[]> {
+  async findAllContainers(): Promise<Container[]> {
     return this.containersRepository.find();
   }
 
-  async findContainerById(id: number): Promise<Containers> {
+  async findContainerById(id: number): Promise<Container> {
     return this.containersRepository.findOne({ where: { id } });
   }
 
-  async updateContainer(id: number, data: Partial<Containers>): Promise<Containers> {
+  async updateContainer(id: number, data: Partial<Container>): Promise<Container> {
     await this.containersRepository.update(id, data);
     return this.containersRepository.findOne({ where: { id } });
   }

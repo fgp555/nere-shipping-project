@@ -1,28 +1,28 @@
 import { Controller, Get, Post, Body, Param, Delete, Put } from '@nestjs/common';
 import { ContainersService } from './containers.service';
-import { Containers } from '../../entities/Containers.entity';
+import { Container } from '../../entities/Containers.entity';
 
 @Controller('containers')
 export class ContainersController {
   constructor(private readonly containersService: ContainersService) {}
 
   @Post()
-  async create(@Body() createContainerDto: Partial<Containers>): Promise<Containers> {
+  async create(@Body() createContainerDto: Partial<Container>): Promise<Container> {
     return this.containersService.createContainer(createContainerDto);
   }
 
   @Get()
-  async findAll(): Promise<Containers[]> {
+  async findAll(): Promise<Container[]> {
     return this.containersService.findAllContainers();
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: number): Promise<Containers> {
+  async findOne(@Param('id') id: number): Promise<Container> {
     return this.containersService.findContainerById(id);
   }
 
   @Put(':id')
-  async update(@Param('id') id: number, @Body() updateContainerDto: Partial<Containers>): Promise<Containers> {
+  async update(@Param('id') id: number, @Body() updateContainerDto: Partial<Container>): Promise<Container> {
     return this.containersService.updateContainer(id, updateContainerDto);
   }
 

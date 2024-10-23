@@ -1,12 +1,12 @@
 // src/entities/Containers.entity.ts
 
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne } from 'typeorm';
 import { Report } from './Report.entity';
 import { RelevantTimes } from './RelevantTimes.entity';
 import { SecuringSeals } from './SecuringSeals.entity';
 
 @Entity('t6_containers_entity')
-export class Containers {
+export class Container {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -16,12 +16,12 @@ export class Containers {
   @Column({ type: 'varchar', length: 255 })
   description: string;
 
-  @OneToMany(() => Report, (report) => report.container)
-  reports: Report[];
+  @ManyToOne(() => Report, (report) => report.containers)
+  reports: Report;
 
-  @OneToMany(() => RelevantTimes, (times) => times.container)
+  @ManyToOne(() => RelevantTimes, (times) => times.containers)
   relevantTimes: RelevantTimes[];
 
-  @OneToMany(() => SecuringSeals, (seals) => seals.container)
-  securingSeals: SecuringSeals[];
+  @ManyToOne(() => SecuringSeals, (seals) => seals.containers)
+  securingSeals: SecuringSeals;
 }

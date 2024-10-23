@@ -9,39 +9,39 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Containers = void 0;
+exports.Container = void 0;
 const typeorm_1 = require("typeorm");
 const Report_entity_1 = require("./Report.entity");
 const RelevantTimes_entity_1 = require("./RelevantTimes.entity");
 const SecuringSeals_entity_1 = require("./SecuringSeals.entity");
-let Containers = class Containers {
+let Container = class Container {
 };
-exports.Containers = Containers;
+exports.Container = Container;
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
-], Containers.prototype, "id", void 0);
+], Container.prototype, "id", void 0);
 __decorate([
     (0, typeorm_1.Column)({ name: 'container_code', type: 'varchar', length: 255 }),
     __metadata("design:type", String)
-], Containers.prototype, "containerCode", void 0);
+], Container.prototype, "containerCode", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: 'varchar', length: 255 }),
     __metadata("design:type", String)
-], Containers.prototype, "description", void 0);
+], Container.prototype, "description", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => Report_entity_1.Report, (report) => report.container),
-    __metadata("design:type", Array)
-], Containers.prototype, "reports", void 0);
+    (0, typeorm_1.ManyToOne)(() => Report_entity_1.Report, (report) => report.containers),
+    __metadata("design:type", Report_entity_1.Report)
+], Container.prototype, "reports", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => RelevantTimes_entity_1.RelevantTimes, (times) => times.container),
+    (0, typeorm_1.ManyToOne)(() => RelevantTimes_entity_1.RelevantTimes, (times) => times.containers),
     __metadata("design:type", Array)
-], Containers.prototype, "relevantTimes", void 0);
+], Container.prototype, "relevantTimes", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => SecuringSeals_entity_1.SecuringSeals, (seals) => seals.container),
-    __metadata("design:type", Array)
-], Containers.prototype, "securingSeals", void 0);
-exports.Containers = Containers = __decorate([
+    (0, typeorm_1.ManyToOne)(() => SecuringSeals_entity_1.SecuringSeals, (seals) => seals.containers),
+    __metadata("design:type", SecuringSeals_entity_1.SecuringSeals)
+], Container.prototype, "securingSeals", void 0);
+exports.Container = Container = __decorate([
     (0, typeorm_1.Entity)('t6_containers_entity')
-], Containers);
+], Container);
 //# sourceMappingURL=Containers.entity.js.map

@@ -6,11 +6,12 @@ import { SeederService } from './seeder.service';
 import { SecuringSeals } from '../entities/SecuringSeals.entity';
 import { UnstuffingContainer } from '../entities/UnstuffingContainer.entity';
 import { PreExistingDamage } from '../entities/PreExistingDamage.entity';
-import { Containers } from '../entities/Containers.entity';
+import { Container } from '../entities/Containers.entity';
 import { ImagesPathimg } from '../entities/ImagesPathimg.entity';
 import { ImagesGroup } from '../entities/ImagesGroup.entity';
 import { Description } from '../entities/Description.entity';
 import { DescriptionsGroup } from '../entities/DescriptionsGroup.entity';
+import { DetailsShipment } from 'src/entities/DetailsShipment.entity';
 
 @Module({
   imports: [
@@ -18,11 +19,12 @@ import { DescriptionsGroup } from '../entities/DescriptionsGroup.entity';
       SecuringSeals,
       UnstuffingContainer,
       PreExistingDamage,
-      Containers,
+      Container,
       ImagesPathimg,
       ImagesGroup,
       Description,
       DescriptionsGroup,
+      DetailsShipment,
     ]),
   ],
   providers: [SeederService],

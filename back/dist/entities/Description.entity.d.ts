@@ -4,7 +4,7 @@ import { PreExistingDamage } from './PreExistingDamage.entity';
 export declare class Description {
     id: number;
     description: string;
-    descriptionsGroups: DescriptionsGroup[];
-    unstuffingContainers: UnstuffingContainer[];
+    descriptionsGroups: DescriptionsGroup;
+    unstuffingContainers: UnstuffingContainer;
     preExistingDamages: PreExistingDamage[];
 }

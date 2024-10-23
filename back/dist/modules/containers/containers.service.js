@@ -42,7 +42,7 @@ let ContainersService = class ContainersService {
 exports.ContainersService = ContainersService;
 exports.ContainersService = ContainersService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, typeorm_1.InjectRepository)(Containers_entity_1.Containers)),
+    __param(0, (0, typeorm_1.InjectRepository)(Containers_entity_1.Container)),
     __metadata("design:paramtypes", [typeorm_2.Repository])
 ], ContainersService);
 //# sourceMappingURL=containers.service.js.map

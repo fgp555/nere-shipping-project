@@ -66,7 +66,7 @@ exports.AppModule = AppModule = __decorate([
                 SecuringSeals_entity_1.SecuringSeals,
                 UnstuffingContainer_entity_1.UnstuffingContainer,
                 PreExistingDamage_entity_1.PreExistingDamage,
-                Containers_entity_1.Containers,
+                Containers_entity_1.Container,
                 ImagesPathimg_entity_1.ImagesPathimg,
                 ImagesGroup_entity_1.ImagesGroup,
                 Description_entity_1.Description,

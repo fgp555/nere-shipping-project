@@ -3,16 +3,12 @@ POST http://localhost:3000/api/securing-seals
 Content-Type: application/json
 
 {
-  "container": {
-    "id": 1
-  },
+  "container": [{"id": 1}],
   "type": "Type A",
   "wwasSafetySeals": "Seal A",
   "argentineanCustomsSeal": "Custom Seal A",
   "others": "Other seals",
-  "detailsShipment": {
-    "id": 1
-  }
+  "detailsShipment": {"id": 1}
 }
 
 ### Get all SecuringSeal entries

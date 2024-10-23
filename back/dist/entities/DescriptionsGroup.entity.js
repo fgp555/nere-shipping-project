@@ -20,14 +20,15 @@ __decorate([
     __metadata("design:type", Number)
 ], DescriptionsGroup.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => Description_entity_1.Description, (description) => description.descriptionsGroups, { eager: true, onDelete: 'CASCADE' }),
-    (0, typeorm_1.JoinColumn)({ name: 'description_id' }),
-    __metadata("design:type", Description_entity_1.Description)
-], DescriptionsGroup.prototype, "description", void 0);
-__decorate([
     (0, typeorm_1.Column)({ type: 'varchar', length: 255 }),
     __metadata("design:type", String)
 ], DescriptionsGroup.prototype, "title", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => Description_entity_1.Description, (description) => description.descriptionsGroups, {
+        eager: true
+    }),
+    __metadata("design:type", Array)
+], DescriptionsGroup.prototype, "descriptions", void 0);
 exports.DescriptionsGroup = DescriptionsGroup = __decorate([
     (0, typeorm_1.Entity)('t10_descriptions_group_entity')
 ], DescriptionsGroup);

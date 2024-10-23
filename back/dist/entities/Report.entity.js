@@ -81,13 +81,6 @@ __decorate([
     __metadata("design:type", String)
 ], Report.prototype, "containersLeyenda", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => Containers_entity_1.Containers, (container) => container.reports, {
-        eager: true,
-    }),
-    (0, typeorm_1.JoinColumn)({ name: 'container_id' }),
-    __metadata("design:type", Containers_entity_1.Containers)
-], Report.prototype, "container", void 0);
-__decorate([
     (0, typeorm_1.Column)({ name: 'containers_descripcion', type: 'varchar', length: 255 }),
     __metadata("design:type", String)
 ], Report.prototype, "containersDescripcion", void 0);
@@ -103,6 +96,12 @@ __decorate([
     (0, typeorm_1.Column)({ name: 'report_note', type: 'text' }),
     __metadata("design:type", String)
 ], Report.prototype, "reportNote", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => Containers_entity_1.Container, (container) => container.reports, {
+        eager: true,
+    }),
+    __metadata("design:type", Array)
+], Report.prototype, "containers", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => DetailsShipment_entity_1.DetailsShipment, (details) => details.reports, {
         eager: true,

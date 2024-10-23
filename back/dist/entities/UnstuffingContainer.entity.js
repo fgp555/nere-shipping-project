@@ -22,9 +22,8 @@ __decorate([
 ], UnstuffingContainer.prototype, "id", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => Description_entity_1.Description, (description) => description.unstuffingContainers, { eager: true, onDelete: 'CASCADE' }),
-    (0, typeorm_1.JoinColumn)({ name: 'description_id' }),
-    __metadata("design:type", Description_entity_1.Description)
-], UnstuffingContainer.prototype, "description", void 0);
+    __metadata("design:type", Array)
+], UnstuffingContainer.prototype, "descriptions", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => DetailsShipment_entity_1.DetailsShipment, (details) => details.unstuffingContainers, { eager: true }),
     (0, typeorm_1.JoinColumn)({ name: 'details_shipment_id' }),

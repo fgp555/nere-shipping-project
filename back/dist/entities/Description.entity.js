@@ -26,12 +26,12 @@ __decorate([
     __metadata("design:type", String)
 ], Description.prototype, "description", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => DescriptionsGroup_entity_1.DescriptionsGroup, (group) => group.description),
-    __metadata("design:type", Array)
+    (0, typeorm_1.ManyToOne)(() => DescriptionsGroup_entity_1.DescriptionsGroup, (group) => group.descriptions),
+    __metadata("design:type", DescriptionsGroup_entity_1.DescriptionsGroup)
 ], Description.prototype, "descriptionsGroups", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => UnstuffingContainer_entity_1.UnstuffingContainer, (unstuffing) => unstuffing.description),
-    __metadata("design:type", Array)
+    (0, typeorm_1.OneToMany)(() => UnstuffingContainer_entity_1.UnstuffingContainer, (unstuffing) => unstuffing.descriptions),
+    __metadata("design:type", UnstuffingContainer_entity_1.UnstuffingContainer)
 ], Description.prototype, "unstuffingContainers", void 0);
 __decorate([
     (0, typeorm_1.OneToMany)(() => PreExistingDamage_entity_1.PreExistingDamage, (damage) => damage.damageDescription),

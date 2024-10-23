@@ -1,7 +1,7 @@
 // src/entities/RelevantTimes.entity.ts
 
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
-import { Containers } from './Containers.entity';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
+import { Container } from './Containers.entity';
 import { DetailsShipment } from './DetailsShipment.entity';
 
 @Entity('t2_relevant_times_entity')
@@ -12,9 +12,9 @@ export class RelevantTimes {
   @Column({ type: 'date' })
   date: Date;
 
-  @ManyToOne(() => Containers, (container) => container.relevantTimes, { eager: true })
+  @OneToMany(() => Container, (container) => container.relevantTimes, { eager: true })
   @JoinColumn({ name: 'container_id' })
-  container: Containers;
+  containers: Container;
 
   @Column({ name: 'qty_of_pkgs', type: 'int' })
   qtyOfPkgs: number;

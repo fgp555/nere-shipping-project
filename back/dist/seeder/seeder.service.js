@@ -24,8 +24,9 @@ const ImagesPathimg_entity_1 = require("../entities/ImagesPathimg.entity");
 const ImagesGroup_entity_1 = require("../entities/ImagesGroup.entity");
 const Description_entity_1 = require("../entities/Description.entity");
 const DescriptionsGroup_entity_1 = require("../entities/DescriptionsGroup.entity");
+const DetailsShipment_entity_1 = require("../entities/DetailsShipment.entity");
 let SeederService = class SeederService {
-    constructor(securingSealsRepository, unstuffingContainerRepository, preExistingDamageRepository, containersRepository, imagesPathimgRepository, imagesGroupRepository, descriptionRepository, descriptionsGroupRepository) {
+    constructor(securingSealsRepository, unstuffingContainerRepository, preExistingDamageRepository, containersRepository, imagesPathimgRepository, imagesGroupRepository, descriptionRepository, descriptionsGroupRepository, detailsShipmentRepository) {
         this.securingSealsRepository = securingSealsRepository;
         this.unstuffingContainerRepository = unstuffingContainerRepository;
         this.preExistingDamageRepository = preExistingDamageRepository;
@@ -34,16 +35,33 @@ let SeederService = class SeederService {
         this.imagesGroupRepository = imagesGroupRepository;
         this.descriptionRepository = descriptionRepository;
         this.descriptionsGroupRepository = descriptionsGroupRepository;
+        this.detailsShipmentRepository = detailsShipmentRepository;
     }
     async seed() {
         await this.seedDescriptions();
         await this.seedContainers();
+        await this.seedDetailsShipment();
         await this.seedSecuringSeals();
         await this.seedUnstuffingContainers();
         await this.seedPreExistingDamages();
         await this.seedImagesPathimg();
         await this.seedImagesGroup();
         await this.seedDescriptionsGroup();
+    }
+    async seedDetailsShipment() {
+        const detailsShipment = this.detailsShipmentRepository.create({
+            vessel: 'XIN CHANG SHA',
+            voyage: '402S',
+            mblCode: 'ONEYHAME90065700',
+            pol: 'Hamburg, Germany',
+            shipper: 'SACO Shipping GmbH',
+            pod: 'Buenos Aires, Argentina',
+            consignee: 'SACO Shipping S.A.',
+            qtyOfPkgs: 94,
+            goods: 'Consolidated cargo',
+            grossWeight: '38,068.90 kg',
+        });
+        await this.detailsShipmentRepository.save(detailsShipment);
     }
     async seedDescriptions() {
         const description = this.descriptionRepository.create({
@@ -53,25 +71,50 @@ let SeederService = class SeederService {
     }
     async seedContainers() {
         const container = this.containersRepository.create({
-            containerCode: 'ABC123',
-            description: 'General container description',
+            containerCode: 'FSCU5726799',
+            description: 'FSCU5726799 x 40-ft non-operating reefer container',
         });
         await this.containersRepository.save(container);
     }
     async seedSecuringSeals() {
+        const containers = await this.containersRepository.find({
+            where: { id: (0, typeorm_2.In)([1, 2]) },
+        });
+        if (containers.length === 0) {
+            throw new Error('Containers not found. Ensure containers with id 1 and 2 exist.');
+        }
+        const detailsShipment = await this.detailsShipmentRepository.findOneBy({
+            id: 1,
+        });
+        if (!detailsShipment) {
+            throw new Error('DetailsShipment not found. Ensure detailsShipment with id 1 exists.');
+        }
         const securingSeal = this.securingSealsRepository.create({
-            container: await this.containersRepository.findOneBy({ id: 1 }),
+            containers: containers,
             type: 'Type A',
             wwasSafetySeals: 'Seal A',
             argentineanCustomsSeal: 'Custom Seal A',
             others: 'Other seals',
+            detailsShipment: detailsShipment,
         });
         await this.securingSealsRepository.save(securingSeal);
     }
     async seedUnstuffingContainers() {
+        const descriptions = await this.descriptionRepository.find({
+            where: { id: (0, typeorm_2.In)([1]) },
+        });
+        if (!descriptions || descriptions.length === 0) {
+            throw new Error('Descriptions not found. Please ensure descriptions with id 1 and 2 exist.');
+        }
+        const detailsShipment = await this.detailsShipmentRepository.findOneBy({
+            id: 1,
+        });
+        if (!detailsShipment) {
+            throw new Error('DetailsShipment not found. Please ensure DetailsShipment with id 1 exists.');
+        }
         const unstuffingContainer = this.unstuffingContainerRepository.create({
-            description: await this.descriptionRepository.findOneBy({ id: 1 }),
-            detailsShipment: null,
+            descriptions: descriptions,
+            detailsShipment: detailsShipment,
         });
         await this.unstuffingContainerRepository.save(unstuffingContainer);
     }
@@ -84,7 +127,9 @@ let SeederService = class SeederService {
             goods: 'Goods A',
             remarks: 'Some remarks',
             damageDescription: await this.descriptionRepository.findOneBy({ id: 1 }),
-            detailsShipment: null,
+            detailsShipment: await this.detailsShipmentRepository.findOneBy({
+                id: 1,
+            }),
         });
         await this.preExistingDamageRepository.save(preExistingDamage);
     }
@@ -107,9 +152,12 @@ let SeederService = class SeederService {
         await this.imagesGroupRepository.save(imagesGroup);
     }
     async seedDescriptionsGroup() {
+        const descriptions = await this.descriptionRepository.find({
+            where: { id: (0, typeorm_2.In)([1, 2, 3]) },
+        });
         const descriptionsGroup = this.descriptionsGroupRepository.create({
-            description: await this.descriptionRepository.findOneBy({ id: 1 }),
             title: 'Seed Group Title',
+            descriptions: descriptions,
         });
         await this.descriptionsGroupRepository.save(descriptionsGroup);
     }
@@ -120,12 +168,14 @@ exports.SeederService = SeederService = __decorate([
     __param(0, (0, typeorm_1.InjectRepository)(SecuringSeals_entity_1.SecuringSeals)),
     __param(1, (0, typeorm_1.InjectRepository)(UnstuffingContainer_entity_1.UnstuffingContainer)),
     __param(2, (0, typeorm_1.InjectRepository)(PreExistingDamage_entity_1.PreExistingDamage)),
-    __param(3, (0, typeorm_1.InjectRepository)(Containers_entity_1.Containers)),
+    __param(3, (0, typeorm_1.InjectRepository)(Containers_entity_1.Container)),
     __param(4, (0, typeorm_1.InjectRepository)(ImagesPathimg_entity_1.ImagesPathimg)),
     __param(5, (0, typeorm_1.InjectRepository)(ImagesGroup_entity_1.ImagesGroup)),
     __param(6, (0, typeorm_1.InjectRepository)(Description_entity_1.Description)),
     __param(7, (0, typeorm_1.InjectRepository)(DescriptionsGroup_entity_1.DescriptionsGroup)),
+    __param(8, (0, typeorm_1.InjectRepository)(DetailsShipment_entity_1.DetailsShipment)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
+        typeorm_2.Repository,
         typeorm_2.Repository,
         typeorm_2.Repository,
         typeorm_2.Repository,

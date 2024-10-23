@@ -25,10 +25,10 @@ __decorate([
     __metadata("design:type", Date)
 ], RelevantTimes.prototype, "date", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => Containers_entity_1.Containers, (container) => container.relevantTimes, { eager: true }),
+    (0, typeorm_1.OneToMany)(() => Containers_entity_1.Container, (container) => container.relevantTimes, { eager: true }),
     (0, typeorm_1.JoinColumn)({ name: 'container_id' }),
-    __metadata("design:type", Containers_entity_1.Containers)
-], RelevantTimes.prototype, "container", void 0);
+    __metadata("design:type", Containers_entity_1.Container)
+], RelevantTimes.prototype, "containers", void 0);
 __decorate([
     (0, typeorm_1.Column)({ name: 'qty_of_pkgs', type: 'int' }),
     __metadata("design:type", Number)

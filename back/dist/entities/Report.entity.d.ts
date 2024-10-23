@@ -1,4 +1,4 @@
-import { Containers } from './Containers.entity';
+import { Container as Container } from './Containers.entity';
 import { DetailsShipment } from './DetailsShipment.entity';
 export declare class Report {
     id: number;
@@ -17,10 +17,10 @@ export declare class Report {
     reportMv: string;
     containersReporte: string;
     containersLeyenda: string;
-    container: Containers;
     containersDescripcion: string;
     containersDestino: string;
     reportDescription: string;
     reportNote: string;
+    containers: Container[];
     detailsShipment: DetailsShipment;
 }

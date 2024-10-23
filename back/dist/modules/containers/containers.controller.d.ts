@@ -1,11 +1,11 @@
 import { ContainersService } from './containers.service';
-import { Containers } from '../../entities/Containers.entity';
+import { Container } from '../../entities/Containers.entity';
 export declare class ContainersController {
     private readonly containersService;
     constructor(containersService: ContainersService);
-    create(createContainerDto: Partial<Containers>): Promise<Containers>;
-    findAll(): Promise<Containers[]>;
-    findOne(id: number): Promise<Containers>;
-    update(id: number, updateContainerDto: Partial<Containers>): Promise<Containers>;
+    create(createContainerDto: Partial<Container>): Promise<Container>;
+    findAll(): Promise<Container[]>;
+    findOne(id: number): Promise<Container>;
+    update(id: number, updateContainerDto: Partial<Container>): Promise<Container>;
     remove(id: number): Promise<void>;
 }

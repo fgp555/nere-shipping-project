@@ -21,10 +21,9 @@ __decorate([
     __metadata("design:type", Number)
 ], SecuringSeals.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => Containers_entity_1.Containers, (container) => container.securingSeals, { eager: true }),
-    (0, typeorm_1.JoinColumn)({ name: 'container_id' }),
-    __metadata("design:type", Containers_entity_1.Containers)
-], SecuringSeals.prototype, "container", void 0);
+    (0, typeorm_1.OneToMany)(() => Containers_entity_1.Container, (container) => container.securingSeals, { eager: true }),
+    __metadata("design:type", Array)
+], SecuringSeals.prototype, "containers", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: 'varchar', length: 255 }),
     __metadata("design:type", String)

@@ -1,8 +1,8 @@
-import { Containers } from './Containers.entity';
+import { Container } from './Containers.entity';
 import { DetailsShipment } from './DetailsShipment.entity';
 export declare class SecuringSeals {
     id: number;
-    container: Containers;
+    containers: Container[];
     type: string;
     wwasSafetySeals: string;
     argentineanCustomsSeal: string;

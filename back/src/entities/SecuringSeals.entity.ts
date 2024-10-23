@@ -1,7 +1,7 @@
 // src/entities/SecuringSeals.entity.ts
 
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
-import { Containers } from './Containers.entity';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
+import { Container } from './Containers.entity';
 import { DetailsShipment } from './DetailsShipment.entity';
 
 @Entity('t3_securing_seals_entity')
@@ -9,9 +9,9 @@ export class SecuringSeals {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Containers, (container) => container.securingSeals, { eager: true })
-  @JoinColumn({ name: 'container_id' })
-  container: Containers;
+  @OneToMany(() => Container, (container) => container.securingSeals, { eager: true })
+  // @JoinColumn({ name: 'container_id' })
+  containers: Container[];
 
   @Column({ type: 'varchar', length: 255 })
   type: string;
