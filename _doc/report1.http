@@ -8,13 +8,35 @@ Content-Type: application/json
     "header_address": "Habana 2874 - 1419 - Buenos Aires - Argentina",
     "header_mobile": "M +54 911 6677 2741",
     "header_email": "E flaviopreziosa@gmail.com / flaviopreziosa@fibertel.com.ar",
-    "container_code": ["FSCU57267991", "FSCU57267992"]
+    "container_code": ["FSCU57267991", "FSCU57267992"],
+    "report_date": "Buenos Aires, 30th September 2024",
+    "cliente_senores": "Messrs",
+    "cliente_empresa": "SACO Shipping GmbH",
+    "cliente_deposito": "Wollkammereistr 1",
+    "cliente_postal": "D-21107 Hamburg",
+    "operador_area": "Export & Import operations",
+    "operador_responsables1": "Arne Schulte / Lars Reil",
+    "operador_responsables2": "Gisel Gimenez / Florencia Bavaro",
+    "report_mv": "m.v. XIN CHANG SHA COMPLETAR",
+    "containers_reporte": "¨IMPORT CONTAINERS UNSTUFFING REPORT¨",
+    "containers_leyenda": "GROUPAGE CONTAINERS",
+    "containers_code": ["FSCU57267991","FSCU57267992"],
+    "containers_descripcion": "1 x 40-ft non-operating reefer container & 1 x 40-ft DV container stuffed with consolidated cargo",
+    "containers_destino": "Buenos Aires - Argentina",
+    "report_description": "In compliance with the instructions given by Messrs. ¨SACO Shipping GmbH¨ - Hamburg, the acting cargo surveyor of this bureau attended at the customs bonded warehouse (CFS) ¨Gemez S.A.¨, Buenos Aires - Argentina, on 25th September 2024 with the purpose of monitoring the whole stripping operation of the ISO (45G1 & 45R1) multi-modal shipping containers.",
+    "report_note": "given the great amount of pictures taken during this survey, few of them are shown just for illustrative purposes."
   },
   "t1_details_shipment": {
     "vessel": "XIN CHANG SHA",
     "voyage": "402S",
     "mbl_code": "ONEYHAME90065700",
-    "pol": "Hamburg, Germany"
+    "pol": "Hamburg, Germany",
+    "shipper": "SACO Shipping GmbH",
+    "pod": "Buenos Aires, Argentina",
+    "consignee": "SACO Shipping S.A.",
+    "qty_of_pkgs": 94,
+    "goods": "Consolidated cargo",
+    "gross_weight": "38,068.90 kg."
   },
   "T2_relevant_times": [
     {
@@ -81,37 +103,3 @@ Content-Type: application/json
     "notes": ["SIGNED WITHOUT PREJUDICE", "Flavio Preziosa", "Independent Cargo Surveyor"]
   }
 }
-
-###
-
-### Obtener todos los Reports
-GET http://localhost:3000/api/report
-Content-Type: application/json
-
-###
-
-### Obtener un Report específico (reemplaza :id con el ID)
-GET http://localhost:3000/api/report/:id
-Content-Type: application/json
-
-###
-
-### Actualizar un Report (reemplaza :id con el ID)
-PATCH http://localhost:3000/api/report/:id
-Content-Type: application/json
-
-{
-  "t0_header": {
-    "header_name": "Actualizado - FLAVIO A. PREZIOSA",
-    "header_address": "Nueva dirección, Buenos Aires, Argentina"
-  },
-  "t1_details_shipment": {
-    "vessel": "Actualizado - XIN CHANG SHA"
-  }
-}
-
-###
-
-### Eliminar un Report (reemplaza :id con el ID)
-DELETE http://localhost:3000/api/report/:id
-Content-Type: application/json

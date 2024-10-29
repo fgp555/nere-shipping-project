@@ -18,6 +18,24 @@ export class DetailsShipment {
   @Column()
   pol: string;
 
+  @Column()
+  shipper: string;
+
+  @Column()
+  pod: string;
+
+  @Column()
+  consignee: string;
+
+  @Column({ type: 'int' })
+  qty_of_pkgs: number;
+
+  @Column()
+  goods: string;
+
+  @Column()
+  gross_weight: string;
+
   @OneToOne(() => Report, (report) => report.t1_details_shipment)
   report: Report;
 }
