@@ -16,6 +16,8 @@ export class PreExistingDamage {
     consignee: string;
     marks: string;
     qty_of_pkgs: number;
+    goods: string;
+    remarks: string;
     images: { path: string; description: string }[];
   }[];
 

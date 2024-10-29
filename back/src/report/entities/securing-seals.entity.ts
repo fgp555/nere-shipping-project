@@ -14,6 +14,12 @@ export class SecuringSeals {
 
   @Column()
   wwas_safety_seals: string;
+  
+  @Column()
+  argentinean_customs_seal: string;
+  
+  @Column()
+  others: string;
 
   @ManyToOne(() => Report, (report) => report.t3_securing_seals)
   report: Report;

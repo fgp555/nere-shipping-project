@@ -60,12 +60,16 @@ Content-Type: application/json
     {
       "container_code": "FSCU57267991",
       "type": "RF",
-      "wwas_safety_seals": "01-0265193"
+      "wwas_safety_seals": "01-0265193",
+      "argentinean_customs_seal": "None",
+      "others": "None"
     },
     {
       "container_code": "FSCU57267992",
       "type": "RF",
-      "wwas_safety_seals": "01-0265193"
+      "wwas_safety_seals": "01-0265193",
+      "argentinean_customs_seal": "None",
+      "others": "None"
     }
   ],
   "t4_unstuffing_container": {
@@ -91,6 +95,8 @@ Content-Type: application/json
         "consignee": "BIO ABA SA",
         "marks": "29119880",
         "qty_of_pkgs": 2,
+        "goods": "Peptones",
+        "remarks": "1 pallet shrink-wrap film stretch torn off + torn paper bags",
         "images": [
           {
             "path": "https://www.example.com/img01.jpeg",

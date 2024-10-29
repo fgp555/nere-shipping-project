@@ -46,6 +46,8 @@ export class CreateReportDto {
     container_code: string;
     type: string;
     wwas_safety_seals: string;
+    argentinean_customs_seal: string;
+    others: string;
   }[];
   t4_unstuffing_container: {
     notes: string[];
@@ -60,6 +62,8 @@ export class CreateReportDto {
       consignee: string;
       marks: string;
       qty_of_pkgs: number;
+      goods: string;
+      remarks: string;
       images: { path: string; description: string }[];
     }[];
   };
