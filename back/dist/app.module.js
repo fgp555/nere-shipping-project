@@ -12,7 +12,7 @@ const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
 const config_1 = require("@nestjs/config");
 const typeorm_1 = require("@nestjs/typeorm");
-const report_module_1 = require("./report/report.module");
+const report_module_1 = require("./reports/report.module");
 const typeorm_2 = require("./config/typeorm");
 let AppModule = class AppModule {
 };
