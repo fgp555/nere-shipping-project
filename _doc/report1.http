@@ -42,12 +42,18 @@ Content-Type: application/json
     {
       "date": "25-sep-24",
       "container_code": "FSCU57267991",
-      "qty_of_pkgs": 59
+      "qty_of_pkgs": 59,
+      "start": "08:00",
+      "complete": "12:00",
+      "time_used_to_survey": "4 hours"
     },
     {
       "date": "25-sep-24",
       "container_code": "FSCU57267992",
-      "qty_of_pkgs": 59
+      "qty_of_pkgs": 59,
+      "start": "13:00",
+      "complete": "17:00",
+      "time_used_to_survey": "4 hours"
     }
   ],
   "t3_securing_seals": [

@@ -38,6 +38,9 @@ export class CreateReportDto {
     date: string;
     container_code: string;
     qty_of_pkgs: number;
+    start: string;
+    complete: string;
+    time_used_to_survey: string;
   }[];
   t3_securing_seals: {
     container_code: string;
