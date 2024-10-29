@@ -57,7 +57,7 @@ export class Header {
   @Column()
   containers_leyenda: string;
 
-  @Column('simple-array')
+  @Column('simple-array', { nullable: true })
   containers_code: string[];
 
   @Column()

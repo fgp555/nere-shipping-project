@@ -16,7 +16,7 @@ export class CreateReportDto {
     report_mv: string;
     containers_reporte: string;
     containers_leyenda: string;
-    containers_code: string[];
+    containers_code?: string[];
     containers_descripcion: string;
     containers_destino: string;
     report_description: string;
