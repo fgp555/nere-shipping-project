@@ -1,5 +1,5 @@
 ### Crear un Report
-POST http://localhost:3000/api/report
+POST http://localhost:3000/api/report/plain
 Content-Type: application/json
 
 {

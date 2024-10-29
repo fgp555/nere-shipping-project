@@ -92,8 +92,8 @@
       <button type="button" onclick="addUnstuffingNote()">Add Another Note</button>
 
       <label for="image_path">Upload Images:</label>
-      <!-- <input type="file" name="image_path" accept="image/*" multiple required /><br /> -->
-      <input type="file" name="image_path" accept="image/*" required /><br />
+      <input type="file" name="image_path" accept="image/*" multiple required /><br />
+      <!-- <input type="file" name="image_path" accept="image/*" required /><br /> -->
       <input type="text" name="image_description" placeholder="Image Description" value="Image 1" required /><br />
       <input type="text" name="foot_note" placeholder="Foot Note" value="Roof panel scratched..." required /><br />
 
@@ -107,8 +107,8 @@
       <input type="number" name="qty_of_pkgs_d" placeholder="Qty of Pkgs" value="2" required /><br />
       <input type="text" name="goods_d" placeholder="Goods" value="Peptones" required /><br />
       <input type="text" name="remarks" placeholder="Remarks" value="1 pallet shrink-wrap film stretch torn off..." required /><br />
-      <label for="damage_image_path">Upload Damage Image:</label>
-      <input type="file" name="damage_image_path" accept="image/*" required /><br />
+      <label for="damage_image_path">Upload Damage Images:</label>
+      <input type="file" name="damage_image_path" accept="image/*" multiple required /><br />
       <input type="text" name="damage_image_description" placeholder="Damage Image Description" value="Image 1" required /><br />
 
       <!-- t6_the_weather -->
@@ -249,33 +249,35 @@
           formData.append(`t3_securing_seals[${index}][others]`, securingSeal.querySelector('[name="others"]').value);
         });
 
-        // // t4_unstuffing_container
-        // Itera sobre cada nota de Unstuffing Container
         document.querySelectorAll(".unstuffing-note textarea").forEach((note, index) => {
           formData.append(`t4_unstuffing_container[notes][${index}]`, note.value);
         });
 
-        // Agregar otros campos de Unstuffing Container
-        formData.append("t4_unstuffing_container[image_description]", event.target.image_description.value);
-        // Agrega cada imagen seleccionada en image_path
-        // const imageFiles = event.target.image_path.files;
-        // for (let i = 0; i < imageFiles.length; i++) {
-        //   formData.append(`t4_unstuffing_container[images][${i}]`, imageFiles[i]);
-        // }
-
+        const unstuffingImages = event.target.image_path.files;
+        for (let i = 0; i < unstuffingImages.length; i++) {
+          formData.append(`t4_unstuffing_container[images][${i}]`, unstuffingImages[i]);
+        }
         formData.append("t4_unstuffing_container[foot_note]", event.target.foot_note.value);
-        formData.append("t4_unstuffing_container[image]", event.target.image_path.files[0]);
 
-        // t5_pre_existing_damage
-        formData.append("t5_pre_existing_damage[notes]", event.target.damage_notes.value);
-        formData.append("t5_pre_existing_damage[title]", event.target.damage_title.value);
+        // Agrega otros campos de Unstuffing Container
+        formData.append("t4_unstuffing_container[image_description]", event.target.image_description.value);
+        formData.append("t4_unstuffing_container[foot_note]", event.target.foot_note.value);
+
+        // Agrega cada imagen seleccionada en damage_image_path de Pre-Existing Damage
+        const damageImages = event.target.damage_image_path.files;
+        for (let i = 0; i < damageImages.length; i++) {
+          formData.append(`t5_pre_existing_damage[images][${i}]`, damageImages[i]);
+        }
+
+        // Agrega otros campos de Pre-Existing Damage
+        formData.append("t5_pre_existing_damage[damage_notes]", event.target.damage_notes.value);
+        formData.append("t5_pre_existing_damage[damage_title]", event.target.damage_title.value);
         formData.append("t5_pre_existing_damage[b_l_no]", event.target.b_l_no.value);
         formData.append("t5_pre_existing_damage[consignee]", event.target.consignee_d.value);
         formData.append("t5_pre_existing_damage[marks]", event.target.marks.value);
         formData.append("t5_pre_existing_damage[qty_of_pkgs]", event.target.qty_of_pkgs_d.value);
         formData.append("t5_pre_existing_damage[goods]", event.target.goods_d.value);
         formData.append("t5_pre_existing_damage[remarks]", event.target.remarks.value);
-        formData.append("t5_pre_existing_damage[image]", event.target.damage_image_path.files[0]);
         formData.append("t5_pre_existing_damage[image_description]", event.target.damage_image_description.value);
 
         // t6_the_weather

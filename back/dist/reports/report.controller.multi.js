@@ -54,8 +54,8 @@ __decorate([
 __decorate([
     (0, common_1.Post)(),
     (0, common_1.UseInterceptors)((0, platform_express_1.FileFieldsInterceptor)([
-        { name: 't4_unstuffing_container[image]', maxCount: 1 },
-        { name: 't5_pre_existing_damage[image]', maxCount: 1 },
+        { name: 't4_unstuffing_container[image]', maxCount: 10 },
+        { name: 't5_pre_existing_damage[image]', maxCount: 10 },
     ], {
         storage: (0, multer_1.diskStorage)({
             destination: './uploads',
@@ -104,4 +104,4 @@ exports.ReportController = ReportController = __decorate([
     (0, common_1.Controller)('report'),
     __metadata("design:paramtypes", [report_service_1.ReportService])
 ], ReportController);
-//# sourceMappingURL=report.controller.js.map
+//# sourceMappingURL=report.controller.multi.js.map

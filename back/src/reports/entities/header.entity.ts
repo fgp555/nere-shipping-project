@@ -18,9 +18,6 @@ export class Header {
   @Column()
   header_email: string;
 
-  @Column('simple-array')
-  container_code: string[];
-
   @OneToOne(() => Report, (report) => report.t0_header)
   report: Report;
 
@@ -59,6 +56,9 @@ export class Header {
 
   @Column('simple-array', { nullable: true })
   containers_code: string[];
+
+  @Column('simple-array')
+  container_code: string[];
 
   @Column()
   containers_descripcion: string;

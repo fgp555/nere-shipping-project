@@ -30,13 +30,11 @@ let ReportService = class ReportService {
             files['t4_unstuffing_container[image]'].length > 0) {
             createReportDto.t4_unstuffing_container = {
                 ...createReportDto.t4_unstuffing_container,
-                images: [
-                    {
-                        path: files['t4_unstuffing_container[image]'][0].path,
-                        description: createReportDto.t4_unstuffing_container?.images?.[0]
-                            ?.description || 'No description provided',
-                    },
-                ],
+                images: files['t4_unstuffing_container[image]'].map((file) => ({
+                    path: file.path,
+                    description: createReportDto.t4_unstuffing_container?.images?.[0]?.description ||
+                        'No description provided',
+                })),
             };
         }
         if (files['t5_pre_existing_damage[image]'] &&
@@ -44,14 +42,10 @@ let ReportService = class ReportService {
             createReportDto.t5_pre_existing_damage?.damages) {
             createReportDto.t5_pre_existing_damage.damages =
                 createReportDto.t5_pre_existing_damage.damages.map((damage, index) => {
-                    const imageFile = files['t5_pre_existing_damage[image]']?.[index];
-                    if (imageFile) {
-                        damage.images = damage.images || [];
-                        damage.images.push({
-                            path: imageFile.path,
-                            description: damage.images?.[0]?.description || 'No description provided',
-                        });
-                    }
+                    damage.images = files['t5_pre_existing_damage[image]'].map((file) => ({
+                        path: file.path,
+                        description: damage.images?.[0]?.description || 'No description provided',
+                    }));
                     return damage;
                 });
         }
@@ -101,4 +95,4 @@ exports.ReportService = ReportService = __decorate([
     __param(0, (0, typeorm_1.InjectRepository)(report_entity_1.Report)),
     __metadata("design:paramtypes", [typeorm_2.Repository])
 ], ReportService);
-//# sourceMappingURL=report.service.js.map
+//# sourceMappingURL=report.service.multi.js.map

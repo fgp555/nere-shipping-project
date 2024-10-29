@@ -36,10 +36,6 @@ __decorate([
     __metadata("design:type", String)
 ], Header.prototype, "header_email", void 0);
 __decorate([
-    (0, typeorm_1.Column)('simple-array'),
-    __metadata("design:type", Array)
-], Header.prototype, "container_code", void 0);
-__decorate([
     (0, typeorm_1.OneToOne)(() => report_entity_1.Report, (report) => report.t0_header),
     __metadata("design:type", report_entity_1.Report)
 ], Header.prototype, "report", void 0);
@@ -91,6 +87,10 @@ __decorate([
     (0, typeorm_1.Column)('simple-array', { nullable: true }),
     __metadata("design:type", Array)
 ], Header.prototype, "containers_code", void 0);
+__decorate([
+    (0, typeorm_1.Column)('simple-array'),
+    __metadata("design:type", Array)
+], Header.prototype, "container_code", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)

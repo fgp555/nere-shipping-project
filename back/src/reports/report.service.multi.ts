@@ -24,46 +24,42 @@ export class ReportService {
       't5_pre_existing_damage[image]'?: Express.Multer.File[];
     },
   ): Promise<Report> {
-    // Attach file paths to the DTO only if files are present and defined
+    // Procesar imágenes de t4_unstuffing_container
     if (
       files['t4_unstuffing_container[image]'] &&
       files['t4_unstuffing_container[image]'].length > 0
     ) {
       createReportDto.t4_unstuffing_container = {
         ...createReportDto.t4_unstuffing_container,
-        images: [
-          {
-            path: files['t4_unstuffing_container[image]'][0].path,
-            description:
-              createReportDto.t4_unstuffing_container?.images?.[0]
-                ?.description || 'No description provided',
-          },
-        ],
+        images: files['t4_unstuffing_container[image]'].map((file) => ({
+          path: file.path,
+          description:
+            createReportDto.t4_unstuffing_container?.images?.[0]?.description ||
+            'No description provided',
+        })),
       };
     }
 
+    // Procesar imágenes de t5_pre_existing_damage
     if (
       files['t5_pre_existing_damage[image]'] &&
       files['t5_pre_existing_damage[image]'].length > 0 &&
       createReportDto.t5_pre_existing_damage?.damages
     ) {
-      // Ensure `damages` exists in DTO and that it contains an array of damage entries
       createReportDto.t5_pre_existing_damage.damages =
         createReportDto.t5_pre_existing_damage.damages.map((damage, index) => {
-          const imageFile = files['t5_pre_existing_damage[image]']?.[index];
-          if (imageFile) {
-            damage.images = damage.images || [];
-            damage.images.push({
-              path: imageFile.path,
+          damage.images = files['t5_pre_existing_damage[image]'].map(
+            (file) => ({
+              path: file.path,
               description:
                 damage.images?.[0]?.description || 'No description provided',
-            });
-          }
+            }),
+          );
           return damage;
         });
     }
 
-    // Create and save the Report entity with the updated DTO
+    // Crear y guardar el reporte con el DTO actualizado
     const report = this.reportRepository.create(createReportDto);
     return await this.reportRepository.save(report);
   }

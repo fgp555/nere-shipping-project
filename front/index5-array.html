@@ -14,13 +14,7 @@
       <input type="text" name="header_address" placeholder="Header Address" value="Habana 2874 - 1419 - Buenos Aires - Argentina" required /><br />
       <input type="text" name="header_mobile" placeholder="Mobile" value="M +54 911 6677 2741" required /><br />
       <input type="email" name="header_email" placeholder="Email" value="flaviopreziosa@gmail.com" required /><br />
-
-      <!-- Container Codes -->
-      <div id="containerCodesContainer">
-        <div class="container-code"><input type="text" name="container_code" placeholder="Container Code" value="FSCU57267991" required /><br /></div>
-      </div>
-      <button type="button" onclick="addContainerCode()">Add Another Container Code</button>
-
+      <input type="text" name="container_code" placeholder="Container Codes" value="FSCU57267991,FSCU57267992" required /><br />
       <input type="text" name="report_date" placeholder="Report Date" value="Buenos Aires, 30th September 2024" required /><br />
       <input type="text" name="cliente_senores" placeholder="Cliente Señores" value="Messrs" required /><br />
       <input type="text" name="cliente_empresa" placeholder="Cliente Empresa" value="SACO Shipping GmbH" required /><br />
@@ -86,13 +80,8 @@
 
       <!-- t4_unstuffing_container -->
       <h2>Unstuffing Container</h2>
-      <div id="unstuffingContainerNotes">
-        <div class="unstuffing-note"><textarea name="notes" placeholder="Notes" required>As soon as the doors of the containers were unsealed...</textarea><br /></div>
-      </div>
-      <button type="button" onclick="addUnstuffingNote()">Add Another Note</button>
-
-      <label for="image_path">Upload Images:</label>
-      <!-- <input type="file" name="image_path" accept="image/*" multiple required /><br /> -->
+      <textarea name="notes" placeholder="Notes" required>As soon as the doors of the containers were unsealed...</textarea><br />
+      <label for="image_path">Upload Image:</label>
       <input type="file" name="image_path" accept="image/*" required /><br />
       <input type="text" name="image_description" placeholder="Image Description" value="Image 1" required /><br />
       <input type="text" name="foot_note" placeholder="Foot Note" value="Roof panel scratched..." required /><br />
@@ -161,45 +150,17 @@
 
       // ========== ==========
 
-      function addUnstuffingNote() {
-        const container = document.getElementById("unstuffingContainerNotes");
-        const noteDiv = document.createElement("div");
-        noteDiv.classList.add("unstuffing-note");
-        noteDiv.innerHTML = `
-    <textarea name="notes" placeholder="Notes" required>Additional note...</textarea><br />
-  `;
-        container.appendChild(noteDiv);
-      }
-
-      // ==========  ==========
-      function addContainerCode() {
-        const container = document.getElementById("containerCodesContainer");
-        const containerCodeDiv = document.createElement("div");
-        containerCodeDiv.classList.add("container-code");
-        containerCodeDiv.innerHTML = `
-    <input type="text" name="container_code" placeholder="Container Code" value="FSCU57267992" required /><br />
-  `;
-        container.appendChild(containerCodeDiv);
-      }
-
-      // ========== ==========
-
       document.getElementById("reportForm").addEventListener("submit", async (event) => {
         event.preventDefault();
 
         const formData = new FormData();
 
         // t0_header
-        // Itera sobre cada código de contenedor en Header
-        document.querySelectorAll(".container-code input").forEach((code, index) => {
-          formData.append(`t0_header[container_code][${index}]`, code.value);
-        });
-
-        // Agrega otros campos del Header
         formData.append("t0_header[header_name]", event.target.header_name.value);
         formData.append("t0_header[header_address]", event.target.header_address.value);
         formData.append("t0_header[header_mobile]", event.target.header_mobile.value);
         formData.append("t0_header[header_email]", event.target.header_email.value);
+        formData.append("t0_header[container_code]", event.target.container_code.value);
         formData.append("t0_header[report_date]", event.target.report_date.value);
         formData.append("t0_header[cliente_senores]", event.target.cliente_senores.value);
         formData.append("t0_header[cliente_empresa]", event.target.cliente_empresa.value);
@@ -229,6 +190,13 @@
         formData.append("t1_details_shipment[gross_weight]", event.target.gross_weight.value);
 
         // // T2_relevant_times
+        // formData.append("T2_relevant_times[date]", event.target.date_rt.value);
+        // formData.append("T2_relevant_times[container_code]", event.target.container_code_rt.value);
+        // formData.append("T2_relevant_times[qty_of_pkgs]", event.target.qty_of_pkgs_rt.value);
+        // formData.append("T2_relevant_times[start]", event.target.start.value);
+        // formData.append("T2_relevant_times[complete]", event.target.complete.value);
+        // formData.append("T2_relevant_times[time_used_to_survey]", event.target.time_used_to_survey.value);
+
         // Itera sobre cada conjunto de Relevant Times
         document.querySelectorAll(".relevant-time").forEach((relevantTime, index) => {
           formData.append(`T2_relevant_times[${index}][date]`, relevantTime.querySelector('[name="date_rt"]').value);
@@ -240,6 +208,11 @@
         });
 
         // t3_securing_seals
+        // formData.append("t3_securing_seals[container_code]", event.target.container_code_ss.value);
+        // formData.append("t3_securing_seals[type]", event.target.type.value);
+        // formData.append("t3_securing_seals[wwas_safety_seals]", event.target.wwas_safety_seals.value);
+        // formData.append("t3_securing_seals[argentinean_customs_seal]", event.target.argentinean_customs_seal.value);
+        // formData.append("t3_securing_seals[others]", event.target.others.value);
         // Itera sobre cada conjunto de Securing Seals
         document.querySelectorAll(".securing-seal").forEach((securingSeal, index) => {
           formData.append(`t3_securing_seals[${index}][container_code]`, securingSeal.querySelector('[name="container_code_ss"]').value);
@@ -249,20 +222,9 @@
           formData.append(`t3_securing_seals[${index}][others]`, securingSeal.querySelector('[name="others"]').value);
         });
 
-        // // t4_unstuffing_container
-        // Itera sobre cada nota de Unstuffing Container
-        document.querySelectorAll(".unstuffing-note textarea").forEach((note, index) => {
-          formData.append(`t4_unstuffing_container[notes][${index}]`, note.value);
-        });
-
-        // Agregar otros campos de Unstuffing Container
+        // t4_unstuffing_container
+        formData.append("t4_unstuffing_container[notes]", event.target.notes.value);
         formData.append("t4_unstuffing_container[image_description]", event.target.image_description.value);
-        // Agrega cada imagen seleccionada en image_path
-        // const imageFiles = event.target.image_path.files;
-        // for (let i = 0; i < imageFiles.length; i++) {
-        //   formData.append(`t4_unstuffing_container[images][${i}]`, imageFiles[i]);
-        // }
-
         formData.append("t4_unstuffing_container[foot_note]", event.target.foot_note.value);
         formData.append("t4_unstuffing_container[image]", event.target.image_path.files[0]);
 

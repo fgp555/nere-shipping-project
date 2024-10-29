@@ -5,7 +5,6 @@ export declare class Header {
     header_address: string;
     header_mobile: string;
     header_email: string;
-    container_code: string[];
     report: Report;
     report_date: string;
     cliente_senores: string;
@@ -19,6 +18,7 @@ export declare class Header {
     containers_reporte: string;
     containers_leyenda: string;
     containers_code: string[];
+    container_code: string[];
     containers_descripcion: string;
     containers_destino: string;
     report_description: string;
