@@ -1,0 +1,98 @@
+{
+  "t0_header": {
+    "header_name": "FLAVIO A. PREZIOSA",
+    "header_address": "Habana 2874 - 1419 - Buenos Aires - Argentina",
+    "header_mobile": "M +54 911 6677 2741",
+    "header_email": "E flaviopreziosa@gmail.com / flaviopreziosa@fibertel.com.ar",
+    "container_code": ["FSCU57267991", "FSCU57267992"]
+  },
+  "t1_details_shipment": {
+    "vessel": "XIN CHANG SHA",
+    "voyage": "402S",
+    "mbl_code": "ONEYHAME90065700",
+    "pol": "Hamburg, Germany"
+  },
+  "T2_relevant_times": [
+    {
+      "date": "25-sep-24",
+      "container_code": "FSCU57267991",
+      "qty_of_pkgs": 59
+    },
+    {
+      "date": "25-sep-24",
+      "container_code": "FSCU57267992",
+      "qty_of_pkgs": 59
+    }
+  ],
+  "t3_securing_seals": [
+    {
+      "container_code": "FSCU57267991",
+      "type": "RF",
+      "wwas_safety_seals": "01-0265193"
+    },
+    {
+      "container_code": "FSCU57267992",
+      "type": "RF",
+      "wwas_safety_seals": "01-0265193"
+    }
+  ],
+  "t4_unstuffing_container": {
+    "notes": [
+      "As soon as the doors of the containers were unsealed/opened, the cargo was observed secured and visually in overall sound condition",
+      "As soon as the doors of the containers were unsealed/opened, the cargo was observed secured and visually in overall sound condition"
+    ],
+    "images": [
+      {
+        "path": "https://www.example.com/img01.jpeg",
+        "description": "Image 1"
+      },
+      {
+        "path": "https://www.example.com/img02.jpeg",
+        "description": "Image 2"
+      }
+    ],
+    "foot_note": "Roof panel scratched – refrigerated panel torn / dented."
+  },
+  "t5_pre_existing_damage": {
+    "notes": [
+      "During the stripping operation, the following exceptions were noticed and/or recorded:",
+      "During the stripping operation, the following exceptions were noticed and/or recorded:"
+    ],
+    "damages": [
+      {
+        "title?": ". FSCU57267991 x 40-ft non-operating reefer container:",
+        "b_l_no": "BUE238550",
+        "consignee": "BIO ABA SA",
+        "marks": "29119880",
+        "qty_of_pkgs": 2,
+        "images": [
+          {
+            "path": "https://www.example.com/img01.jpeg",
+            "description": "Image 1"
+          }
+        ]
+      },
+      {
+        "title?": ". FSCU57267992 x 40-ft non-operating reefer container:",
+        "b_l_no": "BUE238550",
+        "consignee": "BIO ABA SA",
+        "marks": "29119880",
+        "qty_of_pkgs": 2,
+        "images": [
+          {
+            "path": "https://www.example.com/img01.jpeg",
+            "description": "Image 1"
+          }
+        ]
+      }
+    ]
+  },
+  "t6_the_weather:": {
+    "notes": ["Hot/cloudy"],
+    "temperature": 21,
+    "humidity": 70
+  },
+  "t7_footer": {
+    "notes": ["SIGNED WITHOUT PREJUDICE", "Flavio Preziosa", "Independent Cargo Surveyor"]
+  }
+}

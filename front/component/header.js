@@ -3,16 +3,15 @@ let fgp_header_html = /* html */ `<section>
     <div class="logo">
       <i class="btn_navbar icon-menu"></i>
       <h2>
-        <a href="/">Shipping<span class="mobile-none">-project</span></a>
+        <a href="/">App<span class="mobile-none">-project</span></a>
       </h2>
     </div>
 
   </div>
   <nav>
     <ul id="navbar" class="display_none">
-      <li><a href="/">Home</a></li>
-      <li><a href="/5pre-damage/">pre-damage</a></li>
-      <li><a href="/5pre-damage/mbl-download.html">mbl-download</a></li>
+      <li><a href="./">Home</a></li>
+      <li><a href="./">Users Management</a></li>
     </ul>
   </nav>
 </section>
@@ -66,12 +65,6 @@ ul li {
   gap: 3em;
 }
 .btn_navbar {
-  /* position: absolute; */
-  /* top: 50%; */
-  /* left: 1em; */
-  /* right: 1em; */
-  /* transform: translate(-50%, -50%); */
-  /* transform: translateY(-50%); */
   cursor: pointer;
   font-size: 1.5em;
 }
@@ -127,3 +120,12 @@ btn_navbar.addEventListener("click", () => {
   const navbar = document.querySelector("#navbar");
   navbar.classList.toggle("display_none");
 });
+
+// ========== Search ==========
+let searchInput = document.querySelector(".searchInput");
+searchInput.onchange = () => {
+  const url = `https://www.youtube.com/results?search_query=${searchInput.value}%20Frank%20GP`;
+  // window.open(url, '_blank');
+  window.location.href = url;
+  // console.log(url);
+};

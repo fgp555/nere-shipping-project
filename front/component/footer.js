@@ -51,5 +51,4 @@ if (!fgp_footer) {
   document.body.insertAdjacentElement("beforeend", fgp_footer);
 }
 
-// fgp_footer.innerHTML = fgp_footer_css + fgp_footer_html;
-fgp_footer.innerHTML = "";
+fgp_footer.innerHTML = fgp_footer_css + fgp_footer_html;
