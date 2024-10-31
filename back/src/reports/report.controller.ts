@@ -29,15 +29,14 @@ export class ReportController {
   @UseInterceptors(
     FileFieldsInterceptor(
       [
-        { name: 't4_unstuffing_container[image]', maxCount: 1 },
-        { name: 't5_pre_existing_damage[image]', maxCount: 1 },
+        { name: 't4_unstuffing_container[image]', maxCount: 10 }, // Ajusta maxCount según el número máximo permitido
+        { name: 't5_pre_existing_damage[image]', maxCount: 10 },
       ],
       {
         storage: diskStorage({
-          destination: './uploads', // Define your upload directory
+          destination: './uploads', // Define tu directorio de carga 
           filename: (req, file, callback) => {
-            const uniqueSuffix =
-              Date.now() + '-' + Math.round(Math.random() * 1e9);
+            const uniqueSuffix = new Date().toISOString().replace(/[:.]/g, '-');
             const ext = extname(file.originalname);
             callback(null, `${file.fieldname}-${uniqueSuffix}${ext}`);
           },

@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { Report } from './entities/report.entity';
 import { CreateReportDto } from './dto/create-report.dto';
 import { UpdateReportDto } from './dto/update-report.dto';
+import { log } from 'console';
 
 @Injectable()
 export class ReportService {
@@ -24,46 +25,71 @@ export class ReportService {
       't5_pre_existing_damage[image]'?: Express.Multer.File[];
     },
   ): Promise<Report> {
-    // Attach file paths to the DTO only if files are present and defined
+    console.log('createReportDto: ', createReportDto);
+    // console.log('files: ', files);
+
+    // Manejo de archivos para `t4_unstuffing_container`
     if (
       files['t4_unstuffing_container[image]'] &&
       files['t4_unstuffing_container[image]'].length > 0
     ) {
-      createReportDto.t4_unstuffing_container = {
-        ...createReportDto.t4_unstuffing_container,
-        images: [
-          {
-            path: files['t4_unstuffing_container[image]'][0].path,
-            description:
-              createReportDto.t4_unstuffing_container?.images?.[0]
-                ?.description || 'No description provided',
-          },
-        ],
-      };
+      if (!createReportDto.t4_unstuffing_container) {
+        createReportDto.t4_unstuffing_container = {
+          notes: [],
+          images: [],
+          foot_note: '',
+        };
+      }
+      createReportDto.t4_unstuffing_container.images = files[
+        't4_unstuffing_container[image]'
+      ].map((file) => ({
+        path: file.path,
+        description: 'No description provided',
+      }));
     }
 
+    // Manejo de archivos para `t5_pre_existing_damage`
     if (
       files['t5_pre_existing_damage[image]'] &&
-      files['t5_pre_existing_damage[image]'].length > 0 &&
-      createReportDto.t5_pre_existing_damage?.damages
+      files['t5_pre_existing_damage[image]'].length > 0
     ) {
-      // Ensure `damages` exists in DTO and that it contains an array of damage entries
+      if (!createReportDto.t5_pre_existing_damage) {
+        createReportDto.t5_pre_existing_damage = { notes: [], damages: [] };
+      }
+
+      // Verifica si `damages` está definido y es un array
+      if (!Array.isArray(createReportDto.t5_pre_existing_damage.damages)) {
+        createReportDto.t5_pre_existing_damage.damages = [];
+      }
+
+      // Si `damages` está vacío, inicializa al menos un objeto de daño
+      if (createReportDto.t5_pre_existing_damage.damages.length === 0) {
+        createReportDto.t5_pre_existing_damage.damages.push({
+          title: '',
+          b_l_no: '',
+          consignee: '',
+          marks: '',
+          qty_of_pkgs: 0,
+          goods: '',
+          remarks: '',
+          images: [],
+        });
+      }
+
+      // Asigna las imágenes a cada objeto en `damages`
       createReportDto.t5_pre_existing_damage.damages =
-        createReportDto.t5_pre_existing_damage.damages.map((damage, index) => {
-          const imageFile = files['t5_pre_existing_damage[image]']?.[index];
-          if (imageFile) {
-            damage.images = damage.images || [];
-            damage.images.push({
-              path: imageFile.path,
-              description:
-                damage.images?.[0]?.description || 'No description provided',
-            });
-          }
+        createReportDto.t5_pre_existing_damage.damages.map((damage) => {
+          damage.images = files['t5_pre_existing_damage[image]'].map(
+            (file) => ({
+              path: file.path,
+              description: 'No description provided',
+            }),
+          );
           return damage;
         });
     }
 
-    // Create and save the Report entity with the updated DTO
+    // Guarda el reporte en la base de datos
     const report = this.reportRepository.create(createReportDto);
     return await this.reportRepository.save(report);
   }

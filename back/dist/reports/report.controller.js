@@ -54,13 +54,13 @@ __decorate([
 __decorate([
     (0, common_1.Post)(),
     (0, common_1.UseInterceptors)((0, platform_express_1.FileFieldsInterceptor)([
-        { name: 't4_unstuffing_container[image]', maxCount: 1 },
-        { name: 't5_pre_existing_damage[image]', maxCount: 1 },
+        { name: 't4_unstuffing_container[image]', maxCount: 10 },
+        { name: 't5_pre_existing_damage[image]', maxCount: 10 },
     ], {
         storage: (0, multer_1.diskStorage)({
             destination: './uploads',
             filename: (req, file, callback) => {
-                const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+                const uniqueSuffix = new Date().toISOString().replace(/[:.]/g, '-');
                 const ext = (0, path_1.extname)(file.originalname);
                 callback(null, `${file.fieldname}-${uniqueSuffix}${ext}`);
             },

@@ -26,32 +26,47 @@ let ReportService = class ReportService {
         return await this.reportRepository.save(report);
     }
     async create(createReportDto, files) {
+        console.log('createReportDto: ', createReportDto);
         if (files['t4_unstuffing_container[image]'] &&
             files['t4_unstuffing_container[image]'].length > 0) {
-            createReportDto.t4_unstuffing_container = {
-                ...createReportDto.t4_unstuffing_container,
-                images: [
-                    {
-                        path: files['t4_unstuffing_container[image]'][0].path,
-                        description: createReportDto.t4_unstuffing_container?.images?.[0]
-                            ?.description || 'No description provided',
-                    },
-                ],
-            };
+            if (!createReportDto.t4_unstuffing_container) {
+                createReportDto.t4_unstuffing_container = {
+                    notes: [],
+                    images: [],
+                    foot_note: '',
+                };
+            }
+            createReportDto.t4_unstuffing_container.images = files['t4_unstuffing_container[image]'].map((file) => ({
+                path: file.path,
+                description: 'No description provided',
+            }));
         }
         if (files['t5_pre_existing_damage[image]'] &&
-            files['t5_pre_existing_damage[image]'].length > 0 &&
-            createReportDto.t5_pre_existing_damage?.damages) {
+            files['t5_pre_existing_damage[image]'].length > 0) {
+            if (!createReportDto.t5_pre_existing_damage) {
+                createReportDto.t5_pre_existing_damage = { notes: [], damages: [] };
+            }
+            if (!Array.isArray(createReportDto.t5_pre_existing_damage.damages)) {
+                createReportDto.t5_pre_existing_damage.damages = [];
+            }
+            if (createReportDto.t5_pre_existing_damage.damages.length === 0) {
+                createReportDto.t5_pre_existing_damage.damages.push({
+                    title: '',
+                    b_l_no: '',
+                    consignee: '',
+                    marks: '',
+                    qty_of_pkgs: 0,
+                    goods: '',
+                    remarks: '',
+                    images: [],
+                });
+            }
             createReportDto.t5_pre_existing_damage.damages =
-                createReportDto.t5_pre_existing_damage.damages.map((damage, index) => {
-                    const imageFile = files['t5_pre_existing_damage[image]']?.[index];
-                    if (imageFile) {
-                        damage.images = damage.images || [];
-                        damage.images.push({
-                            path: imageFile.path,
-                            description: damage.images?.[0]?.description || 'No description provided',
-                        });
-                    }
+                createReportDto.t5_pre_existing_damage.damages.map((damage) => {
+                    damage.images = files['t5_pre_existing_damage[image]'].map((file) => ({
+                        path: file.path,
+                        description: 'No description provided',
+                    }));
                     return damage;
                 });
         }
