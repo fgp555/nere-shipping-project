@@ -1,0 +1,27 @@
+### Crear un nuevo usuario
+POST http://localhost:3000/api/entity2
+Content-Type: application/json
+
+{
+  "column_1": "column_1",
+  "reportCode": "code001"
+}
+
+### Obtener todos los usuarios
+GET http://localhost:3000/api/entity2
+
+### Obtener un usuario por ID
+GET http://localhost:3000/api/entity2/1
+
+### Actualizar un usuario por ID
+PATCH http://localhost:3000/api/entity2/1
+Content-Type: application/json
+
+{
+  "firstName": "John222",
+  "email": "john.doe222@example.com",
+  "password": "password123222"
+}
+
+### Eliminar un usuario por ID
+DELETE http://localhost:3000/api/entity2/1
