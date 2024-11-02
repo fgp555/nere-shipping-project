@@ -1,0 +1,26 @@
+# report
+
+### Crear un nuevo usuario
+POST http://localhost:3000/api/report
+Content-Type: application/json
+
+{
+  "mbl_code": "code001"
+}
+
+### Obtener todos los usuarios
+GET http://localhost:3000/api/report
+
+### Obtener un usuario por ID
+GET http://localhost:3000/api/report/1
+
+### Actualizar un usuario por ID
+PATCH http://localhost:3000/api/report/1
+Content-Type: application/json
+
+{
+  "code": "code001"
+}
+
+### Eliminar un usuario por ID
+DELETE http://localhost:3000/api/report/1

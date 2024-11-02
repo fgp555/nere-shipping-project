@@ -14,6 +14,8 @@ const config_1 = require("@nestjs/config");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("./config/typeorm");
 const t4_unstuffing_module_1 = require("./module/t4_unstuffing/t4_unstuffing.module");
+const report_module_1 = require("./module/report/report.module");
+const t5_damage_module_1 = require("./module/t5_damage/t5_damage.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -29,6 +31,8 @@ exports.AppModule = AppModule = __decorate([
                 useFactory: (configService) => configService.get('typeorm'),
             }),
             t4_unstuffing_module_1.T4UnstuffingModule,
+            report_module_1.ReportModule,
+            t5_damage_module_1.T5DamageModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

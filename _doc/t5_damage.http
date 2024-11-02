@@ -1,0 +1,28 @@
+# t5-damage
+
+### Crear un nuevo usuario
+POST http://localhost:3000/api/t5-damage
+Content-Type: application/json
+
+{
+  "notes": ["note 1", "note 2"],
+  "report_id": 1,
+  "report_mbl_code": "code001"
+}
+
+### Obtener todos los usuarios
+GET http://localhost:3000/api/t5-damage
+
+### Obtener un registro específico de T5Damage por ID
+GET http://localhost:3000/api/t5-damage/1
+
+### Actualizar un registro específico de T5Damage por ID
+PATCH http://localhost:3000/api/t5-damage/1
+Content-Type: application/json
+
+{
+  "notes": ["Updated damage note 1", "Updated damage note 2"]
+}
+
+### Eliminar un registro específico de T5Damage por ID
+DELETE http://localhost:3000/api/t5-damage/1

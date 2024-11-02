@@ -1,39 +1,77 @@
 {
   "t0_header": {
+    "id": 1,
     "header_name": "FLAVIO A. PREZIOSA",
     "header_address": "Habana 2874 - 1419 - Buenos Aires - Argentina",
     "header_mobile": "M +54 911 6677 2741",
     "header_email": "E flaviopreziosa@gmail.com / flaviopreziosa@fibertel.com.ar",
-    "container_code": ["FSCU57267991", "FSCU57267992"]
+    "report_date": "Buenos Aires, 30th September 2024",
+    "cliente_senores": "Messrs",
+    "cliente_empresa": "SACO Shipping GmbH",
+    "cliente_deposito": "Wollkammereistr 1",
+    "cliente_postal": "D-21107 Hamburg",
+    "operador_area": "Export & Import operations",
+    "operador_responsables1": "Arne Schulte / Lars Reil",
+    "operador_responsables2": "Gisel Gimenez / Florencia Bavaro",
+    "report_mv": "m.v. XIN CHANG SHA COMPLETAR",
+    "containers_reporte": "¨IMPORT CONTAINERS UNSTUFFING REPORT¨",
+    "containers_leyenda": "GROUPAGE CONTAINERS",
+    "containers_code": ["FSCU57267991", "FSCU57267992"],
+    "containers_descripcion": "1 x 40-ft non-operating reefer container & 1 x 40-ft DV container stuffed with consolidated cargo",
+    "containers_destino": "Buenos Aires - Argentina",
+    "report_description": "In compliance with the instructions given by Messrs. ¨SACO Shipping GmbH¨ - Hamburg, the acting cargo surveyor of this bureau attended at the customs bonded warehouse (CFS) ¨Gemez S.A.¨, Buenos Aires - Argentina, on 25th September 2024 with the purpose of monitoring the whole stripping operation of the ISO (45G1 & 45R1) multi-modal shipping containers.",
+    "report_note": "given the great amount of pictures taken during this survey, few of them are shown just for illustrative purposes."
   },
   "t1_details_shipment": {
+    "id": 1,
     "vessel": "XIN CHANG SHA",
     "voyage": "402S",
     "mbl_code": "ONEYHAME90065700",
-    "pol": "Hamburg, Germany"
+    "pol": "Hamburg, Germany",
+    "shipper": "SACO Shipping GmbH",
+    "pod": "Buenos Aires, Argentina",
+    "consignee": "SACO Shipping S.A.",
+    "qty_of_pkgs": 94,
+    "goods": "Consolidated cargo",
+    "gross_weight": "38,068.90 kg.",
+    "note": "(*) For additional information, please refer to cargo´s documents."
   },
   "T2_relevant_times": [
     {
+      "id": 1,
       "date": "25-sep-24",
-      "container_code": "FSCU57267991",
-      "qty_of_pkgs": 59
+      "container_code": "FSCU5726799",
+      "qty_of_pkgs": 59,
+      "start": null,
+      "complete": null,
+      "time_used_to_survey": null
     },
     {
+      "id": 2,
       "date": "25-sep-24",
-      "container_code": "FSCU57267992",
-      "qty_of_pkgs": 59
+      "container_code": "FDCU0477483",
+      "qty_of_pkgs": 35,
+      "start": null,
+      "complete": null,
+      "time_used_to_survey": null
     }
   ],
   "t3_securing_seals": [
     {
-      "container_code": "FSCU57267991",
+      "id": 1,
+      "container_code": "FSCU5726799",
       "type": "RF",
-      "wwas_safety_seals": "01-0265193"
+      "wwas_safety_seals": "01-0265193",
+      "argentinean_customs_seal": "None",
+      "others": "None"
     },
     {
-      "container_code": "FSCU57267992",
-      "type": "RF",
-      "wwas_safety_seals": "01-0265193"
+      "id": 2,
+      "container_code": "FDCU0477483",
+      "type": "DV",
+      "wwas_safety_seals": "01-0261835",
+      "argentinean_customs_seal": "None",
+      "others": "None"
     }
   ],
   "t4_unstuffing": {
@@ -60,45 +98,27 @@
     ]
   },
   "t5_damage": {
-    "notes": [
-      "During the stripping operation, the following exceptions were noticed and/or recorded:",
-      "During the stripping operation, the following exceptions were noticed and/or recorded:"
-    ],
-    "damages": [
+    "notes": ["note 1", "note 2"],
+    "images_groups": [
       {
-        "title?": ". FSCU57267991 x 40-ft non-operating reefer container:",
+        "id": 1,
+        "title": ". FSCU57267991 x 40-ft non-operating reefer container:",
         "b_l_no": "BUE238550",
         "consignee": "BIO ABA SA",
         "marks": "29119880",
         "qty_of_pkgs": 2,
-        "images": [
-          {
-            "path": "https://www.example.com/img01.jpeg",
-            "description": "Image 1"
-          }
-        ]
-      },
-      {
-        "title?": ". FSCU57267992 x 40-ft non-operating reefer container:",
-        "b_l_no": "BUE238550",
-        "consignee": "BIO ABA SA",
-        "marks": "29119880",
-        "qty_of_pkgs": 2,
-        "images": [
-          {
-            "path": "https://www.example.com/img01.jpeg",
-            "description": "Image 1"
-          }
-        ]
+        "goods": "Peptones",
+        "remarks": "1 pallet: shrink-wrap film stretch torn off + torn paper bags",
+        "group_name": "images_group_1",
+        "images": ["/uploads/t5/images_group_1_img3.png", "/uploads/t5/images_group_1_img4.png"],
+        "images_notes": ["note 1", "note 2"]
       }
     ]
   },
-  "t6_the_weather:": {
-    "notes": ["Hot/cloudy"],
-    "temperature": 21,
-    "humidity": 70
-  },
-  "t7_footer": {
-    "notes": ["SIGNED WITHOUT PREJUDICE", "Flavio Preziosa", "Independent Cargo Surveyor"]
+  "t6_footer:": {
+    "weather_status": "Hot/cloudy",
+    "legend": "SIGNED WITHOUT PREJUDICE",
+    "who_signs": "Flavio Preziosa",
+    "cargo": "Independent Cargo Surveyor"
   }
 }
