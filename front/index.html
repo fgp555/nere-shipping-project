@@ -1,164 +1,24 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Subir Informe</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" />
+    <script src="https://frankgp.com/component/stat.js" type="module"></script>
+    <title>Home</title>
   </head>
   <body>
+    <header></header>
+
     <main class="container">
-      <h1>Subir Informe</h1>
-
-      <form id="reportForm" enctype="multipart/form-data">
-        <label for="notes">Notas (una por línea):</label>
-        <textarea id="notes" name="notes" required>Cada salto de línea es un nuevo elemento</textarea>
-        <br /><br />
-
-        <label for="foot_note">Nota al Pie:</label>
-        <textarea id="foot_note" name="foot_note" required>Roof panel scratched - refrigerated panel torn / dented.</textarea>
-        <br /><br />
-
-        <div id="imagesGroupContainer">
-          <div class="images-group">
-            <hr />
-            <h3>Grupo de Imágenes 1</h3>
-            <input type="file" name="images_group_1" multiple required onchange="handleFileSelect(this, 1)" />
-            <div id="preview_group_1" class="image-preview"></div>
-            <br />
-            <label>Notas para las imágenes (una por línea):</label>
-            <textarea name="images_notes_1">Cada salto de línea es un nuevo elemento</textarea>
-            <hr />
-          </div>
-        </div>
-
-        <button type="button" onclick="addImageGroup()">Añadir otro grupo de imágenes</button>
-        <br /><br />
-
-        <button type="submit">Enviar</button>
-      </form>
-
-      <canvas id="canvas" style="display: none"></canvas>
-
-      <script>
-        let groupCounter = 1;
-        const MAX_WIDTH = 500; // Ancho máximo permitido para la compresión
-
-        function addImageGroup() {
-          groupCounter++;
-          const container = document.getElementById("imagesGroupContainer");
-          const newGroup = document.createElement("div");
-          newGroup.className = "images-group";
-
-          newGroup.innerHTML = `
-            <hr />
-            <h3>Grupo de Imágenes ${groupCounter}</h3>
-            <input type="file" name="images_group_${groupCounter}" multiple required onchange="handleFileSelect(this, ${groupCounter})">
-            <div id="preview_group_${groupCounter}" class="image-preview"></div>
-            <br>
-            <label>Notas para las imágenes (una por línea):</label>
-            <textarea name="images_notes_${groupCounter}">note 1\nnote 2\nnote 3\nnote 4</textarea>
-            <hr />
-          `;
-
-          container.appendChild(newGroup);
-        }
-
-        function handleFileSelect(input, groupIndex) {
-          const previewContainer = document.getElementById(`preview_group_${groupIndex}`);
-          previewContainer.innerHTML = ""; // Limpiar previsualizaciones anteriores
-
-          Array.from(input.files).forEach((file) => {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-              const img = document.createElement("img");
-              img.src = e.target.result;
-              img.style.width = "auto";
-              img.style.height = "200px";
-              img.style.margin = "5px";
-              previewContainer.appendChild(img);
-            };
-            reader.readAsDataURL(file);
-          });
-        }
-
-        async function compressImage(file) {
-          return new Promise((resolve) => {
-            const img = new Image();
-            img.src = URL.createObjectURL(file);
-            img.onload = () => {
-              let width = img.width;
-              let height = img.height;
-
-              // Ajustar las dimensiones si el ancho excede el máximo
-              if (width > MAX_WIDTH) {
-                height = Math.floor((MAX_WIDTH / width) * height);
-                width = MAX_WIDTH;
-              }
-
-              // Configurar canvas para compresión
-              const canvas = document.getElementById("canvas");
-              canvas.width = width;
-              canvas.height = height;
-              const ctx = canvas.getContext("2d");
-              ctx.drawImage(img, 0, 0, width, height);
-
-              // Convertir a Blob comprimido
-              canvas.toBlob((blob) => resolve(blob), "image/jpeg", 0.8);
-            };
-          });
-        }
-
-        async function prepareCompressedFiles(formData) {
-          const imagesGroups = document.querySelectorAll(".images-group");
-
-          for (let groupIndex = 1; groupIndex <= imagesGroups.length; groupIndex++) {
-            const fileInput = document.querySelector(`input[name='images_group_${groupIndex}']`);
-            const files = fileInput.files;
-
-            for (let i = 0; i < files.length; i++) {
-              const compressedBlob = await compressImage(files[i]);
-              formData.append(`images_group_${groupIndex}`, compressedBlob, files[i].name);
-            }
-
-            const notesInput = normalizeNewlines(document.querySelector(`textarea[name='images_notes_${groupIndex}']`).value).split("\n");
-            formData.append(`images_group_${groupIndex}_notes`, JSON.stringify(notesInput));
-          }
-        }
-
-        function normalizeNewlines(text) {
-          return text.replace(/\n{2,}/g, "\n").trim();
-        }
-
-        document.getElementById("reportForm").addEventListener("submit", async (e) => {
-          e.preventDefault();
-
-          const formData = new FormData();
-          const notes = normalizeNewlines(document.getElementById("notes").value).split("\n");
-          const foot_note = normalizeNewlines(document.getElementById("foot_note").value);
-
-          formData.append("notes", JSON.stringify(notes));
-          formData.append("foot_note", foot_note);
-
-          await prepareCompressedFiles(formData);
-
-          try {
-            const response = await fetch("/api/report/upload", {
-              method: "POST",
-              body: formData,
-            });
-
-            if (response.ok) {
-              alert("Informe subido exitosamente.");
-            } else {
-              alert("Error al subir el informe.");
-            }
-          } catch (error) {
-            console.error("Error:", error);
-            alert("Error al enviar el informe.");
-          }
-        });
-      </script>
+      <h2>Home</h2>
+      <article role="group">
+        <h3>t4_unstuffing</h3>
+        <a role="button" class="contrast" href="/t4_unstuffing">create</a>
+        <a role="button" href="/t4_unstuffing/read.html">read</a>
+        <a role="button" class="outline" href="/api/t4-unstuffing/">API</a>
+      </article>
     </main>
+    <footer></footer>
   </body>
 </html>

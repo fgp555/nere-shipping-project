@@ -1,0 +1,89 @@
+<!-- front/t4_unstuffing/read.html -->
+<!-- http://localhost:3000/t4_unstuffing/read.html -->
+<!-- http://localhost:3000/api/t4-unstuffing -->
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>t4_unstuffing_container read</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" />
+    <script src="https://frankgp.com/component/stat.js" type="module"></script>
+    <style>
+      .image-preview img {
+        width: auto;
+        height: 100px;
+        margin: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="container">
+      <article>
+        <a class="btn" href="/"><button>⬅️ Retroceder</button></a>
+      </article>
+
+      <h1>t4_unstuffing_container read</h1>
+      <button onclick="fetchReports()">GET all</button>
+      <section id="outContainer"></section>
+    </main>
+
+    <script>
+      async function fetchReports() {
+        try {
+          const response = await fetch("/api/t4-unstuffing");
+          if (!response.ok) throw new Error("Error al obtener los informes");
+
+          const reports = await response.json();
+          displayReports(reports);
+        } catch (error) {
+          console.error("Error:", error);
+          alert("Error al obtener los informes.");
+        }
+      }
+
+      function displayReports(reports) {
+        const container = document.getElementById("outContainer");
+        container.innerHTML = ""; // Limpiar el contenedor antes de mostrar nuevos datos
+
+        reports.forEach((report) => {
+          const reportElement = document.createElement("div");
+
+          // Parsear `notes` si es una cadena en formato JSON
+          let notesArray;
+          try {
+            notesArray = JSON.parse(report.notes);
+          } catch {
+            notesArray = report.notes; // Mantener como está si no es una cadena JSON
+          }
+
+          reportElement.innerHTML = `
+            <h2>Informe ID: ${report.id}</h2>
+            <h3>Notas:</h3>
+            <ul>${notesArray.map((note) => `<li>${note}</li>`).join("")}</ul>
+            <h3>Nota al Pie:</h3>
+            <p>${report.foot_note}</p>
+            <h3>Grupos de Imágenes:</h3>
+            ${report.images_groups
+              .map(
+                (group) => `
+              <article  class="images-group">
+                <h4>${group.group_name}</h4>
+                <h5>Imágenes:</h5>
+                <div class="image-preview">
+                  ${group.images.map((image) => `<img src="${image}" alt="Imagen del grupo ${group.group_name}">`).join("")}
+                </div>
+                <h5>Notas de Imágenes:</h5>
+                <ul>${group.images_notes.map((note) => `<li>${note}</li>`).join("")}</ul>
+              </article>
+            `
+              )
+              .join("")}
+          `;
+          container.appendChild(reportElement);
+        });
+      }
+      fetchReports();
+    </script>
+  </body>
+</html>

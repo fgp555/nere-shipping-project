@@ -4,8 +4,7 @@ import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import typeOrmConfig from './config/typeorm';
-import { UserModule } from './user/user.module';
-import { ReportModule } from './report/report.module';
+import { T4UnstuffingModule } from './module/t4_unstuffing/t4_unstuffing.module';
 
 @Module({
   imports: [
@@ -18,8 +17,7 @@ import { ReportModule } from './report/report.module';
       useFactory: (configService: ConfigService) =>
         configService.get('typeorm'),
     }),
-    UserModule,
-    ReportModule,
+    T4UnstuffingModule,
   ],
   controllers: [AppController],
   providers: [AppService],

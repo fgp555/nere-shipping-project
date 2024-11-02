@@ -1,0 +1,104 @@
+{
+  "t0_header": {
+    "header_name": "FLAVIO A. PREZIOSA",
+    "header_address": "Habana 2874 - 1419 - Buenos Aires - Argentina",
+    "header_mobile": "M +54 911 6677 2741",
+    "header_email": "E flaviopreziosa@gmail.com / flaviopreziosa@fibertel.com.ar",
+    "container_code": ["FSCU57267991", "FSCU57267992"]
+  },
+  "t1_details_shipment": {
+    "vessel": "XIN CHANG SHA",
+    "voyage": "402S",
+    "mbl_code": "ONEYHAME90065700",
+    "pol": "Hamburg, Germany"
+  },
+  "T2_relevant_times": [
+    {
+      "date": "25-sep-24",
+      "container_code": "FSCU57267991",
+      "qty_of_pkgs": 59
+    },
+    {
+      "date": "25-sep-24",
+      "container_code": "FSCU57267992",
+      "qty_of_pkgs": 59
+    }
+  ],
+  "t3_securing_seals": [
+    {
+      "container_code": "FSCU57267991",
+      "type": "RF",
+      "wwas_safety_seals": "01-0265193"
+    },
+    {
+      "container_code": "FSCU57267992",
+      "type": "RF",
+      "wwas_safety_seals": "01-0265193"
+    }
+  ],
+  "t4_unstuffing": {
+    "id": 1,
+    "notes": ["Cada salto de línea es un nuevo elemento", "Cada salto de línea es un nuevo elemento", "Cada salto de línea es un nuevo elemento"],
+    "foot_note": "Roof panel scratched - \r\nrefrigerated panel torn / dented.",
+    "images_groups": [
+      {
+        "id": 1,
+        "group_name": "images_group_1",
+        "images": ["/uploads/t4/images_group_1_20241102T001516895_img3.png", "/uploads/t4/images_group_1_20241102T001516896_img4.png"],
+        "images_notes": ["Cada salto de línea es un nuevo elemento", "Cada salto de línea es un nuevo elemento", "Cada salto de línea es un nuevo elemento"]
+      },
+      {
+        "id": 2,
+        "group_name": "images_group_2",
+        "images": [
+          "/uploads/t4/images_group_2_20241102T001516898_img001.jpg",
+          "/uploads/t4/images_group_2_20241102T001516898_img002.jpg",
+          "/uploads/t4/images_group_2_20241102T001516935_img3.png"
+        ],
+        "images_notes": ["note 1", "note 2", "note 3", "note 4"]
+      }
+    ]
+  },
+  "t5_damage": {
+    "notes": [
+      "During the stripping operation, the following exceptions were noticed and/or recorded:",
+      "During the stripping operation, the following exceptions were noticed and/or recorded:"
+    ],
+    "damages": [
+      {
+        "title?": ". FSCU57267991 x 40-ft non-operating reefer container:",
+        "b_l_no": "BUE238550",
+        "consignee": "BIO ABA SA",
+        "marks": "29119880",
+        "qty_of_pkgs": 2,
+        "images": [
+          {
+            "path": "https://www.example.com/img01.jpeg",
+            "description": "Image 1"
+          }
+        ]
+      },
+      {
+        "title?": ". FSCU57267992 x 40-ft non-operating reefer container:",
+        "b_l_no": "BUE238550",
+        "consignee": "BIO ABA SA",
+        "marks": "29119880",
+        "qty_of_pkgs": 2,
+        "images": [
+          {
+            "path": "https://www.example.com/img01.jpeg",
+            "description": "Image 1"
+          }
+        ]
+      }
+    ]
+  },
+  "t6_the_weather:": {
+    "notes": ["Hot/cloudy"],
+    "temperature": 21,
+    "humidity": 70
+  },
+  "t7_footer": {
+    "notes": ["SIGNED WITHOUT PREJUDICE", "Flavio Preziosa", "Independent Cargo Surveyor"]
+  }
+}
