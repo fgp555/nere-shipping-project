@@ -40,6 +40,7 @@ export class T4UnstuffingController {
   async create(
     @Body() createT4UnstuffingDto: CreateT4UnstuffingDto,
     @UploadedFiles() files: Express.Multer.File[],
+    @Body('mbl_code') mbl_code: string, // Asegúrate de que estás recibiendo mbl_code
   ) {
     // Estructuras para almacenar las imágenes y notas de cada grupo
     const imagesGroups = {};
@@ -64,14 +65,12 @@ export class T4UnstuffingController {
       }
     });
 
-    console.log('Images Groups: ', imagesGroups);
-    console.log('Notes Groups: ', notesGroups);
-
     // Llama al servicio con los datos procesados
     return this.t4UnstuffingService.create(
       createT4UnstuffingDto,
       imagesGroups,
       notesGroups,
+      mbl_code,
     );
   }
 

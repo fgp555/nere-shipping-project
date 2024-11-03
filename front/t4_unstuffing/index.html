@@ -24,6 +24,13 @@
       <h1>t4_unstuffing_container Create</h1>
 
       <form id="reportForm" enctype="multipart/form-data">
+        <!-- Select para seleccionar el mbl_code -->
+        <label for="mbl_code">Seleccionar MBL Code:</label>
+        <select id="mbl_code" name="mbl_code" required>
+          <option value="">Selecciona un código</option>
+        </select>
+        <br /><br />
+
         <label for="notes">Notas (una por línea):</label>
         <textarea id="notes" name="notes" required oninput="autoResize(this)">Cada salto de línea es un nuevo elemento</textarea>
         <br /><br />
@@ -54,8 +61,33 @@
       <canvas id="canvas" style="display: none"></canvas>
 
       <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          loadMblCodes();
+        });
+
+        async function loadMblCodes() {
+          try {
+            const response = await fetch("http://localhost:3000/api/report");
+            if (response.ok) {
+              const reports = await response.json();
+              const select = document.getElementById("mbl_code");
+
+              reports.forEach((report) => {
+                const option = document.createElement("option");
+                option.value = report.mbl_code;
+                option.textContent = report.mbl_code;
+                select.appendChild(option);
+              });
+            } else {
+              console.error("Error al obtener los códigos MBL");
+            }
+          } catch (error) {
+            console.error("Error:", error);
+          }
+        }
+
         let groupCounter = 1;
-        const MAX_WIDTH = 500; // Ancho máximo permitido para la compresión
+        const MAX_WIDTH = 500;
 
         function addImageGroup() {
           groupCounter++;
@@ -79,7 +111,7 @@
 
         function handleFileSelect(input, groupIndex) {
           const previewContainer = document.getElementById(`preview_group_${groupIndex}`);
-          previewContainer.innerHTML = ""; // Limpiar previsualizaciones anteriores
+          previewContainer.innerHTML = "";
 
           Array.from(input.files).forEach((file) => {
             const reader = new FileReader();
@@ -103,20 +135,17 @@
               let width = img.width;
               let height = img.height;
 
-              // Ajustar las dimensiones si el ancho excede el máximo
               if (width > MAX_WIDTH) {
                 height = Math.floor((MAX_WIDTH / width) * height);
                 width = MAX_WIDTH;
               }
 
-              // Configurar canvas para compresión
               const canvas = document.getElementById("canvas");
               canvas.width = width;
               canvas.height = height;
               const ctx = canvas.getContext("2d");
               ctx.drawImage(img, 0, 0, width, height);
 
-              // Convertir a Blob comprimido
               canvas.toBlob((blob) => resolve(blob), "image/jpeg", 0.8);
             };
           });
@@ -149,9 +178,12 @@
           const formData = new FormData();
           const notes = normalizeNewlines(document.getElementById("notes").value).split("\n");
           const foot_note = normalizeNewlines(document.getElementById("foot_note").value);
+          const mbl_code = document.getElementById("mbl_code").value; // Asegúrate de usar .value para obtener el valor
+
 
           formData.append("notes", JSON.stringify(notes));
           formData.append("foot_note", foot_note);
+          formData.append("mbl_code", mbl_code);
 
           await prepareCompressedFiles(formData);
 
@@ -173,8 +205,8 @@
         });
 
         function autoResize(textarea) {
-          textarea.style.height = "auto"; // Reinicia el alto para recalcular el tamaño
-          textarea.style.height = textarea.scrollHeight + "px"; // Ajusta el alto al contenido
+          textarea.style.height = "auto";
+          textarea.style.height = textarea.scrollHeight + "px";
         }
       </script>
     </main>

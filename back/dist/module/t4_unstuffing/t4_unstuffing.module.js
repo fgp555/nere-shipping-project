@@ -13,12 +13,13 @@ const t4_unstuffing_controller_1 = require("./t4_unstuffing.controller");
 const typeorm_1 = require("@nestjs/typeorm");
 const t4_unstuffing_entity_1 = require("./entities/t4_unstuffing.entity");
 const image_group_entity_1 = require("../image/image-group.entity");
+const report_entity_1 = require("../report/entities/report.entity");
 let T4UnstuffingModule = class T4UnstuffingModule {
 };
 exports.T4UnstuffingModule = T4UnstuffingModule;
 exports.T4UnstuffingModule = T4UnstuffingModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([t4_unstuffing_entity_1.T4UnstuffingEntity, image_group_entity_1.ImageGroupEntity])],
+        imports: [typeorm_1.TypeOrmModule.forFeature([t4_unstuffing_entity_1.T4UnstuffingEntity, image_group_entity_1.ImageGroupEntity, report_entity_1.ReportEntity])],
         controllers: [t4_unstuffing_controller_1.T4UnstuffingController],
         providers: [t4_unstuffing_service_1.T4UnstuffingService],
     })

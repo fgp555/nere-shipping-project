@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.T4UnstuffingEntity = void 0;
 const image_group_entity_1 = require("../../image/image-group.entity");
+const report_entity_1 = require("../../report/entities/report.entity");
 const typeorm_1 = require("typeorm");
 let T4UnstuffingEntity = class T4UnstuffingEntity {
 };
@@ -34,6 +35,10 @@ __decorate([
     }),
     __metadata("design:type", Array)
 ], T4UnstuffingEntity.prototype, "images_groups", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => report_entity_1.ReportEntity, (report) => report.t4_unstuffing),
+    __metadata("design:type", report_entity_1.ReportEntity)
+], T4UnstuffingEntity.prototype, "report_mbl_code", void 0);
 exports.T4UnstuffingEntity = T4UnstuffingEntity = __decorate([
     (0, typeorm_1.Entity)('T4Unstuffing')
 ], T4UnstuffingEntity);

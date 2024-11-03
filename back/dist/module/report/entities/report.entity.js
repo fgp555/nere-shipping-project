@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ReportEntity = void 0;
+const t4_unstuffing_entity_1 = require("../../t4_unstuffing/entities/t4_unstuffing.entity");
 const t5_damage_entity_1 = require("../../t5_damage/entities/t5_damage.entity");
 const typeorm_1 = require("typeorm");
 let ReportEntity = class ReportEntity {
@@ -23,6 +24,13 @@ __decorate([
     (0, typeorm_1.Column)({ unique: true }),
     __metadata("design:type", String)
 ], ReportEntity.prototype, "mbl_code", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => t4_unstuffing_entity_1.T4UnstuffingEntity, (t5_damage) => t5_damage.report_mbl_code, {
+        cascade: true,
+        eager: true,
+    }),
+    __metadata("design:type", Array)
+], ReportEntity.prototype, "t4_unstuffing", void 0);
 __decorate([
     (0, typeorm_1.OneToMany)(() => t5_damage_entity_1.T5DamageEntity, (t5_damage) => t5_damage.report_mbl_code, {
         cascade: true,

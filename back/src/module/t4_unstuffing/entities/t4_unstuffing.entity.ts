@@ -1,7 +1,8 @@
 // back/src/module/t4_unstuffing/entities/t4_unstuffing.entity.ts
 
 import { ImageGroupEntity } from 'src/module/image/image-group.entity';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { ReportEntity } from 'src/module/report/entities/report.entity';
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('T4Unstuffing')
 export class T4UnstuffingEntity {
@@ -19,4 +20,7 @@ export class T4UnstuffingEntity {
     eager: true,
   })
   images_groups: ImageGroupEntity[];
+
+  @ManyToOne(() => ReportEntity, (report) => report.t4_unstuffing)
+  report_mbl_code: ReportEntity;
 }

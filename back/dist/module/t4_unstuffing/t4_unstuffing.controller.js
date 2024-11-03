@@ -23,7 +23,7 @@ let T4UnstuffingController = class T4UnstuffingController {
     constructor(t4UnstuffingService) {
         this.t4UnstuffingService = t4UnstuffingService;
     }
-    async create(createT4UnstuffingDto, files) {
+    async create(createT4UnstuffingDto, files, mbl_code) {
         const imagesGroups = {};
         const notesGroups = {};
         files.forEach((file) => {
@@ -39,9 +39,7 @@ let T4UnstuffingController = class T4UnstuffingController {
                 notesGroups[groupName] = JSON.parse(createT4UnstuffingDto[key]);
             }
         });
-        console.log('Images Groups: ', imagesGroups);
-        console.log('Notes Groups: ', notesGroups);
-        return this.t4UnstuffingService.create(createT4UnstuffingDto, imagesGroups, notesGroups);
+        return this.t4UnstuffingService.create(createT4UnstuffingDto, imagesGroups, notesGroups, mbl_code);
     }
     findAll() {
         return this.t4UnstuffingService.findAll();
@@ -70,8 +68,9 @@ __decorate([
     })),
     __param(0, (0, common_1.Body)()),
     __param(1, (0, common_1.UploadedFiles)()),
+    __param(2, (0, common_1.Body)('mbl_code')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_t4_unstuffing_dto_1.CreateT4UnstuffingDto, Array]),
+    __metadata("design:paramtypes", [create_t4_unstuffing_dto_1.CreateT4UnstuffingDto, Array, String]),
     __metadata("design:returntype", Promise)
 ], T4UnstuffingController.prototype, "create", null);
 __decorate([

@@ -11,6 +11,9 @@ export class CreateT4UnstuffingDto {
   
     @IsString()
     foot_note: string;
+
+    @IsString()
+    mbl_code: string;
   
     @IsArray()
     @ValidateNested({ each: true })

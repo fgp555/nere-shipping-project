@@ -6,7 +6,6 @@ Content-Type: application/json
 
 {
   "notes": ["note 1", "note 2"],
-  "report_id": 1,
   "report_mbl_code": "code001"
 }
 

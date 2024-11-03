@@ -24,13 +24,11 @@ let T5DamageService = class T5DamageService {
         this.reportRepository = reportRepository;
     }
     async create(createT5DamageDto) {
-        console.log('createT5DamageDto: ', createT5DamageDto);
         const foundReport = await this.reportRepository.findOne({
             where: {
                 mbl_code: createT5DamageDto.report_mbl_code,
             },
         });
-        console.log('foundReport: ', foundReport);
         const createdT5Damage = this.t5DamageRepository.create({
             ...createT5DamageDto,
             report_mbl_code: foundReport,

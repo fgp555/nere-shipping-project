@@ -26,6 +26,10 @@ __decorate([
     __metadata("design:type", String)
 ], CreateT4UnstuffingDto.prototype, "foot_note", void 0);
 __decorate([
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], CreateT4UnstuffingDto.prototype, "mbl_code", void 0);
+__decorate([
     (0, class_validator_1.IsArray)(),
     (0, class_validator_1.ValidateNested)({ each: true }),
     (0, class_transformer_1.Type)(() => create_image_group_dto_1.CreateImageGroupDto),

@@ -18,23 +18,32 @@ const t4_unstuffing_entity_1 = require("./entities/t4_unstuffing.entity");
 const image_group_entity_1 = require("../image/image-group.entity");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
+const report_entity_1 = require("../report/entities/report.entity");
 let T4UnstuffingService = class T4UnstuffingService {
-    constructor(t4Unstuffing) {
+    constructor(t4Unstuffing, reportRepository) {
         this.t4Unstuffing = t4Unstuffing;
+        this.reportRepository = reportRepository;
     }
-    async create(createReportDto, imagesGroups, notesGroups) {
+    async create(createReportDto, imagesGroups, notesGroups, mbl_code) {
         const { notes, foot_note } = createReportDto;
-        const report = new t4_unstuffing_entity_1.T4UnstuffingEntity();
-        report.notes = notes;
-        report.foot_note = foot_note;
-        report.images_groups = Object.keys(imagesGroups).map((groupName) => {
+        const foundReport = await this.reportRepository.findOne({
+            where: { mbl_code },
+        });
+        if (!foundReport) {
+            throw new common_1.NotFoundException('Report not found');
+        }
+        const t4Unstuffing = new t4_unstuffing_entity_1.T4UnstuffingEntity();
+        t4Unstuffing.notes = notes;
+        t4Unstuffing.foot_note = foot_note;
+        t4Unstuffing.report_mbl_code = foundReport;
+        t4Unstuffing.images_groups = Object.keys(imagesGroups).map((groupName) => {
             const imageGroup = new image_group_entity_1.ImageGroupEntity();
             imageGroup.group_name = groupName;
             imageGroup.images = imagesGroups[groupName];
             imageGroup.images_notes = notesGroups[groupName] || [];
             return imageGroup;
         });
-        return await this.t4Unstuffing.save(report);
+        return await this.t4Unstuffing.save(t4Unstuffing);
     }
     findAll() {
         return this.t4Unstuffing.find();
@@ -53,6 +62,8 @@ exports.T4UnstuffingService = T4UnstuffingService;
 exports.T4UnstuffingService = T4UnstuffingService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(t4_unstuffing_entity_1.T4UnstuffingEntity)),
-    __metadata("design:paramtypes", [typeorm_2.Repository])
+    __param(1, (0, typeorm_1.InjectRepository)(report_entity_1.ReportEntity)),
+    __metadata("design:paramtypes", [typeorm_2.Repository,
+        typeorm_2.Repository])
 ], T4UnstuffingService);
 //# sourceMappingURL=t4_unstuffing.service.js.map
