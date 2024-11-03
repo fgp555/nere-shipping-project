@@ -32,6 +32,9 @@ let ReportController = class ReportController {
     findOne(mbl_code) {
         return this.reportService.findOne(mbl_code);
     }
+    dowload(mbl_code) {
+        return this.reportService.download(mbl_code);
+    }
     update(id, updateReportDto) {
         return this.reportService.update(+id, updateReportDto);
     }
@@ -66,6 +69,13 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], ReportController.prototype, "findOne", null);
+__decorate([
+    (0, common_1.Get)('download/:mbl_code'),
+    __param(0, (0, common_1.Param)('mbl_code')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], ReportController.prototype, "dowload", null);
 __decorate([
     (0, common_1.Patch)(':id'),
     __param(0, (0, common_1.Param)('id')),

@@ -35,6 +35,11 @@ export class ReportController {
     return this.reportService.findOne(mbl_code);
   }
 
+  @Get('download/:mbl_code')
+  dowload(@Param('mbl_code') mbl_code: string) {
+    return this.reportService.download(mbl_code);
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateReportDto: UpdateReportDto) {
     return this.reportService.update(+id, updateReportDto);

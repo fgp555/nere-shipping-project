@@ -7,6 +7,7 @@ export declare class ReportService {
     create(createReportDto: any): Promise<any>;
     findAll(): Promise<ReportEntity[]>;
     findOne(mbl_code: string): Promise<ReportEntity>;
+    download(mbl_code: string): Promise<ReportEntity>;
     mbl_code(): Promise<any[]>;
     update(id: number, updateReportDto: UpdateReportDto): string;
     remove(id: number): string;

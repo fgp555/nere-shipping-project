@@ -2,8 +2,11 @@
 ### Obtener todos los usuarios
 GET http://localhost:3000/api/report
 
-### Obtener un usuario por mbl_code
+### Obtener un usuario por mbl_code 
 GET http://localhost:3000/api/report/ONEYHAME90065700
+
+### Obtener un usuario por mbl_code
+GET http://localhost:3000/api/report/download/ONEYHAME90065700
 
 ### Obtener un usuario por ID
 GET http://localhost:3000/api/report/mbl_code/

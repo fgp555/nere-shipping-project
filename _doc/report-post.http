@@ -6,7 +6,7 @@ POST http://localhost:3000/api/report
 Content-Type: application/json
 
 {
-  "mbl_code": "ONEYHAME90065700222",
+  "mbl_code": "ONEYHAME90065700",
     "t0_header": {
     "header_name": "FLAVIO A. PREZIOSA",
     "header_address": "Habana 2874 - 1419 - Buenos Aires - Argentina",
@@ -76,7 +76,7 @@ Content-Type: application/json
       "others": "None"
     }
   ],
-  "t6_footer:": {
+  "t6_footer": {
     "weather_status": "Hot/cloudy",
     "legend": "SIGNED WITHOUT PREJUDICE",
     "who_signs": "Flavio Preziosa",
