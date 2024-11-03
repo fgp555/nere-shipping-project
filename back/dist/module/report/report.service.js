@@ -34,8 +34,8 @@ let ReportService = class ReportService {
     findAll() {
         return this.reportRepository.find();
     }
-    findOne(id) {
-        return `This action returns a #${id} report`;
+    async findOne(mbl_code) {
+        return await this.reportRepository.findOne({ where: { mbl_code } });
     }
     async mbl_code() {
         const reports = await this.reportRepository

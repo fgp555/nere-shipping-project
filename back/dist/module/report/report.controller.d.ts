@@ -6,7 +6,7 @@ export declare class ReportController {
     create(createReportDto: any): Promise<any>;
     findAll(): Promise<import("./entities/report.entity").ReportEntity[]>;
     mbl_code(): Promise<any[]>;
-    findOne(id: string): string;
+    findOne(mbl_code: string): Promise<import("./entities/report.entity").ReportEntity>;
     update(id: string, updateReportDto: UpdateReportDto): string;
     remove(id: string): string;
 }

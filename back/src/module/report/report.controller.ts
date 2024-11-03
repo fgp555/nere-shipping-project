@@ -30,9 +30,9 @@ export class ReportController {
     return this.reportService.mbl_code();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.reportService.findOne(+id);
+  @Get(':mbl_code')
+  findOne(@Param('mbl_code') mbl_code: string) {
+    return this.reportService.findOne(mbl_code);
   }
 
   @Patch(':id')

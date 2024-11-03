@@ -12,6 +12,12 @@
 
     <main class="container">
       <h2>Home</h2>
+      <label for="mbl_code">Seleccionar MBL Code:</label>
+      <select id="mbl_code" name="mbl_code" required onchange="saveToLocalStorage()">
+        <option value="">Selecciona un código</option>
+      </select>
+      <br /><br />
+
       <article role="group">
         <h3>Report</h3>
         <a role="button" class="contrast" href="/report/">create</a>
@@ -30,6 +36,30 @@
         <a role="button" href="/t5_damage/read.html">read</a>
         <a role="button" class="outline" href="/api/t5_damage/" target="_blank">API</a>
       </article>
+      <script>
+        async function loadMblCodes() {
+          try {
+            const response = await fetch("/api/report/mbl_code");
+            if (response.ok) {
+              const reports = await response.json();
+              const select = document.getElementById("mbl_code");
+              console.log(reports);
+
+              reports.forEach((report) => {
+                const option = document.createElement("option");
+                option.value = report.report_mbl_code;
+                option.textContent = report.report_mbl_code;
+                select.appendChild(option);
+              });
+            } else {
+              console.error("Error al obtener los códigos MBL");
+            }
+          } catch (error) {
+            console.error("Error:", error);
+          }
+        }
+        loadMblCodes();
+      </script>
     </main>
     <footer></footer>
   </body>

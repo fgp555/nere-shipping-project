@@ -28,8 +28,8 @@ export class ReportService {
     return this.reportRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} report`;
+  async findOne(mbl_code: string) {
+    return await this.reportRepository.findOne({ where: { mbl_code } });
   }
 
   async mbl_code() {
