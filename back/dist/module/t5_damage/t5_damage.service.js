@@ -14,8 +14,9 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.T5DamageService = void 0;
 const common_1 = require("@nestjs/common");
-const typeorm_1 = require("@nestjs/typeorm");
 const t5_damage_entity_1 = require("./entities/t5_damage.entity");
+const t5_image_group_entity_1 = require("./entities/t5_image-group.entity");
+const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const report_entity_1 = require("../report/entities/report.entity");
 let T5DamageService = class T5DamageService {
@@ -23,33 +24,45 @@ let T5DamageService = class T5DamageService {
         this.t5DamageRepository = t5DamageRepository;
         this.reportRepository = reportRepository;
     }
-    async create(createT5DamageDto) {
+    async create(createReportDto, mbl_code, files) {
+        const { notes, images_groups } = createReportDto;
         const foundReport = await this.reportRepository.findOne({
-            where: {
-                mbl_code: createT5DamageDto.report_mbl_code,
-            },
+            where: { mbl_code },
         });
-        const createdT5Damage = this.t5DamageRepository.create({
-            ...createT5DamageDto,
-            report_mbl_code: foundReport,
+        if (!foundReport) {
+            throw new common_1.NotFoundException('Report not found');
+        }
+        const t5Damage = new t5_damage_entity_1.T5DamageEntity();
+        t5Damage.notes = notes;
+        t5Damage.report_mbl_code = foundReport;
+        const groupedFiles = files.reduce((acc, file) => {
+            const groupName = file.fieldname.split('_files')[0];
+            if (!acc[groupName])
+                acc[groupName] = [];
+            acc[groupName].push(`/uploads/t5_damage/${file.filename}`);
+            return acc;
+        }, {});
+        t5Damage.images_groups = images_groups.map((groupData) => {
+            const imageGroup = new t5_image_group_entity_1.T5ImageGroupEntity();
+            imageGroup.group_name = groupData.group_name;
+            imageGroup.title = groupData.title;
+            imageGroup.b_l_no = groupData.b_l_no;
+            imageGroup.consignee = groupData.consignee;
+            imageGroup.marks = groupData.marks;
+            imageGroup.qty_of_pkgs = groupData.qty_of_pkgs;
+            imageGroup.goods = groupData.goods;
+            imageGroup.remarks = groupData.remarks;
+            imageGroup.images = groupedFiles[groupData.group_name] || [];
+            imageGroup.images_notes = groupData.images_notes;
+            return imageGroup;
         });
-        const savedT5Damage = await this.t5DamageRepository.save(createdT5Damage);
-        return savedT5Damage;
+        return await this.t5DamageRepository.save(t5Damage);
     }
     findAll() {
         return this.t5DamageRepository.find();
     }
-    async findOne(id) {
-        return await this.t5DamageRepository.findOne({ where: { id } });
-    }
-    async update(id, updateT5DamageDto) {
-        await this.t5DamageRepository.update(id, updateT5DamageDto);
-        return this.findOne(id);
-    }
-    async remove(id) {
-        const record = await this.findOne(id);
-        await this.t5DamageRepository.delete(id);
-        return record;
+    remove(id) {
+        return this.t5DamageRepository.delete(id);
     }
 };
 exports.T5DamageService = T5DamageService;

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>t5_damage Create</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" />
+    <style>
+      textarea {
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="container">
+      <article>
+        <a class="btn" href="/"><button>⬅️ Retroceder</button></a>
+      </article>
+
+      <h1>t5_damage Create</h1>
+
+      <form id="damageForm" enctype="multipart/form-data">
+        <!-- Select para seleccionar el mbl_code -->
+        <label for="mbl_code">Seleccionar MBL Code:</label>
+        <select id="mbl_code" name="mbl_code" required>
+          <option value="">Selecciona un código</option>
+        </select>
+        <br /><br />
+
+        <!-- Campo para las notas generales -->
+        <label for="notes">Notas (una por línea):</label>
+        <textarea id="notes" name="notes" oninput="autoResize(this)" required>note 1</textarea>
+        <br /><br />
+
+        <!-- Contenedor para grupos de imágenes -->
+        <div id="imagesGroupContainer">
+          <article class="images-group">
+            <hr />
+            <h3>Grupo de Imágenes 1 - Título del contenedor:</h3>
+            <label for="b_l_no_1">B/L No:</label>
+            <input type="text" id="b_l_no_1" name="b_l_no" value="BUE238550" />
+            <br />
+
+            <label for="consignee_1">Consignatario:</label>
+            <input type="text" id="consignee_1" name="consignee" value="BIO ABA SA" />
+            <br />
+
+            <label for="marks_1">Marcas:</label>
+            <input type="text" id="marks_1" name="marks" value="29119880" />
+            <br />
+
+            <label for="qty_of_pkgs_1">Cantidad de paquetes:</label>
+            <input type="number" id="qty_of_pkgs_1" name="qty_of_pkgs" value="2" />
+            <br />
+
+            <label for="goods_1">Mercancía:</label>
+            <input type="text" id="goods_1" name="goods" value="Peptones" />
+            <br />
+
+            <label for="remarks_1">Observaciones:</label>
+            <input type="text" id="remarks_1" name="remarks" value="1 pallet: shrink-wrap film stretch torn off + torn paper bags" />
+            <br /><br />
+
+            <input type="file" name="images_group_1" multiple />
+            <br />
+            <label>Notas para las imágenes (una por línea):</label>
+            <textarea name="images_notes_1" oninput="autoResize(this)">note 1</textarea>
+            <hr />
+          </article>
+        </div>
+
+        <button type="button" onclick="addImageGroup()">Añadir otro grupo de imágenes</button>
+        <br /><br />
+
+        <button type="submit">Enviar</button>
+      </form>
+
+      <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          loadMblCodes();
+        });
+
+        let groupCounter = 1;
+
+        async function loadMblCodes() {
+          try {
+            const response = await fetch("/api/report/mbl_code");
+            if (response.ok) {
+              const reports = await response.json();
+              const select = document.getElementById("mbl_code");
+
+              reports.forEach((report) => {
+                const option = document.createElement("option");
+                option.value = report.report_mbl_code;
+                option.textContent = report.report_mbl_code;
+                select.appendChild(option);
+              });
+            } else {
+              console.error("Error al obtener los códigos MBL");
+            }
+          } catch (error) {
+            console.error("Error:", error);
+          }
+        }
+
+        function addImageGroup() {
+          groupCounter++;
+          const container = document.getElementById("imagesGroupContainer");
+          const newGroup = document.createElement("article");
+          newGroup.className = "images-group";
+
+          newGroup.innerHTML = `
+          <hr />
+          <h3>Grupo de Imágenes ${groupCounter} - Título del contenedor:</h3>
+          <label for="b_l_no_${groupCounter}">B/L No:</label>
+          <input type="text" id="b_l_no_${groupCounter}" name="b_l_no" value="BUE238550"/>
+          <br />
+
+          <label for="consignee_${groupCounter}">Consignatario:</label>
+          <input type="text" id="consignee_${groupCounter}" name="consignee" value="BIO ABA SA"/>
+          <br />
+
+          <label for="marks_${groupCounter}">Marcas:</label>
+          <input type="text" id="marks_${groupCounter}" name="marks" value="29119880"/>
+          <br />
+
+          <label for="qty_of_pkgs_${groupCounter}">Cantidad de paquetes:</label>
+          <input type="number" id="qty_of_pkgs_${groupCounter}" name="qty_of_pkgs" value="2"/>
+          <br />
+
+          <label for="goods_${groupCounter}">Mercancía:</label>
+          <input type="text" id="goods_${groupCounter}" name="goods" value="Peptones"/>
+          <br />
+
+          <label for="remarks_${groupCounter}">Observaciones:</label>
+          <input type="text" id="remarks_${groupCounter}" name="remarks" value="1 pallet: shrink-wrap film stretch torn off + torn paper bags"/>
+          <br /><br />
+
+          <input type="file" name="images_group_${groupCounter}" multiple />
+          <br>
+          <label>Notas para las imágenes (una por línea):</label>
+          <textarea name="images_notes_${groupCounter}" oninput="autoResize(this)">note 1\nnote 2</textarea>
+          <hr />
+        `;
+
+          container.appendChild(newGroup);
+        }
+
+        document.getElementById("damageForm").addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          function normalizeNewlines(text) {
+            return text.replace(/\n{2,}/g, "\n").trim();
+          }
+
+          const formData = new FormData();
+          const mblCode = document.getElementById("mbl_code").value;
+          const notes = normalizeNewlines(document.getElementById("notes").value).split("\n");
+
+          // Crear estructura de grupos de imágenes y añadir archivos
+          const imagesGroups = Array.from(document.querySelectorAll(".images-group")).map((group, index) => {
+            const groupIndex = index + 1;
+
+            const imagesFiles = group.querySelector(`input[name="images_group_${groupIndex}"]`).files;
+            Array.from(imagesFiles).forEach((file) => {
+              formData.append(`images_group_${groupIndex}_files`, file);
+            });
+
+            return {
+              group_name: `images_group_${groupIndex}`,
+              title: `Grupo de Imágenes ${groupIndex} - Título del contenedor:`,
+              b_l_no: group.querySelector(`input[name="b_l_no"]`).value,
+              consignee: group.querySelector(`input[name="consignee"]`).value,
+              marks: group.querySelector(`input[name="marks"]`).value,
+              qty_of_pkgs: parseInt(group.querySelector(`input[name="qty_of_pkgs"]`).value, 10),
+              goods: group.querySelector(`input[name="goods"]`).value,
+              remarks: group.querySelector(`input[name="remarks"]`).value,
+              images_notes: normalizeNewlines(group.querySelector(`textarea[name="images_notes_${groupIndex}"]`).value)
+                .split("\n")
+                .map((note) => note.trim()),
+            };
+          });
+
+          formData.append("data", JSON.stringify({ mbl_code: mblCode, notes, images_groups: imagesGroups }));
+
+          try {
+            const response = await fetch("/api/t5-damage/upload", {
+              method: "POST",
+              body: formData,
+            });
+
+            if (response.ok) {
+              alert("Informe subido exitosamente.");
+            } else {
+              alert("Error al subir el informe.");
+            }
+          } catch (error) {
+            console.error("Error:", error);
+            alert("Error al enviar el informe.");
+          }
+        });
+
+        function autoResize(textarea) {
+          textarea.style.height = "auto";
+          textarea.style.height = textarea.scrollHeight + "px";
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+          const textareas = document.querySelectorAll("textarea");
+          textareas.forEach((textarea) => autoResize(textarea));
+        });
+      </script>
+    </main>
+  </body>
+</html>

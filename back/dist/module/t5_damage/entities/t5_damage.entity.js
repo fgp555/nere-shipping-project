@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.T5DamageEntity = void 0;
 const report_entity_1 = require("../../report/entities/report.entity");
 const typeorm_1 = require("typeorm");
+const t5_image_group_entity_1 = require("./t5_image-group.entity");
 let T5DamageEntity = class T5DamageEntity {
 };
 exports.T5DamageEntity = T5DamageEntity;
@@ -20,14 +21,25 @@ __decorate([
     __metadata("design:type", Number)
 ], T5DamageEntity.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.Column)('json'),
+    (0, typeorm_1.Column)('json', { nullable: false }),
     __metadata("design:type", Array)
 ], T5DamageEntity.prototype, "notes", void 0);
+__decorate([
+    (0, typeorm_1.Column)('text', { nullable: true }),
+    __metadata("design:type", String)
+], T5DamageEntity.prototype, "foot_note", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => t5_image_group_entity_1.T5ImageGroupEntity, (imageGroup) => imageGroup.damage, {
+        cascade: true,
+        eager: true,
+    }),
+    __metadata("design:type", Array)
+], T5DamageEntity.prototype, "images_groups", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => report_entity_1.ReportEntity, (report) => report.t5_damage),
     __metadata("design:type", report_entity_1.ReportEntity)
 ], T5DamageEntity.prototype, "report_mbl_code", void 0);
 exports.T5DamageEntity = T5DamageEntity = __decorate([
-    (0, typeorm_1.Entity)('t5_damage')
+    (0, typeorm_1.Entity)('T5Damage')
 ], T5DamageEntity);
 //# sourceMappingURL=t5_damage.entity.js.map

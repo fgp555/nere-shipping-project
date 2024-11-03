@@ -15,23 +15,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.T5DamageController = void 0;
 const common_1 = require("@nestjs/common");
 const t5_damage_service_1 = require("./t5_damage.service");
-const create_t5_damage_dto_1 = require("./dto/create-t5_damage.dto");
-const update_t5_damage_dto_1 = require("./dto/update-t5_damage.dto");
+const platform_express_1 = require("@nestjs/platform-express");
+const multer_1 = require("multer");
 let T5DamageController = class T5DamageController {
     constructor(t5DamageService) {
         this.t5DamageService = t5DamageService;
     }
-    create(createT5DamageDto) {
-        return this.t5DamageService.create(createT5DamageDto);
+    async create(data, files) {
+        const { mbl_code, notes, images_groups } = JSON.parse(data);
+        return this.t5DamageService.create({ notes, images_groups }, mbl_code, files);
     }
     findAll() {
         return this.t5DamageService.findAll();
-    }
-    findOne(id) {
-        return this.t5DamageService.findOne(+id);
-    }
-    update(id, updateT5DamageDto) {
-        return this.t5DamageService.update(+id, updateT5DamageDto);
     }
     remove(id) {
         return this.t5DamageService.remove(+id);
@@ -39,11 +34,21 @@ let T5DamageController = class T5DamageController {
 };
 exports.T5DamageController = T5DamageController;
 __decorate([
-    (0, common_1.Post)(),
-    __param(0, (0, common_1.Body)()),
+    (0, common_1.Post)('upload'),
+    (0, common_1.UseInterceptors)((0, platform_express_1.AnyFilesInterceptor)({
+        storage: (0, multer_1.diskStorage)({
+            destination: './uploads/t5_damage',
+            filename: (req, file, callback) => {
+                const uniqueSuffix = new Date().toISOString().replace(/[:.\-Z]/g, '');
+                callback(null, `${uniqueSuffix}_${file.fieldname}_${file.originalname}`);
+            },
+        }),
+    })),
+    __param(0, (0, common_1.Body)('data')),
+    __param(1, (0, common_1.UploadedFiles)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_t5_damage_dto_1.CreateT5DamageDto]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:paramtypes", [String, Array]),
+    __metadata("design:returntype", Promise)
 ], T5DamageController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
@@ -51,21 +56,6 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], T5DamageController.prototype, "findAll", null);
-__decorate([
-    (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
-], T5DamageController.prototype, "findOne", null);
-__decorate([
-    (0, common_1.Patch)(':id'),
-    __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, update_t5_damage_dto_1.UpdateT5DamageDto]),
-    __metadata("design:returntype", void 0)
-], T5DamageController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id')),

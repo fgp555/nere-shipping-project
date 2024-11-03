@@ -1,0 +1,129 @@
+<!-- front/report/read.html -->
+<!-- http://localhost:3000/report/read.html -->
+<!-- http://localhost:3000/api/report -->
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Report Read</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" />
+    <style>
+      .image-preview img {
+        width: auto;
+        height: 100px;
+        margin: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="container">
+      <article>
+        <a class="btn" href="/"><button>⬅️ Retroceder</button></a>
+      </article>
+
+      <h1>Report Read</h1>
+      <button onclick="fetchReports()">GET all</button>
+      <section id="outContainer"></section>
+    </main>
+
+    <script>
+      async function fetchReports() {
+        try {
+          const response = await fetch("/api/report");
+          if (!response.ok) throw new Error("Error al obtener los informes");
+
+          const reports = await response.json();
+          displayReports(reports);
+        } catch (error) {
+          console.error("Error:", error);
+          alert("Error al obtener los informes.");
+        }
+      }
+
+      function displayReports(reports) {
+        const container = document.getElementById("outContainer");
+        container.innerHTML = ""; // Limpiar el contenedor antes de mostrar nuevos datos
+
+        reports.forEach((report) => {
+          const reportElement = document.createElement("div");
+
+          reportElement.innerHTML = `
+            <h2>Informe ID: ${report.id}</h2>
+            <h3>MBL Code:</h3>
+            <p>${report.mbl_code}</p>
+            
+            <!-- Header Section -->
+            <h3>Header:</h3>
+            <p><strong>Nombre:</strong> ${report.t0_header.header_name}</p>
+            <p><strong>Dirección:</strong> ${report.t0_header.header_address}</p>
+            <p><strong>Móvil:</strong> ${report.t0_header.header_mobile}</p>
+            <p><strong>Email:</strong> ${report.t0_header.header_email}</p>
+            <p><strong>Fecha del Reporte:</strong> ${report.t0_header.report_date}</p>
+            <p><strong>Descripción del Reporte:</strong> ${report.t0_header.report_description}</p>
+            <p><strong>Nota del Reporte:</strong> ${report.t0_header.report_note}</p>
+            
+            <!-- Details Shipment -->
+            <h3>Detalles del Envío:</h3>
+            <p><strong>Vessel:</strong> ${report.t1_details_shipment.vessel}</p>
+            <p><strong>Voyage:</strong> ${report.t1_details_shipment.voyage}</p>
+            <p><strong>Peso Bruto:</strong> ${report.t1_details_shipment.gross_weight}</p>
+
+            <!-- Relevant Times -->
+            <h3>Tiempos Relevantes:</h3>
+            ${report.T2_relevant_times.map(time => `
+              <p><strong>Fecha:</strong> ${time.date}, <strong>Código del Contenedor:</strong> ${time.container_code}</p>
+            `).join("")}
+
+            <!-- Securing Seals -->
+            <h3>Sellos de Seguridad:</h3>
+            ${report.t3_securing_seals.map(seal => `
+              <p><strong>Código del Contenedor:</strong> ${seal.container_code}, <strong>Tipo:</strong> ${seal.type}</p>
+            `).join("")}
+
+            <!-- Unstuffing Section -->
+            <h3>Desestiba:</h3>
+            ${report.t4_unstuffing.map(unstuff => `
+              <p><strong>Notas:</strong></p>
+              <ul>${unstuff.notes.map(note => `<li>${note}</li>`).join("")}</ul>
+              <h5>Nota al Pie:</h5>
+              <p>${unstuff.foot_note || "Sin nota al pie"}</p>
+              <h5>Grupos de Imágenes:</h5>
+              ${unstuff.images_groups.map(group => `
+                <article>
+                  <h4>${group.group_name}</h4>
+                  <div class="image-preview">
+                    ${group.images.map(image => `<img src="${image}" alt="Imagen">`).join("")}
+                  </div>
+                </article>
+              `).join("")}
+            `).join("")}
+
+            <!-- Damage Section -->
+            <h3>Daños:</h3>
+            ${report.t5_damage.map(damage => `
+              <p><strong>Notas:</strong></p>
+              <ul>${damage.notes.map(note => `<li>${note}</li>`).join("")}</ul>
+              <h5>Nota al Pie:</h5>
+              <p>${damage.foot_note || "Sin nota al pie"}</p>
+              <h5>Grupos de Imágenes:</h5>
+              ${damage.images_groups.map(group => `
+                <article>
+                  <h4>${group.group_name}</h4>
+                  <p><strong>Título:</strong> ${group.title}</p>
+                  <p><strong>B/L No:</strong> ${group.b_l_no}</p>
+                  <p><strong>Consignatario:</strong> ${group.consignee}</p>
+                  <div class="image-preview">
+                    ${group.images.map(image => `<img src="${image}" alt="Imagen del grupo">`).join("")}
+                  </div>
+                </article>
+              `).join("")}
+            `).join("")}
+          `;
+          container.appendChild(reportElement);
+        });
+      }
+      fetchReports();
+    </script>
+  </body>
+</html>
