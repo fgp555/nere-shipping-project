@@ -6,7 +6,7 @@ POST http://localhost:3000/api/report
 Content-Type: application/json
 
 {
-  "mbl_code": "ONEYHAME90065700",
+  "mbl_code": "ONEYHAME90065700222",
     "t0_header": {
     "header_name": "FLAVIO A. PREZIOSA",
     "header_address": "Habana 2874 - 1419 - Buenos Aires - Argentina",

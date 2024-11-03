@@ -13,15 +13,17 @@
     <main class="container">
       <h2>Home</h2>
       <label for="mbl_code">Seleccionar MBL Code:</label>
-      <select id="mbl_code" name="mbl_code" required onchange="saveToLocalStorage()">
+      <select id="mbl_code" name="mbl_code" required>
         <option value="">Selecciona un código</option>
       </select>
+      <button onclick="getBy_mbl_code()">console log</button>
       <br /><br />
 
       <article role="group">
         <h3>Report</h3>
         <a role="button" class="contrast" href="/report/">create</a>
-        <a role="button" href="/report/read.html">read</a>
+        <a role="button" class="secondary" href="/report/read.html">read</a>
+        <a role="button" href="/report/mbl_code.html">By mbl_code</a>
         <a role="button" class="outline" href="/api/report/" target="_blank">API</a>
       </article>
       <article role="group">
@@ -43,7 +45,6 @@
             if (response.ok) {
               const reports = await response.json();
               const select = document.getElementById("mbl_code");
-              console.log(reports);
 
               reports.forEach((report) => {
                 const option = document.createElement("option");
@@ -59,6 +60,30 @@
           }
         }
         loadMblCodes();
+
+        const getBy_mbl_code = async () => {
+          const select = document.getElementById("mbl_code");
+          const mbl_code = select.value;
+
+          if (mbl_code) {
+            // Verifica que se haya seleccionado un código
+            try {
+              const response = await fetch(`/api/report/${mbl_code}`);
+              const data = await response.json();
+              console.log("data", data);
+
+              if (response.ok) {
+                console.log("Informe obtenido exitosamente.");
+              } else {
+                console.log("Error al obtener el informe.");
+              }
+            } catch (error) {
+              console.error("Error:", error);
+            }
+          } else {
+            console.log("Por favor, selecciona un código MBL.");
+          }
+        };
       </script>
     </main>
     <footer></footer>
