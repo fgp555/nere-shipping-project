@@ -35,6 +35,11 @@ export class ReportController {
     return this.reportService.findOne(mbl_code);
   }
 
+  @Get('download/test')
+  dowloadTest() {
+    return this.reportService.dowloadTest();
+  }
+
   @Get('download/:mbl_code')
   dowload(@Param('mbl_code') mbl_code: string) {
     return this.reportService.download(mbl_code);

@@ -37,8 +37,11 @@ let ReportService = class ReportService {
     async findOne(mbl_code) {
         return await this.reportRepository.findOne({ where: { mbl_code } });
     }
+    async dowloadTest() {
+        return `This action downloads a # report`;
+    }
     async download(mbl_code) {
-        return await this.reportRepository.findOne({ where: { mbl_code } });
+        return `This action downloads a #${mbl_code} report`;
     }
     async mbl_code() {
         const reports = await this.reportRepository

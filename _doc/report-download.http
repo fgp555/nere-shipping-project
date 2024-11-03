@@ -1,0 +1,5 @@
+### Obtener un usuario por mbl_code
+GET http://localhost:3000/api/report/download/ONEYHAME90065700
+
+### Obtener un usuario por mbl_code
+GET http://localhost:3000/api/report/download/test
