@@ -6,6 +6,7 @@ export declare class ReportController {
     constructor(reportService: ReportService);
     create(createReportDto: CreateReportDto): Promise<any>;
     findAll(): Promise<import("./entities/report.entity").ReportEntity[]>;
+    mbl_code(): Promise<any[]>;
     findOne(id: string): string;
     update(id: string, updateReportDto: UpdateReportDto): string;
     remove(id: string): string;

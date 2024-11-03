@@ -37,6 +37,13 @@ let ReportService = class ReportService {
     findOne(id) {
         return `This action returns a #${id} report`;
     }
+    async mbl_code() {
+        const reports = await this.reportRepository
+            .createQueryBuilder('report')
+            .select('report.mbl_code')
+            .getRawMany();
+        return reports;
+    }
     update(id, updateReportDto) {
         return `This action updates a #${id} report`;
     }

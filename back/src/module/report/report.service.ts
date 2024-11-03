@@ -32,6 +32,15 @@ export class ReportService {
     return `This action returns a #${id} report`;
   }
 
+  async mbl_code() {
+    const reports = await this.reportRepository
+      .createQueryBuilder('report')
+      .select('report.mbl_code')
+      .getRawMany();
+
+    return reports;
+  }
+
   update(id: number, updateReportDto: UpdateReportDto) {
     return `This action updates a #${id} report`;
   }

@@ -5,6 +5,9 @@ GET http://localhost:3000/api/report
 ### Obtener un usuario por ID
 GET http://localhost:3000/api/report/1
 
+### Obtener un usuario por ID
+GET http://localhost:3000/api/report/mbl_code/
+
 ### Actualizar un usuario por ID
 PATCH http://localhost:3000/api/report/1
 Content-Type: application/json

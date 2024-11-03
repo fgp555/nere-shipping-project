@@ -67,15 +67,15 @@
 
         async function loadMblCodes() {
           try {
-            const response = await fetch("http://localhost:3000/api/report");
+            const response = await fetch("/api/report/mbl_code");
             if (response.ok) {
               const reports = await response.json();
               const select = document.getElementById("mbl_code");
 
               reports.forEach((report) => {
                 const option = document.createElement("option");
-                option.value = report.mbl_code;
-                option.textContent = report.mbl_code;
+                option.value = report.report_mbl_code;
+                option.textContent = report.report_mbl_code;
                 select.appendChild(option);
               });
             } else {
