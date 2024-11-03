@@ -18,12 +18,12 @@ const typeOrmConfig = {
   password: process.env.DB_PASSWORD || '',
   database: process.env.DB_DATABASE || 'my_db',
   dropSchema: process.env.DROPSCHEMA === 'true', // Convert string to boolean
+  synchronize: process.env.DROPSCHEMA === 'true',
   autoloadEntities: true,
-  //logging: true, 
+  //logging: true,
   logging: ['error'],
   entities: ['dist/**/*.entity{.ts,.js}'],
   migrations: ['dist/migrations/*{.ts,.js}'],
-  synchronize: true,
 };
 
 export default registerAs('typeorm', () => typeOrmConfig);

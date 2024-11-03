@@ -15,11 +15,11 @@ const typeOrmConfig = {
     password: process.env.DB_PASSWORD || '',
     database: process.env.DB_DATABASE || 'my_db',
     dropSchema: process.env.DROPSCHEMA === 'true',
+    synchronize: process.env.DROPSCHEMA === 'true',
     autoloadEntities: true,
     logging: ['error'],
     entities: ['dist/**/*.entity{.ts,.js}'],
     migrations: ['dist/migrations/*{.ts,.js}'],
-    synchronize: true,
 };
 exports.default = (0, config_1.registerAs)('typeorm', () => typeOrmConfig);
 exports.conectionSource = new typeorm_1.DataSource(typeOrmConfig);

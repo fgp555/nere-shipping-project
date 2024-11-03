@@ -15,7 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ReportController = void 0;
 const common_1 = require("@nestjs/common");
 const report_service_1 = require("./report.service");
-const create_report_dto_1 = require("./dto/create-report.dto");
 const update_report_dto_1 = require("./dto/update-report.dto");
 let ReportController = class ReportController {
     constructor(reportService) {
@@ -45,7 +44,7 @@ __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_report_dto_1.CreateReportDto]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], ReportController.prototype, "create", null);
 __decorate([

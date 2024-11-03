@@ -1,8 +1,9 @@
-### Obtener todos los usuarios
-GET http://localhost:3000/api/report
+### Obtener todos los Reports
+GET https://fpshippingsolutions.com/api/report
+Content-Type: application/json
 
-### Crear un nuevo usuario 
-POST http://localhost:3000/api/report
+### Crear un nuevo usuario
+POST https://fpshippingsolutions.com/api/report
 Content-Type: application/json
 
 {

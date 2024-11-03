@@ -26,28 +26,28 @@
       <form id="reportForm" enctype="multipart/form-data">
         <!-- Select para seleccionar el mbl_code -->
         <label for="mbl_code">Seleccionar MBL Code:</label>
-        <select id="mbl_code" name="mbl_code" required>
+        <select id="mbl_code" name="mbl_code" required onchange="saveToLocalStorage()">
           <option value="">Selecciona un código</option>
         </select>
         <br /><br />
 
         <label for="notes">Notas (una por línea):</label>
-        <textarea id="notes" name="notes" required oninput="autoResize(this)">Cada salto de línea es un nuevo elemento</textarea>
+        <textarea id="notes" name="notes" required oninput="autoResize(this); saveToLocalStorage()">Cada salto de línea es un nuevo elemento</textarea>
         <br /><br />
 
         <label for="foot_note">Nota al Pie:</label>
-        <textarea id="foot_note" name="foot_note" required oninput="autoResize(this)">Roof panel scratched - refrigerated panel torn / dented.</textarea>
+        <textarea id="foot_note" name="foot_note" required oninput="autoResize(this); saveToLocalStorage()">Roof panel scratched - refrigerated panel torn / dented.</textarea>
         <br /><br />
 
         <div id="imagesGroupContainer">
           <article class="images-group">
             <hr />
             <h3>Grupo de Imágenes 1</h3>
-            <input type="file" name="images_group_1" multiple required onchange="handleFileSelect(this, 1)" />
+            <input type="file" name="images_group_1" multiple required onchange="handleFileSelect(this, 1); saveToLocalStorage()" />
             <div id="preview_group_1" class="image-preview"></div>
             <br />
             <label>Notas para las imágenes (una por línea):</label>
-            <textarea name="images_notes_1" oninput="autoResize(this)">Cada salto de línea es un nuevo elemento</textarea>
+            <textarea name="images_notes_1" oninput="autoResize(this); saveToLocalStorage()">Cada salto de línea es un nuevo elemento</textarea>
             <hr />
           </article>
         </div>
@@ -63,6 +63,7 @@
       <script>
         document.addEventListener("DOMContentLoaded", () => {
           loadMblCodes();
+          loadFromLocalStorage();
         });
 
         async function loadMblCodes() {
@@ -89,6 +90,37 @@
         let groupCounter = 1;
         const MAX_WIDTH = 500;
 
+        function saveToLocalStorage() {
+          const formData = {
+            mbl_code: document.getElementById("mbl_code").value,
+            notes: document.getElementById("notes").value,
+            foot_note: document.getElementById("foot_note").value,
+          };
+
+          const imageGroups = document.querySelectorAll(".images-group");
+          formData.imagesGroups = Array.from(imageGroups).map((group, index) => {
+            const notes = group.querySelector(`textarea[name='images_notes_${index + 1}']`).value;
+            return { notes };
+          });
+
+          localStorage.setItem("t4_unstuffing_data", JSON.stringify(formData));
+        }
+
+        function loadFromLocalStorage() {
+          const savedData = JSON.parse(localStorage.getItem("t4_unstuffing_data"));
+          if (savedData) {
+            document.getElementById("mbl_code").value = savedData.mbl_code || "";
+            document.getElementById("notes").value = savedData.notes || "";
+            document.getElementById("foot_note").value = savedData.foot_note || "";
+
+            const imageGroups = document.querySelectorAll(".images-group");
+            savedData.imagesGroups.forEach((groupData, index) => {
+              const notesInput = imageGroups[index].querySelector(`textarea[name='images_notes_${index + 1}']`);
+              if (notesInput) notesInput.value = groupData.notes || "";
+            });
+          }
+        }
+
         function addImageGroup() {
           groupCounter++;
           const container = document.getElementById("imagesGroupContainer");
@@ -98,11 +130,11 @@
           newGroup.innerHTML = `
             <hr />
             <h3>Grupo de Imágenes ${groupCounter}</h3>
-            <input type="file" name="images_group_${groupCounter}" multiple required onchange="handleFileSelect(this, ${groupCounter})">
+            <input type="file" name="images_group_${groupCounter}" multiple required onchange="handleFileSelect(this, ${groupCounter}); saveToLocalStorage()">
             <div id="preview_group_${groupCounter}" class="image-preview"></div>
             <br>
             <label>Notas para las imágenes (una por línea):</label>
-            <textarea name="images_notes_${groupCounter}" oninput="autoResize(this)">note 1\nnote 2</textarea>
+            <textarea name="images_notes_${groupCounter}" oninput="autoResize(this); saveToLocalStorage()">note 1\nnote 2</textarea>
             <hr />
           `;
 
@@ -178,8 +210,7 @@
           const formData = new FormData();
           const notes = normalizeNewlines(document.getElementById("notes").value).split("\n");
           const foot_note = normalizeNewlines(document.getElementById("foot_note").value);
-          const mbl_code = document.getElementById("mbl_code").value; // Asegúrate de usar .value para obtener el valor
-
+          const mbl_code = document.getElementById("mbl_code").value;
 
           formData.append("notes", JSON.stringify(notes));
           formData.append("foot_note", foot_note);
@@ -195,6 +226,7 @@
 
             if (response.ok) {
               alert("Informe subido exitosamente.");
+              // localStorage.removeItem("t4_unstuffing_data"); // Limpiar localStorage al enviar
             } else {
               alert("Error al subir el informe.");
             }

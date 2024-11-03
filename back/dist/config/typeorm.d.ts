@@ -7,11 +7,11 @@ declare const _default: (() => {
     password: string;
     database: string;
     dropSchema: boolean;
+    synchronize: boolean;
     autoloadEntities: boolean;
     logging: string[];
     entities: string[];
     migrations: string[];
-    synchronize: boolean;
 }) & import("@nestjs/config").ConfigFactoryKeyHost<{
     type: string;
     host: string;
@@ -20,11 +20,11 @@ declare const _default: (() => {
     password: string;
     database: string;
     dropSchema: boolean;
+    synchronize: boolean;
     autoloadEntities: boolean;
     logging: string[];
     entities: string[];
     migrations: string[];
-    synchronize: boolean;
 }>;
 export default _default;
 export declare const conectionSource: DataSource;

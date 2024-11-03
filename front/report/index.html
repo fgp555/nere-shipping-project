@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crear Reporte</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" />
+    <style>
+      textarea {
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <header></header>
+
+    <main class="container">
+      <article>
+        <a class="btn" href="/"><button>⬅️ Retroceder</button></a>
+      </article>
+
+      <h1>Crear Reporte</h1>
+
+      <form id="reportForm">
+        <fieldset>
+          <legend>Detalles del MBL</legend>
+          <label for="mbl_code">MBL Code:</label>
+          <input type="text" id="mbl_code" name="mbl_code" value="ONEYHAME90065700" required onchange="saveToLocalStorage()" />
+        </fieldset>
+
+        <fieldset>
+          <legend>Detalles del Header</legend>
+          <label for="header_name">Nombre:</label>
+          <input type="text" id="header_name" name="header_name" value="FLAVIO A. PREZIOSA" required onchange="saveToLocalStorage()" />
+
+          <label for="header_address">Dirección:</label>
+          <input type="text" id="header_address" name="header_address" value="Habana 2874 - 1419 - Buenos Aires - Argentina" required onchange="saveToLocalStorage()" />
+
+          <label for="header_mobile">Teléfono:</label>
+          <input type="text" id="header_mobile" name="header_mobile" value="M +54 911 6677 2741" required onchange="saveToLocalStorage()" />
+
+          <label for="header_email">Email:</label>
+          <input type="text" id="header_email" name="header_email" value="flaviopreziosa@gmail.com / flaviopreziosa@fibertel.com.ar" required onchange="saveToLocalStorage()" />
+
+          <label for="report_date">Fecha del Reporte:</label>
+          <input type="text" id="report_date" name="report_date" value="Buenos Aires, 30th September 2024" required onchange="saveToLocalStorage()" />
+
+          <label for="cliente_senores">Señores:</label>
+          <input type="text" id="cliente_senores" name="cliente_senores" value="Messrs" required onchange="saveToLocalStorage()" />
+
+          <label for="cliente_empresa">Empresa:</label>
+          <input type="text" id="cliente_empresa" name="cliente_empresa" value="SACO Shipping GmbH" required onchange="saveToLocalStorage()" />
+
+          <label for="cliente_deposito">Depósito:</label>
+          <input type="text" id="cliente_deposito" name="cliente_deposito" value="Wollkammereistr 1" required onchange="saveToLocalStorage()" />
+
+          <label for="cliente_postal">Código Postal:</label>
+          <input type="text" id="cliente_postal" name="cliente_postal" value="D-21107 Hamburg" required onchange="saveToLocalStorage()" />
+
+          <label for="operador_area">Área del Operador:</label>
+          <input type="text" id="operador_area" name="operador_area" value="Export & Import operations" required onchange="saveToLocalStorage()" />
+
+          <label for="operador_responsables1">Responsables 1:</label>
+          <input type="text" id="operador_responsables1" name="operador_responsables1" value="Arne Schulte / Lars Reil" required onchange="saveToLocalStorage()" />
+
+          <label for="operador_responsables2">Responsables 2:</label>
+          <input type="text" id="operador_responsables2" name="operador_responsables2" value="Gisel Gimenez / Florencia Bavaro" required onchange="saveToLocalStorage()" />
+
+          <label for="report_mv">MV Reporte:</label>
+          <input type="text" id="report_mv" name="report_mv" value="m.v. XIN CHANG SHA COMPLETAR" required onchange="saveToLocalStorage()" />
+
+          <label for="containers_reporte">Reporte de Contenedores:</label>
+          <input type="text" id="containers_reporte" name="containers_reporte" value="IMPORT CONTAINERS UNSTUFFING REPORT" required onchange="saveToLocalStorage()" />
+
+          <label for="containers_leyenda">Leyenda de Contenedores:</label>
+          <input type="text" id="containers_leyenda" name="containers_leyenda" value="GROUPAGE CONTAINERS" required onchange="saveToLocalStorage()" />
+
+          <!-- <label for="containers_code">Códigos de Contenedores (separados por comas):</label>
+          <input type="text" id="containers_code" name="containers_code" value="FSCU57267991,FSCU57267992" required onchange="saveToLocalStorage()" /> -->
+          <label for="containers_code">Códigos de Contenedores:</label>
+          <div id="containerCodesSection">
+            <input type="text" name="container_code[]" placeholder="Código del contenedor" value="FSCU57267991" required onchange="saveToLocalStorage()" />
+          </div>
+          <button type="button" onclick="addContainerCode(); addRelevantTime(); addSecuringSeal()">Añadir Contenedor</button>
+
+          <label for="containers_descripcion">Descripción de Contenedores:</label>
+          <input
+            type="text"
+            id="containers_descripcion"
+            name="containers_descripcion"
+            value="1 x 40-ft non-operating reefer container & 1 x 40-ft DV container stuffed with consolidated cargo"
+            required
+            onchange="saveToLocalStorage()"
+          />
+
+          <label for="containers_destino">Destino de Contenedores:</label>
+          <input type="text" id="containers_destino" name="containers_destino" value="Buenos Aires - Argentina" required onchange="saveToLocalStorage()" />
+
+          <label for="report_description">Descripción del Reporte:</label>
+          <textarea id="report_description" name="report_description" required oninput="autoResize(this); saveToLocalStorage()" onchange="saveToLocalStorage()">
+In compliance with the instructions given by Messrs. ¨SACO Shipping GmbH¨ - Hamburg, the acting cargo surveyor of this bureau attended at the customs bonded warehouse (CFS) ¨Gemez S.A.¨, Buenos Aires - Argentina, on 25th September 2024 with the purpose of monitoring the whole stripping operation of the ISO (45G1 & 45R1) multi-modal shipping containers.</textarea
+          >
+
+          <label for="report_note">Nota del Reporte:</label>
+          <textarea id="report_note" name="report_note" required oninput="autoResize(this); saveToLocalStorage()" onchange="saveToLocalStorage()">
+given the great amount of pictures taken during this survey, few of them are shown just for illustrative purposes.</textarea
+          >
+        </fieldset>
+
+        <fieldset>
+          <legend>Detalles del Embarque</legend>
+          <label for="vessel">Vessel:</label>
+          <input type="text" id="vessel" name="vessel" value="XIN CHANG SHA" required onchange="saveToLocalStorage()" />
+
+          <label for="voyage">Voyage:</label>
+          <input type="text" id="voyage" name="voyage" value="402S" required onchange="saveToLocalStorage()" />
+
+          <label for="pol">Puerto de Origen (POL):</label>
+          <input type="text" id="pol" name="pol" value="Hamburg, Germany" required onchange="saveToLocalStorage()" />
+
+          <label for="shipper">Shipper:</label>
+          <input type="text" id="shipper" name="shipper" value="SACO Shipping GmbH" required onchange="saveToLocalStorage()" />
+
+          <label for="pod">Puerto de Destino (POD):</label>
+          <input type="text" id="pod" name="pod" value="Buenos Aires, Argentina" required onchange="saveToLocalStorage()" />
+
+          <label for="consignee">Consignee:</label>
+          <input type="text" id="consignee" name="consignee" value="SACO Shipping S.A." required onchange="saveToLocalStorage()" />
+
+          <label for="qty_of_pkgs">Cantidad de Paquetes:</label>
+          <input type="text" id="qty_of_pkgs" name="qty_of_pkgs" value="94" required onchange="saveToLocalStorage()" />
+
+          <label for="goods">Bienes:</label>
+          <input type="text" id="goods" name="goods" value="Consolidated cargo" required onchange="saveToLocalStorage()" />
+
+          <label for="gross_weight">Peso Bruto:</label>
+          <input type="text" id="gross_weight" name="gross_weight" value="38,068.90 kg." required onchange="saveToLocalStorage()" />
+
+          <label for="note">Nota:</label>
+          <textarea id="note" name="note" required onchange="saveToLocalStorage()" oninput="autoResize(this); saveToLocalStorage()">
+(*) For additional information, please refer to cargo´s documents.</textarea
+          >
+        </fieldset>
+
+        <!-- Sección de tiempos relevantes -->
+        <fieldset id="relevantTimesSection">
+          <legend>Tiempos Relevantes</legend>
+          <!-- <button type="button" onclick="addRelevantTime()">Añadir Tiempo</button> -->
+        </fieldset>
+
+        <!-- Sección de securing seals -->
+        <fieldset id="securingSealsSection">
+          <legend>Seguridad de Sellos</legend>
+          <!-- <button type="button" onclick="addSecuringSeal()">Añadir Sello</button> -->
+        </fieldset>
+
+        <fieldset>
+          <legend>Pie de Página</legend>
+          <label for="weather_status">Estado del Clima:</label>
+          <input type="text" id="weather_status" name="weather_status" value="Hot/cloudy" required onchange="saveToLocalStorage()" />
+
+          <label for="legend">Leyenda:</label>
+          <input type="text" id="legend" name="legend" value="SIGNED WITHOUT PREJUDICE" required onchange="saveToLocalStorage()" />
+
+          <label for="who_signs">Firmado por:</label>
+          <input type="text" id="who_signs" name="who_signs" value="Flavio Preziosa" required onchange="saveToLocalStorage()" />
+
+          <label for="cargo">Cargo:</label>
+          <input type="text" id="cargo" name="cargo" value="Independent Cargo Surveyor" required onchange="saveToLocalStorage()" />
+        </fieldset>
+
+        <button type="submit">Enviar</button>
+      </form>
+
+      <script>
+        function addContainerCode() {
+          const containerCodesSection = document.getElementById("containerCodesSection");
+          const newInput = document.createElement("input");
+          newInput.type = "text";
+          newInput.name = "container_code[]";
+          newInput.placeholder = "Código del contenedor";
+          newInput.value = "FSCU57267992";
+          newInput.required = true;
+          newInput.onchange = saveToLocalStorage;
+          containerCodesSection.appendChild(newInput);
+        }
+
+        function saveToLocalStorage() {
+          const formData = {
+            mbl_code: document.getElementById("mbl_code").value,
+            header_name: document.getElementById("header_name").value,
+            header_address: document.getElementById("header_address").value,
+            header_mobile: document.getElementById("header_mobile").value,
+            header_email: document.getElementById("header_email").value,
+            report_date: document.getElementById("report_date").value,
+            cliente_senores: document.getElementById("cliente_senores").value,
+            cliente_empresa: document.getElementById("cliente_empresa").value,
+            cliente_deposito: document.getElementById("cliente_deposito").value,
+            cliente_postal: document.getElementById("cliente_postal").value,
+            operador_area: document.getElementById("operador_area").value,
+            operador_responsables1: document.getElementById("operador_responsables1").value,
+            operador_responsables2: document.getElementById("operador_responsables2").value,
+            report_mv: document.getElementById("report_mv").value,
+            containers_reporte: document.getElementById("containers_reporte").value,
+            containers_leyenda: document.getElementById("containers_leyenda").value,
+            containers_code: document.getElementById("containers_code").value,
+            containers_descripcion: document.getElementById("containers_descripcion").value,
+            containers_destino: document.getElementById("containers_destino").value,
+            report_description: document.getElementById("report_description").value,
+            report_note: document.getElementById("report_note").value,
+            vessel: document.getElementById("vessel").value,
+            voyage: document.getElementById("voyage").value,
+            pol: document.getElementById("pol").value,
+            shipper: document.getElementById("shipper").value,
+            pod: document.getElementById("pod").value,
+            consignee: document.getElementById("consignee").value,
+            qty_of_pkgs: document.getElementById("qty_of_pkgs").value,
+            goods: document.getElementById("goods").value,
+            gross_weight: document.getElementById("gross_weight").value,
+            note: document.getElementById("note").value,
+            weather_status: document.getElementById("weather_status").value,
+            legend: document.getElementById("legend").value,
+            who_signs: document.getElementById("who_signs").value,
+            cargo: document.getElementById("cargo").value,
+          };
+          localStorage.setItem("reportFormData", JSON.stringify(formData));
+        }
+
+        window.onload = function () {
+          const savedData = JSON.parse(localStorage.getItem("reportFormData"));
+          if (savedData) {
+            Object.keys(savedData).forEach((id) => {
+              if (document.getElementById(id)) {
+                document.getElementById(id).value = savedData[id];
+              }
+            });
+          }
+        };
+
+        // ==========  ==========
+        document.getElementById("reportForm").addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          // Obtén los valores de todos los inputs `container_code[]` y crea un array
+          const containerCodes = Array.from(document.querySelectorAll("input[name='container_code[]']")).map((input) => input.value);
+
+          const formData = {
+            mbl_code: document.getElementById("mbl_code").value,
+            t0_header: {
+              header_name: document.getElementById("header_name").value,
+              header_address: document.getElementById("header_address").value,
+              header_mobile: document.getElementById("header_mobile").value,
+              header_email: document.getElementById("header_email").value,
+              report_date: document.getElementById("report_date").value,
+              cliente_senores: document.getElementById("cliente_senores").value,
+              cliente_empresa: document.getElementById("cliente_empresa").value,
+              cliente_deposito: document.getElementById("cliente_deposito").value,
+              cliente_postal: document.getElementById("cliente_postal").value,
+              operador_area: document.getElementById("operador_area").value,
+              operador_responsables1: document.getElementById("operador_responsables1").value,
+              operador_responsables2: document.getElementById("operador_responsables2").value,
+              report_mv: document.getElementById("report_mv").value,
+              containers_reporte: document.getElementById("containers_reporte").value,
+              containers_leyenda: document.getElementById("containers_leyenda").value,
+              containers_code: containerCodes, // Aquí se asigna el array de códigos
+              containers_descripcion: document.getElementById("containers_descripcion").value,
+              containers_destino: document.getElementById("containers_destino").value,
+              report_description: document.getElementById("report_description").value,
+              report_note: document.getElementById("report_note").value,
+            },
+            t1_details_shipment: {
+              vessel: document.getElementById("vessel").value,
+              voyage: document.getElementById("voyage").value,
+              mbl_code: document.getElementById("mbl_code").value, // Asegúrate de que esté incluido aquí también
+              pol: document.getElementById("pol").value,
+              shipper: document.getElementById("shipper").value,
+              pod: document.getElementById("pod").value,
+              consignee: document.getElementById("consignee").value,
+              qty_of_pkgs: document.getElementById("qty_of_pkgs").value,
+              goods: document.getElementById("goods").value,
+              gross_weight: document.getElementById("gross_weight").value,
+              note: document.getElementById("note").value,
+            },
+            T2_relevant_times: Array.from(document.querySelectorAll(".relevant-time")).map((section) => ({
+              date: section.querySelector(".date").value,
+              container_code: section.querySelector(".container_code").value,
+              qty_of_pkgs: section.querySelector(".qty_of_pkgs").value,
+              start: section.querySelector(".start").value,
+              complete: section.querySelector(".complete").value,
+              time_used_to_survey: section.querySelector(".time_used_to_survey").value,
+            })),
+            t3_securing_seals: Array.from(document.querySelectorAll(".securing-seal")).map((section) => ({
+              container_code: section.querySelector(".seal_container_code").value,
+              type: section.querySelector(".type").value,
+              wwas_safety_seals: section.querySelector(".safety_seal").value,
+              argentinean_customs_seal: section.querySelector(".customs_seal").value,
+              others: section.querySelector(".others").value,
+            })),
+            t6_footer: {
+              weather_status: document.getElementById("weather_status").value,
+              legend: document.getElementById("legend").value,
+              who_signs: document.getElementById("who_signs").value,
+              cargo: document.getElementById("cargo").value,
+            },
+          };
+
+          try {
+            const response = await fetch("/api/report", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(formData),
+            });
+
+            if (response.ok) {
+              alert("Reporte enviado exitosamente");
+            } else {
+              const errorData = await response.json(); // Obtiene los detalles del error
+              console.error("Error en la respuesta:", errorData); // Imprime detalles del error en consola
+              alert(`Error al enviar el reporte: ${errorData.message || "conflicto de datos"}`);
+            }
+          } catch (error) {
+            console.error("Error:", error);
+            alert("Error al enviar el reporte.");
+          }
+        });
+
+        function addRelevantTime() {
+          const section = document.createElement("fieldset");
+          section.className = "relevant-time";
+          section.innerHTML = `
+          <legend>Tiempo Relevante</legend>
+          <label>Fecha:</label>
+          <input type="text" class="date" value="25-sep-24" required onchange="saveToLocalStorage()" >
+
+          <label>Código de Contenedor:</label>
+          <input type="text" class="container_code" value="FSCU5726799" required onchange="saveToLocalStorage()" >
+
+          <label>Cantidad de Paquetes:</label>
+          <input type="text" class="qty_of_pkgs" value="59" required onchange="saveToLocalStorage()" >
+
+          <label>Inicio:</label>
+          <input type="text" class="start">
+
+          <label>Completo:</label>
+          <input type="text" class="complete">
+
+          <label>Tiempo de Inspección:</label>
+          <input type="text" class="time_used_to_survey">
+        `;
+          document.getElementById("relevantTimesSection").appendChild(section);
+        }
+        addRelevantTime();
+
+        function addSecuringSeal() {
+          const section = document.createElement("fieldset");
+          section.className = "securing-seal";
+          section.innerHTML = `
+          <legend>Sello de Seguridad</legend>
+          <label>Código de Contenedor:</label>
+          <input type="text" class="seal_container_code" value="FSCU5726799" required onchange="saveToLocalStorage()" >
+
+          <label>Tipo:</label>
+          <input type="text" class="type" value="RF" required onchange="saveToLocalStorage()" >
+
+          <label>Sello de Seguridad WWAS:</label>
+          <input type="text" class="safety_seal" value="01-0265193" required onchange="saveToLocalStorage()" >
+
+          <label>Sello de Aduana Argentina:</label>
+          <input type="text" class="customs_seal" value="None">
+
+          <label>Otros:</label>
+          <input type="text" class="others" value="None">
+        `;
+          document.getElementById("securingSealsSection").appendChild(section);
+        }
+        addSecuringSeal();
+
+        function autoResize(textarea) {
+          textarea.style.height = "auto";
+          textarea.style.height = textarea.scrollHeight + "px";
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+          const textareas = document.querySelectorAll("textarea");
+          textareas.forEach((textarea) => autoResize(textarea));
+        });
+
+        function clearLocalStorage() {
+          localStorage.removeItem("reportFormData");
+          document.getElementById("reportForm").reset();
+          alert("Local storage cleared and form reset");
+        }
+      </script>
+      <button type="button" onclick="clearLocalStorage()" style="margin-left: auto; display: block" class="secondary">Clear Local Storage</button>
+    </main>
+    <footer></footer>
+  </body>
+</html>
