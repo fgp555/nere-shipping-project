@@ -18,6 +18,7 @@ const html_pdf_service_1 = require("./html-pdf.service");
 const path = require("path");
 const fs = require("fs");
 const report_service_1 = require("../report/report.service");
+const Handlebars = require("handlebars");
 let HtmlPdfController = class HtmlPdfController {
     constructor(htmlPdfService, reportService) {
         this.htmlPdfService = htmlPdfService;
@@ -44,9 +45,29 @@ let HtmlPdfController = class HtmlPdfController {
     findAll() {
         return this.htmlPdfService.findAll();
     }
-    async download(mbl_code) {
-        const find_mbl_code = await this.findOne_mbl_code(mbl_code);
-        return find_mbl_code;
+    async download(mbl_code, res) {
+        try {
+            const report = await this.findOne_mbl_code(mbl_code);
+            if (!report)
+                throw new common_1.NotFoundException('Report not found');
+            const templatePath = path.join(__dirname, '..', '..', '..', 'templates', 'template.html');
+            const templateHtml = fs.readFileSync(templatePath, 'utf8');
+            const template = Handlebars.compile(templateHtml);
+            const htmlContent = template(report);
+            const pdfBuffer = await this.htmlPdfService.generatePdf({
+                content: htmlContent,
+            });
+            res.set({
+                'Content-Type': 'application/pdf',
+                'Content-Disposition': `attachment; filename="${mbl_code}.pdf"`,
+                'Content-Length': pdfBuffer.length,
+            });
+            res.end(pdfBuffer);
+        }
+        catch (error) {
+            console.error('Error al generar el PDF:', error);
+            res.status(500).send('Error al generar el PDF');
+        }
     }
     async findOne(mbl_code) {
         const report = await this.reportService.findOne(mbl_code);
@@ -82,8 +103,9 @@ __decorate([
 __decorate([
     (0, common_1.Get)('download/:mbl_code'),
     __param(0, (0, common_1.Param)('mbl_code')),
+    __param(1, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", Promise)
 ], HtmlPdfController.prototype, "download", null);
 __decorate([

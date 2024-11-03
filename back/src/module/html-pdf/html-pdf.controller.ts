@@ -4,6 +4,7 @@ import { Response } from 'express';
 import * as path from 'path';
 import * as fs from 'fs';
 import { ReportService } from '../report/report.service';
+import * as Handlebars from 'handlebars';
 
 @Controller('html-pdf')
 export class HtmlPdfController {
@@ -38,10 +39,50 @@ export class HtmlPdfController {
     return this.htmlPdfService.findAll();
   }
 
+  // @Get('download/:mbl_code')
+  // async download(@Param('mbl_code') mbl_code: string) {
+  //   const find_mbl_code = await this.findOne_mbl_code(mbl_code);
+  //   return find_mbl_code;
+  // }
+
   @Get('download/:mbl_code')
-  async download(@Param('mbl_code') mbl_code: string) {
-    const find_mbl_code = await this.findOne_mbl_code(mbl_code);
-    return find_mbl_code;
+  async download(@Param('mbl_code') mbl_code: string, @Res() res: Response) {
+    try {
+      const report = await this.findOne_mbl_code(mbl_code);
+
+      if (!report) throw new NotFoundException('Report not found');
+
+      // Cargar la plantilla HTML
+      const templatePath = path.join(
+        __dirname,
+        '..',
+        '..',
+        '..',
+        'templates',
+        'template.html',
+      );
+      const templateHtml = fs.readFileSync(templatePath, 'utf8');
+
+      // Compilar la plantilla con Handlebars
+      const template = Handlebars.compile(templateHtml);
+      const htmlContent = template(report);
+
+      // Generar el PDF a partir del contenido HTML
+      const pdfBuffer = await this.htmlPdfService.generatePdf({
+        content: htmlContent,
+      });
+
+      // Configurar las cabeceras y enviar el PDF como respuesta
+      res.set({
+        'Content-Type': 'application/pdf',
+        'Content-Disposition': `attachment; filename="${mbl_code}.pdf"`,
+        'Content-Length': pdfBuffer.length,
+      });
+      res.end(pdfBuffer);
+    } catch (error) {
+      console.error('Error al generar el PDF:', error);
+      res.status(500).send('Error al generar el PDF');
+    }
   }
 
   @Get(':mbl_code')
