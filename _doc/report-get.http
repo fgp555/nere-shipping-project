@@ -1,12 +1,3 @@
-# report
-
-### Crear un nuevo usuario
-POST http://localhost:3000/api/report
-Content-Type: application/json
-
-{
-  "mbl_code": "code001"
-}
 
 ### Obtener todos los usuarios
 GET http://localhost:3000/api/report
