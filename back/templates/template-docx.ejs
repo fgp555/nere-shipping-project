@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Documento de Productos</title>
+</head>
+<body>
+    <h1>Lista de Productos</h1>
+    <ul>
+        <% productos.forEach(producto => { %>
+            <li>
+                <h2><%= producto.nombre %></h2>
+                <img src="<%= producto.imagenPath %>" alt="<%= producto.nombre %>" style="width: 200px; height: auto;">
+            </li>
+        <% }) %>
+    </ul>
+</body>
+</html>

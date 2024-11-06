@@ -1,8 +1,14 @@
 ### test enpoint
 GET http://localhost:3000/api/html-pdf
 
-### download pdf test
-GET http://localhost:3000/api/html-pdf/test
+### download_test
+GET http://localhost:3000/api/html-pdf/download_test
+
+### download_template
+GET http://localhost:3000/api/html-pdf/download_template
+
+### download_template
+GET http://localhost:3000/api/html-pdf/render_template
 
 ### find by mbl_code
 GET http://localhost:3000/api/html-pdf/ONEYHAME90065700

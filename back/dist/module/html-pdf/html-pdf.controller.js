@@ -19,12 +19,13 @@ const path = require("path");
 const fs = require("fs");
 const report_service_1 = require("../report/report.service");
 const Handlebars = require("handlebars");
+const ejs = require("ejs");
 let HtmlPdfController = class HtmlPdfController {
     constructor(htmlPdfService, reportService) {
         this.htmlPdfService = htmlPdfService;
         this.reportService = reportService;
     }
-    async createPdf(res) {
+    async download_test(res) {
         try {
             const htmlContent = `<h1>test</h1>`;
             const pdfBuffer = await this.htmlPdfService.generatePdf({
@@ -40,6 +41,65 @@ let HtmlPdfController = class HtmlPdfController {
         catch (error) {
             console.error('Error al generar el PDF:', error);
             res.status(500).send('Error al generar el PDF');
+        }
+    }
+    async download_template(res) {
+        try {
+            const templatePath = path.join(__dirname, '..', '..', '..', 'templates', 'template-html-pdf.ejs');
+            const tempData = [
+                {
+                    id: 1,
+                    name: 'Product 1',
+                    image: 'http://localhost:3000/imgs/img1.jpg?1',
+                },
+                {
+                    id: 2,
+                    name: 'Product 2',
+                    image: 'http://localhost:3000/imgs/img1.jpg?2',
+                },
+                {
+                    id: 3,
+                    name: 'Product 3',
+                    image: 'http://localhost:3000/imgs/img1.jpg?3',
+                },
+            ];
+            const htmlContent = await ejs.renderFile(templatePath, {
+                title: 'Listado de Productos',
+                products: tempData,
+            });
+            const pdfBuffer = await this.htmlPdfService.generatePdfHeadFooter({
+                content: htmlContent,
+            });
+            res.set({
+                'Content-Type': 'application/pdf',
+                'Content-Disposition': 'attachment; filename="productos.pdf"',
+                'Content-Length': pdfBuffer.length,
+            });
+            res.end(pdfBuffer);
+        }
+        catch (error) {
+            console.error('Error al generar el PDF:', error);
+            res.status(500).send('Error al generar el PDF');
+        }
+    }
+    async render_template(res) {
+        try {
+            const templatePath = path.join(__dirname, '..', '..', '..', 'templates', 'template-html-pdf.ejs');
+            const tempData = [
+                { id: 1, name: 'Product 1', image: 'http://localhost:3000/imgs/img1.jpg?1' },
+                { id: 2, name: 'Product 2', image: 'http://localhost:3000/imgs/img1.jpg?2' },
+                { id: 3, name: 'Product 3', image: 'http://localhost:3000/imgs/img1.jpg?3' },
+            ];
+            const htmlContent = await ejs.renderFile(templatePath, {
+                title: 'Listado de Productos',
+                products: tempData,
+            });
+            res.setHeader('Content-Type', 'text/html');
+            res.send(htmlContent);
+        }
+        catch (error) {
+            console.error('Error al renderizar el archivo EJS:', error);
+            res.status(500).send('Error al renderizar el archivo EJS');
         }
     }
     findAll() {
@@ -88,12 +148,26 @@ let HtmlPdfController = class HtmlPdfController {
 };
 exports.HtmlPdfController = HtmlPdfController;
 __decorate([
-    (0, common_1.Get)('test'),
+    (0, common_1.Get)('download_test'),
     __param(0, (0, common_1.Res)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
-], HtmlPdfController.prototype, "createPdf", null);
+], HtmlPdfController.prototype, "download_test", null);
+__decorate([
+    (0, common_1.Get)('download_template'),
+    __param(0, (0, common_1.Res)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], HtmlPdfController.prototype, "download_template", null);
+__decorate([
+    (0, common_1.Get)('render_template'),
+    __param(0, (0, common_1.Res)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], HtmlPdfController.prototype, "render_template", null);
 __decorate([
     (0, common_1.Get)(),
     __metadata("design:type", Function),

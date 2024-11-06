@@ -7,13 +7,14 @@ const config_1 = require("@nestjs/config");
 (0, dotenv_1.config)({ path: '.env' });
 console.info('dropSchema: ', process.env.DROPSCHEMA);
 console.info('DB_TYPE: ', process.env.DB_TYPE);
+console.info("DB_DATABASE: ", process.env.DB_DATABASE);
 const typeOrmConfig = {
     type: process.env.DB_TYPE || 'mysql',
     host: process.env.DB_HOST || 'localhost',
     port: process.env.DB_PORT || 3306,
     username: process.env.DB_USERNAME || 'root',
     password: process.env.DB_PASSWORD || '',
-    database: process.env.DB_DATABASE || 'my_db',
+    database: process.env.DB_DATABASE || 'shipping_db',
     dropSchema: process.env.DROPSCHEMA === 'true',
     synchronize: process.env.DROPSCHEMA === 'true',
     autoloadEntities: true,

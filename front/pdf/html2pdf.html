@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crear Factura y Orden</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background-color: #f4f4f4;
+      }
+      .container {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        width: 100%;
+      }
+      h2,
+      h3,
+      h4 {
+        color: #333;
+      }
+      label {
+        display: block;
+        margin: 15px 0 5px;
+      }
+      input,
+      select {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 1em;
+      }
+      .product-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+      .product-item img {
+        width: 50px;
+        height: 50px;
+        margin-right: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      button {
+        width: 100%;
+        padding: 10px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-size: 1em;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #0056b3;
+      }
+
+      /* CSS para el encabezado y pie de página */
+      .header,
+      .footer {
+        text-align: center;
+        font-size: 0.9em;
+        color: #666;
+      }
+      .footer {
+        margin-top: 20px;
+        border-top: 1px solid #ddd;
+        padding-top: 10px;
+      }
+
+      /* CSS para controlar los saltos de página */
+      .page-break {
+        page-break-before: always;
+      }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div id="invoiceContent">
+        <!-- Encabezado -->
+        <div class="header">
+          <p>Mi Empresa S.A. - Facturación</p>
+          <p>Dirección: Calle Falsa 123, Ciudad, País</p>
+          <p>Teléfono: +1 234 567 8900 | Email: contacto@miempresa.com</p>
+        </div>
+
+        <h2>Crear Nueva Factura y Orden</h2>
+        <form id="invoiceForm">
+          <h3>Factura</h3>
+          <label for="invoiceNumber">Número de Factura:</label>
+          <input type="text" id="invoiceNumber" name="invoiceNumber" value="12345" required />
+
+          <label for="issueDate">Fecha de Emisión:</label>
+          <input type="date" id="issueDate" name="issueDate" value="2024-01-01" required />
+
+          <label for="dueDate">Fecha de Vencimiento:</label>
+          <input type="date" id="dueDate" name="dueDate" value="2024-01-15" required />
+
+          <label for="amount">Monto:</label>
+          <input type="number" step="0.01" id="amount" name="amount" value="500.00" required />
+
+          <label for="invoiceStatus">Estado de la Factura:</label>
+          <select id="invoiceStatus" name="invoiceStatus" required>
+            <option value="pendiente">Pendiente</option>
+            <option value="pagada" selected>Pagada</option>
+            <option value="cancelada">Cancelada</option>
+          </select>
+
+          <div class="page-break"></div>
+
+          <h3>Orden</h3>
+          <label for="orderNumber">Número de Orden:</label>
+          <input type="text" id="orderNumber" name="orderNumber" value="ORD-6789" required />
+
+          <label for="orderDate">Fecha de Orden:</label>
+          <input type="date" id="orderDate" name="orderDate" value="2024-01-02" required />
+
+          <h4>Detalles de Productos</h4>
+          <div class="product-item">
+            <img src="imgdemo.png" alt="Producto 1" />
+            <div>
+              <p><strong>Producto 1:</strong> Descripción del producto 1</p>
+              <p>Precio: $100.00</p>
+            </div>
+          </div>
+          <div class="product-item">
+            <img src="imgdemo.png" alt="Producto 2" />
+            <div>
+              <p><strong>Producto 2:</strong> Descripción del producto 2</p>
+              <p>Precio: $200.00</p>
+            </div>
+          </div>
+          <div class="product-item">
+            <img src="imgdemo.png" alt="Producto 3" />
+            <div>
+              <p><strong>Producto 3:</strong> Descripción del producto 3</p>
+              <p>Precio: $150.00</p>
+            </div>
+          </div>
+        </form>
+
+        <!-- Pie de página -->
+        <div class="footer">
+          <p>Gracias por su compra</p>
+          <p>Para más información, visite nuestro sitio web: www.miempresa.com</p>
+        </div>
+      </div>
+
+      <button type="button" onclick="downloadPDF()">Descargar PDF</button>
+    </div>
+
+    <script>
+      function downloadPDF() {
+        const element = document.getElementById("invoiceContent");
+        html2pdf()
+          .set({
+            margin: 1,
+            filename: `Factura_${document.getElementById("invoiceNumber").value}_Orden_${document.getElementById("orderNumber").value}.pdf`,
+            image: { type: "jpeg", quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: "in", format: "a4", orientation: "portrait" },
+          })
+          .from(element)
+          .save();
+      }
+    </script>
+  </body>
+</html>

@@ -8,7 +8,7 @@ dotevn({ path: '.env' });
 
 console.info('dropSchema: ', process.env.DROPSCHEMA);
 console.info('DB_TYPE: ', process.env.DB_TYPE);
-// console.info("EMAIL_USER: ", process.env.EMAIL_USER)
+console.info("DB_DATABASE: ", process.env.DB_DATABASE)
 
 const typeOrmConfig = {
   type: process.env.DB_TYPE || 'mysql',
@@ -16,7 +16,7 @@ const typeOrmConfig = {
   port: (process.env.DB_PORT as unknown as number) || 3306,
   username: process.env.DB_USERNAME || 'root',
   password: process.env.DB_PASSWORD || '',
-  database: process.env.DB_DATABASE || 'my_db',
+  database: process.env.DB_DATABASE || 'shipping_db',
   dropSchema: process.env.DROPSCHEMA === 'true', // Convert string to boolean
   synchronize: process.env.DROPSCHEMA === 'true',
   autoloadEntities: true,

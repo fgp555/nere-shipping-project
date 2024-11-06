@@ -5,7 +5,9 @@ export declare class HtmlPdfController {
     private readonly htmlPdfService;
     private readonly reportService;
     constructor(htmlPdfService: HtmlPdfService, reportService: ReportService);
-    createPdf(res: Response): Promise<void>;
+    download_test(res: Response): Promise<void>;
+    download_template(res: Response): Promise<void>;
+    render_template(res: Response): Promise<void>;
     findAll(): string;
     download(mbl_code: string, res: Response): Promise<void>;
     findOne(mbl_code: string): Promise<import("../report/entities/report.entity").ReportEntity>;

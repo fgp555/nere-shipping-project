@@ -17,6 +17,7 @@ const t4_unstuffing_module_1 = require("./module/t4_unstuffing/t4_unstuffing.mod
 const report_module_1 = require("./module/report/report.module");
 const t5_damage_module_1 = require("./module/t5_damage/t5_damage.module");
 const html_pdf_module_1 = require("./module/html-pdf/html-pdf.module");
+const info_module_1 = require("./info/info.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -35,6 +36,7 @@ exports.AppModule = AppModule = __decorate([
             report_module_1.ReportModule,
             t5_damage_module_1.T5DamageModule,
             html_pdf_module_1.HtmlPdfModule,
+            info_module_1.InfoModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
