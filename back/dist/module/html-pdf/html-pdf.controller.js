@@ -18,12 +18,14 @@ const html_pdf_service_1 = require("./html-pdf.service");
 const path = require("path");
 const fs = require("fs");
 const report_service_1 = require("../report/report.service");
-const Handlebars = require("handlebars");
 const ejs = require("ejs");
 let HtmlPdfController = class HtmlPdfController {
     constructor(htmlPdfService, reportService) {
         this.htmlPdfService = htmlPdfService;
         this.reportService = reportService;
+    }
+    findAll() {
+        return this.htmlPdfService.findAll();
     }
     async download_test(res) {
         try {
@@ -45,7 +47,7 @@ let HtmlPdfController = class HtmlPdfController {
     }
     async download_template(res) {
         try {
-            const templatePath = path.join(__dirname, '..', '..', '..', 'templates', 'template-html-pdf.ejs');
+            const templatePath = path.join(__dirname, '..', '..', '..', '..', 'front', 'report', 'mbl_code_basic.ejs');
             const tempData = [
                 {
                     id: 1,
@@ -65,7 +67,7 @@ let HtmlPdfController = class HtmlPdfController {
             ];
             const htmlContent = await ejs.renderFile(templatePath, {
                 title: 'Listado de Productos',
-                products: tempData,
+                data: tempData,
             });
             const pdfBuffer = await this.htmlPdfService.generatePdfHeadFooter({
                 content: htmlContent,
@@ -82,17 +84,32 @@ let HtmlPdfController = class HtmlPdfController {
             res.status(500).send('Error al generar el PDF');
         }
     }
-    async render_template(res) {
+    async render_template(mbl_code, res) {
         try {
-            const templatePath = path.join(__dirname, '..', '..', '..', 'templates', 'template-html-pdf.ejs');
+            const report = await this.findOne_mbl_code(mbl_code);
+            if (!report)
+                throw new common_1.NotFoundException('Report not found');
+            const templatePath = path.join(__dirname, '..', '..', '..', '..', 'front', 'report', 'mbl_code_data.ejs');
             const tempData = [
-                { id: 1, name: 'Product 1', image: 'http://localhost:3000/imgs/img1.jpg?1' },
-                { id: 2, name: 'Product 2', image: 'http://localhost:3000/imgs/img1.jpg?2' },
-                { id: 3, name: 'Product 3', image: 'http://localhost:3000/imgs/img1.jpg?3' },
+                {
+                    id: 1,
+                    name: 'Product 1',
+                    image: 'http://localhost:3000/imgs/img1.jpg?1',
+                },
+                {
+                    id: 2,
+                    name: 'Product 2',
+                    image: 'http://localhost:3000/imgs/img1.jpg?2',
+                },
+                {
+                    id: 3,
+                    name: 'Product 3',
+                    image: 'http://localhost:3000/imgs/img1.jpg?3',
+                },
             ];
             const htmlContent = await ejs.renderFile(templatePath, {
                 title: 'Listado de Productos',
-                products: tempData,
+                report: report,
             });
             res.setHeader('Content-Type', 'text/html');
             res.send(htmlContent);
@@ -102,24 +119,22 @@ let HtmlPdfController = class HtmlPdfController {
             res.status(500).send('Error al renderizar el archivo EJS');
         }
     }
-    findAll() {
-        return this.htmlPdfService.findAll();
-    }
     async download(mbl_code, res) {
         try {
             const report = await this.findOne_mbl_code(mbl_code);
             if (!report)
                 throw new common_1.NotFoundException('Report not found');
-            const templatePath = path.join(__dirname, '..', '..', '..', 'templates', 'template.html');
-            const templateHtml = fs.readFileSync(templatePath, 'utf8');
-            const template = Handlebars.compile(templateHtml);
-            const htmlContent = template(report);
-            const pdfBuffer = await this.htmlPdfService.generatePdf({
+            const templatePath = path.join(__dirname, '..', '..', '..', '..', 'front', 'report', 'mbl_code_data.ejs');
+            const htmlContent = await ejs.renderFile(templatePath, {
+                title: 'Listado de Productos',
+                report: report,
+            });
+            const pdfBuffer = await this.htmlPdfService.generatePdfHeadFooter({
                 content: htmlContent,
             });
             res.set({
                 'Content-Type': 'application/pdf',
-                'Content-Disposition': `attachment; filename="${mbl_code}.pdf"`,
+                'Content-Disposition': 'attachment; filename="productos.pdf"',
                 'Content-Length': pdfBuffer.length,
             });
             res.end(pdfBuffer);
@@ -148,6 +163,12 @@ let HtmlPdfController = class HtmlPdfController {
 };
 exports.HtmlPdfController = HtmlPdfController;
 __decorate([
+    (0, common_1.Get)(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], HtmlPdfController.prototype, "findAll", null);
+__decorate([
     (0, common_1.Get)('download_test'),
     __param(0, (0, common_1.Res)()),
     __metadata("design:type", Function),
@@ -162,18 +183,13 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], HtmlPdfController.prototype, "download_template", null);
 __decorate([
-    (0, common_1.Get)('render_template'),
-    __param(0, (0, common_1.Res)()),
+    (0, common_1.Get)('render/:mbl_code'),
+    __param(0, (0, common_1.Param)('mbl_code')),
+    __param(1, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", Promise)
 ], HtmlPdfController.prototype, "render_template", null);
-__decorate([
-    (0, common_1.Get)(),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], HtmlPdfController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)('download/:mbl_code'),
     __param(0, (0, common_1.Param)('mbl_code')),

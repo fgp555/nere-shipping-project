@@ -14,6 +14,12 @@ export class HtmlPdfController {
     private readonly reportService: ReportService,
   ) {}
 
+  @Get()
+  findAll() {
+    // return `This action returns all htmlPdf`;
+    return this.htmlPdfService.findAll();
+  }
+
   @Get('download_test')
   async download_test(@Res() res: Response) {
     try {
@@ -44,8 +50,10 @@ export class HtmlPdfController {
         '..',
         '..',
         '..',
-        'templates',
-        'template-html-pdf.ejs',
+        '..',
+        'front',
+        'report',
+        'mbl_code_basic.ejs',
       );
 
       // Datos temporales para la plantilla
@@ -70,7 +78,7 @@ export class HtmlPdfController {
       // Renderizar el contenido del archivo EJS con los datos
       const htmlContent = await ejs.renderFile(templatePath, {
         title: 'Listado de Productos',
-        products: tempData,
+        data: tempData,
       });
 
       // Generar el PDF utilizando el HTML renderizado
@@ -91,27 +99,47 @@ export class HtmlPdfController {
     }
   }
 
-  @Get('render_template')
-  async render_template(@Res() res: Response) {
+  @Get('render/:mbl_code')
+  async render_template(
+    @Param('mbl_code') mbl_code: string,
+    @Res() res: Response,
+  ) {
     try {
+      const report = await this.findOne_mbl_code(mbl_code);
+      if (!report) throw new NotFoundException('Report not found');
+
       const templatePath = path.join(
         __dirname,
         '..',
         '..',
         '..',
-        'templates',
-        'template-html-pdf.ejs',
+        '..',
+        'front',
+        'report',
+        'mbl_code_data.ejs',
       );
 
       const tempData = [
-        { id: 1, name: 'Product 1', image: 'http://localhost:3000/imgs/img1.jpg?1' },
-        { id: 2, name: 'Product 2', image: 'http://localhost:3000/imgs/img1.jpg?2' },
-        { id: 3, name: 'Product 3', image: 'http://localhost:3000/imgs/img1.jpg?3' },
+        {
+          id: 1,
+          name: 'Product 1',
+          image: 'http://localhost:3000/imgs/img1.jpg?1',
+        },
+        {
+          id: 2,
+          name: 'Product 2',
+          image: 'http://localhost:3000/imgs/img1.jpg?2',
+        },
+        {
+          id: 3,
+          name: 'Product 3',
+          image: 'http://localhost:3000/imgs/img1.jpg?3',
+        },
       ];
 
       const htmlContent = await ejs.renderFile(templatePath, {
         title: 'Listado de Productos',
-        products: tempData,
+        report: report,
       });
 
       res.setHeader('Content-Type', 'text/html');
@@ -122,22 +150,10 @@ export class HtmlPdfController {
     }
   }
 
-  @Get()
-  findAll() {
-    return this.htmlPdfService.findAll();
-  }
-
-  // @Get('download/:mbl_code')
-  // async download(@Param('mbl_code') mbl_code: string) {
-  //   const find_mbl_code = await this.findOne_mbl_code(mbl_code);
-  //   return find_mbl_code;
-  // }
-
   @Get('download/:mbl_code')
   async download(@Param('mbl_code') mbl_code: string, @Res() res: Response) {
     try {
       const report = await this.findOne_mbl_code(mbl_code);
-
       if (!report) throw new NotFoundException('Report not found');
 
       // Cargar la plantilla HTML
@@ -146,24 +162,27 @@ export class HtmlPdfController {
         '..',
         '..',
         '..',
-        'templates',
-        'template.html',
+        '..',
+        'front',
+        'report',
+        'mbl_code_data.ejs',
       );
-      const templateHtml = fs.readFileSync(templatePath, 'utf8');
 
-      // Compilar la plantilla con Handlebars
-      const template = Handlebars.compile(templateHtml);
-      const htmlContent = template(report);
+      // Renderizar el contenido del archivo EJS con los datos
+      const htmlContent = await ejs.renderFile(templatePath, {
+        title: 'Listado de Productos',
+        report: report,
+      });
 
-      // Generar el PDF a partir del contenido HTML
-      const pdfBuffer = await this.htmlPdfService.generatePdf({
+      // Generar el PDF utilizando el HTML renderizado
+      const pdfBuffer = await this.htmlPdfService.generatePdfHeadFooter({
         content: htmlContent,
       });
 
-      // Configurar las cabeceras y enviar el PDF como respuesta
+      // Configurar y enviar el PDF como respuesta
       res.set({
         'Content-Type': 'application/pdf',
-        'Content-Disposition': `attachment; filename="${mbl_code}.pdf"`,
+        'Content-Disposition': 'attachment; filename="productos.pdf"',
         'Content-Length': pdfBuffer.length,
       });
       res.end(pdfBuffer);

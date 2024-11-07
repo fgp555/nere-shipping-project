@@ -37,14 +37,22 @@ let HtmlPdfService = class HtmlPdfService {
         const options = {
             format: 'A4',
             border: {
-                top: '1in',
                 right: '0.5in',
-                bottom: '1in',
                 left: '0.5in',
             },
             header: {
-                height: '1in',
-                contents: '<div style="text-align: center;">Encabezado - Mi empresa</div>',
+                height: '2in',
+                contents: `
+        <div>
+          <b>
+            <p>FLAVIO A. PREZIOSA</p>
+            <p>Habana 2874 - 1419 - Buenos Aires - Argentina</p>
+            <p>M +54 911 6677 2741</p>
+            <p>flaviopreziosa@gmail.com / flaviopreziosa@fibertel.com.ar</p>
+            <hr>
+          </b>
+        </div>
+          `,
             },
             footer: {
                 height: '1in',
