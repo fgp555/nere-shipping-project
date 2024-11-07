@@ -9,81 +9,84 @@
       textarea {
         overflow: hidden;
       }
+      .title_h2 {
+        /* text-align: center; */
+        color: bisque;
+        text-decoration: underline;
+      }
     </style>
   </head>
   <body>
     <header></header>
 
     <main class="container">
-      <article>
+      <article style="display: flex; justify-content: space-between">
         <a class="btn" href="/"><button>⬅️ Retroceder</button></a>
+        <button type="button" onclick="clearLocalStorage()" style="margin-left: auto; display: inline-block; background-color: red; border: none">Clear Local Storage</button>
       </article>
 
-      <h1>Crear Reporte</h1>
+      <h1><span style="color: greenyellow">Create</span> Report</h1>
 
       <form id="reportForm">
         <fieldset>
-          <legend>Detalles del MBL</legend>
-          <label for="mbl_code">MBL Code:</label>
-          <input type="text" id="mbl_code" name="mbl_code" value="ONEYHAME90065700" required onchange="saveToLocalStorage()" />
-        </fieldset>
-
-        <fieldset>
-          <legend>Detalles del Header</legend>
-          <label for="header_name">Nombre:</label>
+          <label for="header_name">Name:</label>
           <input type="text" id="header_name" name="header_name" value="FLAVIO A. PREZIOSA" required onchange="saveToLocalStorage()" />
 
-          <label for="header_address">Dirección:</label>
+          <label for="header_address">Address:</label>
           <input type="text" id="header_address" name="header_address" value="Habana 2874 - 1419 - Buenos Aires - Argentina" required onchange="saveToLocalStorage()" />
 
-          <label for="header_mobile">Teléfono:</label>
+          <label for="header_mobile">Phone:</label>
           <input type="text" id="header_mobile" name="header_mobile" value="M +54 911 6677 2741" required onchange="saveToLocalStorage()" />
 
           <label for="header_email">Email:</label>
           <input type="text" id="header_email" name="header_email" value="flaviopreziosa@gmail.com / flaviopreziosa@fibertel.com.ar" required onchange="saveToLocalStorage()" />
 
-          <label for="report_date">Fecha del Reporte:</label>
+          <label for="report_date">Report Date:</label>
           <input type="text" id="report_date" name="report_date" value="Buenos Aires, 30th September 2024" required onchange="saveToLocalStorage()" />
 
-          <label for="cliente_senores">Señores:</label>
+          <label for="cliente_senores">Sirs:</label>
           <input type="text" id="cliente_senores" name="cliente_senores" value="Messrs" required onchange="saveToLocalStorage()" />
 
-          <label for="cliente_empresa">Empresa:</label>
+          <label for="cliente_empresa">Company:</label>
           <input type="text" id="cliente_empresa" name="cliente_empresa" value="SACO Shipping GmbH" required onchange="saveToLocalStorage()" />
 
-          <label for="cliente_deposito">Depósito:</label>
+          <label for="cliente_deposito">Deposit:</label>
           <input type="text" id="cliente_deposito" name="cliente_deposito" value="Wollkammereistr 1" required onchange="saveToLocalStorage()" />
 
-          <label for="cliente_postal">Código Postal:</label>
+          <label for="cliente_postal">Zip code:</label>
           <input type="text" id="cliente_postal" name="cliente_postal" value="D-21107 Hamburg" required onchange="saveToLocalStorage()" />
 
-          <label for="operador_area">Área del Operador:</label>
+          <label for="operador_area">Operator Area:</label>
           <input type="text" id="operador_area" name="operador_area" value="Export & Import operations" required onchange="saveToLocalStorage()" />
 
-          <label for="operador_responsables1">Responsables 1:</label>
+          <label for="operador_responsables1">Responsible 1:</label>
           <input type="text" id="operador_responsables1" name="operador_responsables1" value="Arne Schulte / Lars Reil" required onchange="saveToLocalStorage()" />
 
-          <label for="operador_responsables2">Responsables 2:</label>
+          <label for="operador_responsables2">Responsible 2:</label>
           <input type="text" id="operador_responsables2" name="operador_responsables2" value="Gisel Gimenez / Florencia Bavaro" required onchange="saveToLocalStorage()" />
 
-          <label for="report_mv">MV Reporte:</label>
-          <input type="text" id="report_mv" name="report_mv" value="m.v. XIN CHANG SHA COMPLETAR" required onchange="saveToLocalStorage()" />
+          <br />
+          <br />
+          <hr />
+          <br />
+          <br />
 
-          <label for="containers_reporte">Reporte de Contenedores:</label>
-          <input type="text" id="containers_reporte" name="containers_reporte" value="IMPORT CONTAINERS UNSTUFFING REPORT" required onchange="saveToLocalStorage()" />
+          <label for="report_mv">MV Report:</label>
+          <input type="text" id="report_mv" name="report_mv" value="m.v. XIN CHANG SHA" required onchange="saveToLocalStorage()" />
 
-          <label for="containers_leyenda">Leyenda de Contenedores:</label>
+          <label for="containers_reporte">Container Report:</label>
+          <input type="text" id="containers_reporte" name="containers_reporte" value='"IMPORT CONTAINERS UNSTUFFING REPORT"' required onchange="saveToLocalStorage()" />
+
+          <label for="containers_leyenda">Container Legend:</label>
           <input type="text" id="containers_leyenda" name="containers_leyenda" value="GROUPAGE CONTAINERS" required onchange="saveToLocalStorage()" />
 
-          <!-- <label for="containers_code">Códigos de Contenedores (separados por comas):</label>
-          <input type="text" id="containers_code" name="containers_code" value="FSCU57267991,FSCU57267992" required onchange="saveToLocalStorage()" /> -->
-          <label for="containers_code">Códigos de Contenedores:</label>
+          <label for="containers_code">Container Codes:</label>
           <div id="containerCodesSection">
             <input type="text" name="container_code[]" placeholder="Código del contenedor" value="FSCU57267991" required onchange="saveToLocalStorage()" />
           </div>
-          <button type="button" onclick="addContainerCode(); addRelevantTime(); addSecuringSeal()">Añadir Contenedor</button>
+          <button type="button" onclick="addContainerCode(); addRelevantTime(); addSecuringSeal()">Add Container</button>
 
-          <label for="containers_descripcion">Descripción de Contenedores:</label>
+          <label for="containers_descripcion">Container Description:</label>
           <input
             type="text"
             id="containers_descripcion"
@@ -93,47 +96,61 @@
             onchange="saveToLocalStorage()"
           />
 
-          <label for="containers_destino">Destino de Contenedores:</label>
+          <label for="containers_destino">Container Destination:</label>
           <input type="text" id="containers_destino" name="containers_destino" value="Buenos Aires - Argentina" required onchange="saveToLocalStorage()" />
 
-          <label for="report_description">Descripción del Reporte:</label>
+          <hr />
+
+          <label for="report_description">Report Description:</label>
           <textarea id="report_description" name="report_description" required oninput="autoResize(this); saveToLocalStorage()" onchange="saveToLocalStorage()">
 In compliance with the instructions given by Messrs. ¨SACO Shipping GmbH¨ - Hamburg, the acting cargo surveyor of this bureau attended at the customs bonded warehouse (CFS) ¨Gemez S.A.¨, Buenos Aires - Argentina, on 25th September 2024 with the purpose of monitoring the whole stripping operation of the ISO (45G1 & 45R1) multi-modal shipping containers.</textarea
           >
 
-          <label for="report_note">Nota del Reporte:</label>
+          <label for="report_note">Report Note:</label>
           <textarea id="report_note" name="report_note" required oninput="autoResize(this); saveToLocalStorage()" onchange="saveToLocalStorage()">
 given the great amount of pictures taken during this survey, few of them are shown just for illustrative purposes.</textarea
           >
         </fieldset>
 
+        <br />
+        <br />
+        <hr />
+        <br />
+        <br />
+
+        <!-- 1.-Details of the shipment: -->
         <fieldset>
-          <legend>Detalles del Embarque</legend>
+          <h2 class="title_h2">1.-Details of the shipment:</h2>
           <label for="vessel">Vessel:</label>
           <input type="text" id="vessel" name="vessel" value="XIN CHANG SHA" required onchange="saveToLocalStorage()" />
 
           <label for="voyage">Voyage:</label>
           <input type="text" id="voyage" name="voyage" value="402S" required onchange="saveToLocalStorage()" />
 
-          <label for="pol">Puerto de Origen (POL):</label>
+          <hr />
+          <label for="mbl_code" style="color: rgb(255, 105, 128); font-weight: bold; font-size: 1.6em">MBL:</label>
+          <input type="text" id="mbl_code" name="mbl_code" value="ONEYHAME90065701" required onchange="saveToLocalStorage()" />
+          <hr />
+
+          <label for="pol">POL:</label>
           <input type="text" id="pol" name="pol" value="Hamburg, Germany" required onchange="saveToLocalStorage()" />
 
           <label for="shipper">Shipper:</label>
           <input type="text" id="shipper" name="shipper" value="SACO Shipping GmbH" required onchange="saveToLocalStorage()" />
 
-          <label for="pod">Puerto de Destino (POD):</label>
+          <label for="pod">POD:</label>
           <input type="text" id="pod" name="pod" value="Buenos Aires, Argentina" required onchange="saveToLocalStorage()" />
 
           <label for="consignee">Consignee:</label>
           <input type="text" id="consignee" name="consignee" value="SACO Shipping S.A." required onchange="saveToLocalStorage()" />
 
-          <label for="qty_of_pkgs">Cantidad de Paquetes:</label>
+          <label for="qty_of_pkgs">Qty. of pkgs.::</label>
           <input type="text" id="qty_of_pkgs" name="qty_of_pkgs" value="94" required onchange="saveToLocalStorage()" />
 
-          <label for="goods">Bienes:</label>
+          <label for="goods">Goods:</label>
           <input type="text" id="goods" name="goods" value="Consolidated cargo" required onchange="saveToLocalStorage()" />
 
-          <label for="gross_weight">Peso Bruto:</label>
+          <label for="gross_weight">Gross weight:</label>
           <input type="text" id="gross_weight" name="gross_weight" value="38,068.90 kg." required onchange="saveToLocalStorage()" />
 
           <label for="note">Nota:</label>
@@ -142,27 +159,46 @@ given the great amount of pictures taken during this survey, few of them are sho
           >
         </fieldset>
 
-        <!-- Sección de tiempos relevantes -->
+        <br />
+        <br />
+        <hr />
+        <br />
+        <br />
+
+        <!-- 2.-Relevant times: -->
         <fieldset id="relevantTimesSection">
-          <legend>Tiempos Relevantes</legend>
+          <h2 class="title_h2">2.-Relevant times:</h2>
           <!-- <button type="button" onclick="addRelevantTime()">Añadir Tiempo</button> -->
         </fieldset>
 
-        <!-- Sección de securing seals -->
+        <br />
+        <br />
+        <hr />
+        <br />
+        <br />
+
+        <!-- 3.-Securing seals: -->
         <fieldset id="securingSealsSection">
-          <legend>Seguridad de Sellos</legend>
+          <h2 class="title_h2">3.-Securing seals:</h2>
           <!-- <button type="button" onclick="addSecuringSeal()">Añadir Sello</button> -->
         </fieldset>
 
+        <br />
+        <br />
+        <hr />
+        <br />
+        <br />
+
+        <!-- 6.-The weather: -->
         <fieldset>
-          <legend>Pie de Página</legend>
-          <label for="weather_status">Estado del Clima:</label>
+          <h2 class="title_h2">6.-The weather:</h2>
+          <label for="weather_status">State of the Climate:</label>
           <input type="text" id="weather_status" name="weather_status" value="Hot/cloudy" required onchange="saveToLocalStorage()" />
 
-          <label for="legend">Leyenda:</label>
+          <label for="legend">Legend:</label>
           <input type="text" id="legend" name="legend" value="SIGNED WITHOUT PREJUDICE" required onchange="saveToLocalStorage()" />
 
-          <label for="who_signs">Firmado por:</label>
+          <label for="who_signs">Signed by:</label>
           <input type="text" id="who_signs" name="who_signs" value="Flavio Preziosa" required onchange="saveToLocalStorage()" />
 
           <label for="cargo">Cargo:</label>
@@ -328,23 +364,24 @@ given the great amount of pictures taken during this survey, few of them are sho
           const section = document.createElement("fieldset");
           section.className = "relevant-time";
           section.innerHTML = `
-          <legend>Tiempo Relevante</legend>
-          <label>Fecha:</label>
+          <hr>
+          <h3>Relevant Times</h3>
+          <label>Date:</label>
           <input type="text" class="date" value="25-sep-24" required onchange="saveToLocalStorage()" >
 
-          <label>Código de Contenedor:</label>
+          <label>Containers #</label>
           <input type="text" class="container_code" value="FSCU5726799" required onchange="saveToLocalStorage()" >
 
-          <label>Cantidad de Paquetes:</label>
+          <label>Qty. of pkgs.</label>
           <input type="text" class="qty_of_pkgs" value="59" required onchange="saveToLocalStorage()" >
 
-          <label>Inicio:</label>
+          <label>Start</label>
           <input type="text" class="start">
 
-          <label>Completo:</label>
+          <label>Complete</label>
           <input type="text" class="complete">
 
-          <label>Tiempo de Inspección:</label>
+          <label>Time used to survey</label>
           <input type="text" class="time_used_to_survey">
         `;
           document.getElementById("relevantTimesSection").appendChild(section);
@@ -355,20 +392,21 @@ given the great amount of pictures taken during this survey, few of them are sho
           const section = document.createElement("fieldset");
           section.className = "securing-seal";
           section.innerHTML = `
-          <legend>Sello de Seguridad</legend>
-          <label>Código de Contenedor:</label>
+          <hr>
+          <h3>Securing Seal</h3>
+          <label>Containers #</label>
           <input type="text" class="seal_container_code" value="FSCU5726799" required onchange="saveToLocalStorage()" >
 
-          <label>Tipo:</label>
+          <label>Type</label>
           <input type="text" class="type" value="RF" required onchange="saveToLocalStorage()" >
 
-          <label>Sello de Seguridad WWAS:</label>
+          <label>WWA´s safety seals</label>
           <input type="text" class="safety_seal" value="01-0265193" required onchange="saveToLocalStorage()" >
 
-          <label>Sello de Aduana Argentina:</label>
+          <label>Argentinean customs seal</label>
           <input type="text" class="customs_seal" value="None">
 
-          <label>Otros:</label>
+          <label>Others</label>
           <input type="text" class="others" value="None">
         `;
           document.getElementById("securingSealsSection").appendChild(section);
@@ -391,7 +429,6 @@ given the great amount of pictures taken during this survey, few of them are sho
           alert("Local storage cleared and form reset");
         }
       </script>
-      <button type="button" onclick="clearLocalStorage()" style="margin-left: auto; display: block" class="secondary">Clear Local Storage</button>
     </main>
     <footer></footer>
   </body>

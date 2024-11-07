@@ -29,3 +29,4 @@ GET http://localhost:3000/api/info/cookies
 
 ### resetDatabase
 DELETE http://localhost:3000/api/info/resetDatabase
+Authorization: false

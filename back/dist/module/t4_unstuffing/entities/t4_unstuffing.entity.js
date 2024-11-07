@@ -32,6 +32,7 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => image_group_entity_1.ImageGroupEntity, (imageGroup) => imageGroup.unstuffing, {
         cascade: true,
         eager: true,
+        nullable: true,
     }),
     __metadata("design:type", Array)
 ], T4UnstuffingEntity.prototype, "images_groups", void 0);

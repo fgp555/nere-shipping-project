@@ -37,11 +37,11 @@ let HtmlPdfService = class HtmlPdfService {
         const options = {
             format: 'A4',
             border: {
-                right: '0.5in',
-                left: '0.5in',
+                right: '0.3in',
+                left: '0.3in',
             },
             header: {
-                height: '2in',
+                height: '1.7in',
                 contents: `
         <div>
           <b>

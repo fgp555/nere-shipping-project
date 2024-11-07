@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Report Shipping</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+      }
+      body {
+        font-size: 1.2em;
+      }
+      .image-preview img {
+        width: auto;
+        height: 10rem;
+        margin: 0px;
+      }
+      .report_mv {
+        font-size: 2em;
+        text-align: center;
+        border-top: 1px solid #000;
+        border-bottom: 1px solid #000;
+        width: 20em;
+        margin: 2em auto 1em;
+      }
+      .containers_reporte {
+        text-align: center;
+      }
+      .containers_reporte_foot {
+        text-align: justify;
+        max-width: 50rem;
+        margin: 1em auto;
+      }
+      .containers_reporte_foot .note {
+        color: red;
+        text-decoration: underline;
+        font-weight: bold;
+      }
+      .title_h3 {
+        color: navy;
+        text-decoration: underline;
+      }
+      /* Clase para el salto de página */
+      .page-break {
+        page-break-before: always;
+      }
+    </style>
+    <style>
+      table {
+        /* width: 100%; */
+        min-width: 20em;
+        border-collapse: collapse;
+        margin-top: 10px;
+      }
+
+      table,
+      th,
+      td {
+        border: 1px solid #ddd;
+      }
+
+      th,
+      td {
+        padding: 8px;
+        text-align: center;
+      }
+
+      th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+      }
+
+      tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+      .table {
+        max-width: 50rem;
+        margin: 3em auto 1em;
+      }
+      ol {
+        margin: 1.5em 0;
+      }
+      ol li {
+        margin: 0.5em 0 0.5em 0em;
+        padding-left: 1em;
+      }
+    </style>
+    <style>
+      .damage {
+        margin-top: 5em;
+      }
+      .damage table th,
+      .damage table td {
+        text-align: left;
+      }
+      .damage .image-preview {
+        margin: 1em 0;
+      }
+    </style>
+  </head>
+  <body class="body">
+    <main class="container">
+      <section id="outContainer">
+        <p style="text-align: right; font-size: 1.2em"><%= report.t0_header.report_date %></p>
+        <p><%= report.t0_header.cliente_senores %></p>
+        <b><p><%= report.t0_header.cliente_empresa %></p></b>
+        <p><%= report.t0_header.cliente_deposito %></p>
+        <u> <p><%= report.t0_header.cliente_postal %></p></u>
+        <br />
+        <b> <p><%= report.t0_header.operador_area %></p></b>
+        <p><%= report.t0_header.operador_responsables1 %></p>
+        <p><%= report.t0_header.operador_responsables2 %></p>
+        <br />
+        <p class="report_mv"><%= report.t0_header.report_mv %></p>
+        <div class="containers_reporte">
+          <p><%= report.t0_header.containers_reporte %></p>
+          <p><%= report.t0_header.containers_leyenda %></p>
+          <!-- <pre><%= JSON.stringify(report.t0_header.containers_code, null, 2) %></pre> -->
+          <% report.t0_header.containers_code.forEach((container, index) => { %>
+          <span><%= container %><%= index < report.t0_header.containers_code.length - 1 ? ' &' : '' %></span>
+          <% }); %>
+          <p><%= report.t0_header.containers_descripcion %></p>
+          <p><%= report.t0_header.containers_destino %></p>
+        </div>
+        <div class="containers_reporte_foot">
+          <p><%= report.t0_header.report_description %></p>
+          <br />
+          <p><span class="note">NOTE:</span> <%= report.t0_header.report_note %></p>
+        </div>
+        <!-- Salto de página después de cada producto excepto el último -->
+        <div class="page-break"></div>
+
+
+        <!-- 1.-Details of the shipment: -->
+        <div class="table">
+          <table>
+            <h3 class="title_h3">1.-Details of the shipment:</h3>
+            <tr>
+              <td><strong>Vessel:</strong></td>
+              <td><%= report.t1_details_shipment.vessel %></td>
+            </tr>
+            <tr>
+              <td><strong>Voyage:</strong></td>
+              <td><%= report.t1_details_shipment.voyage %></td>
+            </tr>
+            <tr>
+              <td><strong>MBL Code:</strong></td>
+              <td><%= report.t1_details_shipment.mbl_code %></td>
+            </tr>
+            <tr>
+              <td><strong>POL:</strong></td>
+              <td><%= report.t1_details_shipment.pol %></td>
+            </tr>
+            <tr>
+              <td><strong>Shipper:</strong></td>
+              <td><%= report.t1_details_shipment.shipper %></td>
+            </tr>
+            <tr>
+              <td><strong>POD:</strong></td>
+              <td><%= report.t1_details_shipment.pod %></td>
+            </tr>
+            <tr>
+              <td><strong>Consignee:</strong></td>
+              <td><%= report.t1_details_shipment.consignee %></td>
+            </tr>
+            <tr>
+              <td><strong>Qty of pkgs:</strong></td>
+              <td><%= report.t1_details_shipment.qty_of_pkgs %></td>
+            </tr>
+            <tr>
+              <td><strong>Goods:</strong></td>
+              <td><%= report.t1_details_shipment.goods %></td>
+            </tr>
+            <tr>
+              <td><strong>Gross weight:</strong></td>
+              <td><%= report.t1_details_shipment.gross_weight %></td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- 2.- Relevant times: -->
+        <div class="table">
+          <table>
+            <h3 class="title_h3">2.- Relevant times:</h3>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Containers #</th>
+                <th>Qty. of pkgs.</th>
+                <th>Start</th>
+                <th>Complete</th>
+                <th style="max-width: 10em">Time used to survey</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% report.T2_relevant_times.forEach(time => { %>
+              <tr>
+                <td><%= time.date %></td>
+                <td><%= time.container_code %></td>
+                <td><%= time.qty_of_pkgs %></td>
+                <td><%= time.start %></td>
+                <td><%= time.complete %></td>
+                <td><%= time.time_used_to_survey %></td>
+              </tr>
+              <% }); %>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- 3.-Securing seals: -->
+        <div class="table">
+          <h3 class="title_h3">3.-Securing seals:</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Containers #</th>
+                <th>Type</th>
+                <th>WWA's safety seals</th>
+                <th style="max-width: 10em">Argentinean customs seal</th>
+                <th>Others</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% report.t3_securing_seals.forEach(seal => { %>
+              <tr>
+                <td><%= seal.container_code %></td>
+                <td><%= seal.type %></td>
+                <td><%= seal.wwas_safety_seals %></td>
+                <td><%= seal.argentinean_customs_seal %></td>
+                <td><%= seal.others %></td>
+              </tr>
+              <% }); %>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Salto de página después de cada producto excepto el último -->
+        <div class="page-break"></div>
+
+        
+
+        <!-- 4.-Unstuffing of container: -->
+        <div class="table">
+          <!-- <hr> -->
+          <br>
+          <h3 class="title_h3">4.-Unstuffing of container:</h3>
+          <% report.t4_unstuffing.forEach(unstuff => { %>
+          <br>
+          <hr>
+          <ol style="list-style-type: upper-roman; margin-left: 2em">
+            <% unstuff.notes.forEach(note => { %>
+            <li><%= note %></li>
+            <% }); %>
+          </ol>
+
+          <% unstuff.images_groups.forEach(group => { %>
+          <span class="image-preview">
+            <% group.images.forEach(image => { %>
+            <img src="<%= PROTOCOL_HOST %><%= image %>" alt="Imagen" />
+            <% }); %>
+            <!-- images_notes. -->
+            <% if (group.images_notes.length > 0) { %> 
+              <ol style="list-style-type: upper-roman; margin-left: 2em">
+              <% group.images_notes.forEach(note => { %>
+                  <li><%= note %></li>
+              <% }); %> 
+              </ol>            
+            <% } %>
+            <!-- images_notes... -->
+          </span>
+          <% }); %>
+          <p><%= unstuff.foot_note || "Sin nota al pie" %></p>
+          <% }); %>
+          <br>
+          <hr>
+        </div>
+
+        <!-- Salto de página después de cada producto excepto el último -->
+        <div class="page-break"></div>
+
+        <!-- 5.-Pre-existing damage: -->
+        <div class="table">
+          <h3 class="title_h3">5.-Pre-existing damage:</h3>
+          <% report.t5_damage.forEach(damage => { %>
+          <ol style="list-style-type: upper-roman; margin-left: 2em">
+            <% damage.notes.forEach(note => { %>
+            <li><%= note %></li>
+            <% }); %>
+          </ol>
+
+
+          <% damage.images_groups.forEach(group => { %>
+          <article class="damage">
+            <p style="text-decoration: underline">
+              <b><i> <%= group.title %></i></b>
+            </p>
+            <table>
+              <tr>
+                <td><strong>B/L No</strong></td>
+                <td><%= group.b_l_no %></td>
+              </tr>
+              <tr>
+                <td><strong>Consignee</strong></td>
+                <td><%= group.consignee %></td>
+              </tr>
+              <tr>
+                <td><strong>Marks</strong></td>
+                <td><%= group.marks %></td>
+              </tr>
+              <tr>
+                <td><strong>Qty. of pkgs.</strong></td>
+                <td><%= group.qty_of_pkgs %></td>
+              </tr>
+              <tr>
+                <td><strong>Goods</strong></td>
+                <td><%= group.goods %></td>
+              </tr>
+              <tr>
+                <td><strong>Remarks</strong></td>
+                <td><%= group.remarks %></td>
+              </tr>
+            </table>
+
+            <div class="image-preview">
+              <% group.images.forEach(image => { %>
+              <img src="<%= PROTOCOL_HOST %><%= image %>" alt="Imagen del grupo" />
+              <% }); %>
+              <!-- images_notes. -->
+              <% if (group.images_notes.length > 0) { %> 
+                <ol style="list-style-type: upper-roman; margin-left: 2em">
+                <% group.images_notes.forEach(note => { %>
+                    <li><%= note %></li>
+                <% }); %> 
+                </ol>            
+              <% } %>
+              <!-- images_notes... -->
+            </div>
+          </article>
+          <% }); %> <% }); %>
+        </div>
+
+        <style>
+          .footer .legend {
+            text-align: right;
+          }
+        </style>
+        <!-- Footer Section -->
+        <div class="table footer">
+          <h3 class="title_h3">6.-The weather::</h3>
+          <p><%= report.t6_footer.weather_status %></p>
+
+          <div class="legend">
+            <p><b> <%= report.t6_footer.legend %></b></p>
+            <p><%= report.t6_footer.who_signs %></p>
+            <p><%= report.t6_footer.cargo %></p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

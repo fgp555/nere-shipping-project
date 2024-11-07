@@ -47,7 +47,7 @@ let HtmlPdfController = class HtmlPdfController {
     }
     async download_template(res) {
         try {
-            const templatePath = path.join(__dirname, '..', '..', '..', '..', 'front', 'report', 'mbl_code_basic.ejs');
+            const templatePath = path.join(__dirname, '../../../templates/mbl_code_basic.ejs');
             const tempData = [
                 {
                     id: 1,
@@ -74,7 +74,7 @@ let HtmlPdfController = class HtmlPdfController {
             });
             res.set({
                 'Content-Type': 'application/pdf',
-                'Content-Disposition': 'attachment; filename="productos.pdf"',
+                'Content-Disposition': 'attachment; filename="download_template.pdf"',
                 'Content-Length': pdfBuffer.length,
             });
             res.end(pdfBuffer);
@@ -84,12 +84,13 @@ let HtmlPdfController = class HtmlPdfController {
             res.status(500).send('Error al generar el PDF');
         }
     }
-    async render_template(mbl_code, res) {
+    async render_template(mbl_code, res, request) {
         try {
             const report = await this.findOne_mbl_code(mbl_code);
             if (!report)
                 throw new common_1.NotFoundException('Report not found');
-            const templatePath = path.join(__dirname, '..', '..', '..', '..', 'front', 'report', 'mbl_code_data.ejs');
+            const templatePath = path.join(__dirname, '../../../templates/mbl_code_data.ejs');
+            const PROTOCOL_HOST = process.env.PROTOCOL_HOST || 'https://fpshippingsolutions.com';
             const tempData = [
                 {
                     id: 1,
@@ -108,8 +109,9 @@ let HtmlPdfController = class HtmlPdfController {
                 },
             ];
             const htmlContent = await ejs.renderFile(templatePath, {
-                title: 'Listado de Productos',
+                title: `Report ${mbl_code}`,
                 report: report,
+                PROTOCOL_HOST: PROTOCOL_HOST,
             });
             res.setHeader('Content-Type', 'text/html');
             res.send(htmlContent);
@@ -119,22 +121,24 @@ let HtmlPdfController = class HtmlPdfController {
             res.status(500).send('Error al renderizar el archivo EJS');
         }
     }
-    async download(mbl_code, res) {
+    async download(mbl_code, res, request) {
         try {
             const report = await this.findOne_mbl_code(mbl_code);
             if (!report)
                 throw new common_1.NotFoundException('Report not found');
-            const templatePath = path.join(__dirname, '..', '..', '..', '..', 'front', 'report', 'mbl_code_data.ejs');
+            const templatePath = path.join(__dirname, '../../../templates/mbl_code_data.ejs');
+            const PROTOCOL_HOST = process.env.PROTOCOL_HOST || 'https://fpshippingsolutions.com';
             const htmlContent = await ejs.renderFile(templatePath, {
-                title: 'Listado de Productos',
+                title: `Report ${mbl_code}`,
                 report: report,
+                PROTOCOL_HOST: PROTOCOL_HOST,
             });
             const pdfBuffer = await this.htmlPdfService.generatePdfHeadFooter({
                 content: htmlContent,
             });
             res.set({
                 'Content-Type': 'application/pdf',
-                'Content-Disposition': 'attachment; filename="productos.pdf"',
+                'Content-Disposition': `attachment; filename="${mbl_code}.pdf"`,
                 'Content-Length': pdfBuffer.length,
             });
             res.end(pdfBuffer);
@@ -186,16 +190,18 @@ __decorate([
     (0, common_1.Get)('render/:mbl_code'),
     __param(0, (0, common_1.Param)('mbl_code')),
     __param(1, (0, common_1.Res)()),
+    __param(2, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:paramtypes", [String, Object, Object]),
     __metadata("design:returntype", Promise)
 ], HtmlPdfController.prototype, "render_template", null);
 __decorate([
     (0, common_1.Get)('download/:mbl_code'),
     __param(0, (0, common_1.Param)('mbl_code')),
     __param(1, (0, common_1.Res)()),
+    __param(2, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:paramtypes", [String, Object, Object]),
     __metadata("design:returntype", Promise)
 ], HtmlPdfController.prototype, "download", null);
 __decorate([

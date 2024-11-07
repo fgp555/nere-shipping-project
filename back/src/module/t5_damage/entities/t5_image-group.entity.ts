@@ -35,7 +35,7 @@ export class T5ImageGroupEntity {
   @Column('json')
   images: string[];
 
-  @Column('json')
+  @Column('json', { nullable: true })
   images_notes: string[];
 
   @ManyToOne(() => T5DamageEntity, (damage) => damage.images_groups, {

@@ -17,7 +17,7 @@
         <a class="btn" href="/"><button>⬅️ Retroceder</button></a>
       </article>
 
-      <h1>t5_damage Create</h1>
+      <h1><span style="color: greenyellow">Create</span> t5_damage</h1>
 
       <form id="damageForm" enctype="multipart/form-data">
         <!-- Select para seleccionar el mbl_code -->
@@ -166,6 +166,10 @@
               formData.append(`images_group_${groupIndex}_files`, file);
             });
 
+            // Procesar notas para las imágenes
+            const imagesNotesValue = normalizeNewlines(group.querySelector(`textarea[name="images_notes_${groupIndex}"]`).value).trim();
+            const imagesNotes = imagesNotesValue === "" ? [] : imagesNotesValue.split("\n").map((note) => note.trim());
+
             return {
               group_name: `images_group_${groupIndex}`,
               title: `Grupo de Imágenes ${groupIndex} - Título del contenedor:`,
@@ -175,9 +179,7 @@
               qty_of_pkgs: parseInt(group.querySelector(`input[name="qty_of_pkgs"]`).value, 10),
               goods: group.querySelector(`input[name="goods"]`).value,
               remarks: group.querySelector(`input[name="remarks"]`).value,
-              images_notes: normalizeNewlines(group.querySelector(`textarea[name="images_notes_${groupIndex}"]`).value)
-                .split("\n")
-                .map((note) => note.trim()),
+              images_notes: imagesNotes,
             };
           });
 

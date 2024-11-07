@@ -56,7 +56,7 @@ __decorate([
     __metadata("design:type", Array)
 ], T5ImageGroupEntity.prototype, "images", void 0);
 __decorate([
-    (0, typeorm_1.Column)('json'),
+    (0, typeorm_1.Column)('json', { nullable: true }),
     __metadata("design:type", Array)
 ], T5ImageGroupEntity.prototype, "images_notes", void 0);
 __decorate([

@@ -21,7 +21,7 @@ __decorate([
     __metadata("design:type", Number)
 ], T5DamageEntity.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.Column)('json', { nullable: false }),
+    (0, typeorm_1.Column)('json', { nullable: true }),
     __metadata("design:type", Array)
 ], T5DamageEntity.prototype, "notes", void 0);
 __decorate([

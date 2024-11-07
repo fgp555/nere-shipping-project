@@ -35,12 +35,12 @@ export class HtmlPdfService {
       format: 'A4',
       border: {
         // top: '2in',
-        right: '0.5in',
+        right: '0.3in',
         // bottom: '1in',
-        left: '0.5in',
+        left: '0.3in',
       },
       header: {
-        height: '2in',
+        height: '1.7in',
         contents: `
         <div>
           <b>

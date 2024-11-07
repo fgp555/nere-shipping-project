@@ -15,7 +15,7 @@ export class T5DamageEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column('json', { nullable: false })
+  @Column('json', { nullable: true })
   notes: string[];
 
   @Column('text', { nullable: true })

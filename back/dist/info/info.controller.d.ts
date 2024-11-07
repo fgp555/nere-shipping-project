@@ -3,11 +3,6 @@ import { Request } from 'express';
 export declare class InfoController {
     private readonly infoService;
     constructor(infoService: InfoService);
-    listAllEndpointsSorted(): {
-        id: number;
-        path: any;
-        methods: any;
-    }[];
     getSystemInfo(): {
         nodeVersion: string;
         platform: NodeJS.Platform;
@@ -25,11 +20,15 @@ export declare class InfoController {
         osTotalMemory: number;
         osFreeMemory: number;
     };
+    listAllEndpointsSorted(): {
+        id: number;
+        path: any;
+        methods: any;
+    }[];
     getServerAndDatabaseTime(): Promise<{
         serverTime: Date;
         databaseTime: any;
     }>;
-    resetDatabase(): Promise<string>;
     getDatabaseInfo(): {
         password: string;
         type: "mysql" | "mariadb";
@@ -965,21 +964,7 @@ export declare class InfoController {
         projectId?: string;
         databaseId?: string;
     };
-    getEntitiesInfo(): {
-        entityName: string;
-        tableName: string;
-        columns: {
-            columnName: string;
-            type: import("typeorm").ColumnType;
-            isPrimary: boolean;
-            isNullable: boolean;
-        }[];
-        relations: {
-            relationProperty: string;
-            type: import("typeorm/metadata/types/RelationTypes").RelationType;
-            targetEntity: string;
-        }[];
-    }[];
+    resetDatabase(request: Request): Promise<string>;
     getPackageInfo(): any;
     getServerDomain(request: Request): {
         domain: string;

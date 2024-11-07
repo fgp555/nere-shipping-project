@@ -1,4 +1,4 @@
-import { Controller, Get, Delete } from '@nestjs/common';
+import { Controller, Get, Delete, UnauthorizedException } from '@nestjs/common';
 import { InfoService } from './info.service';
 import { Request } from 'express';
 import { Req } from '@nestjs/common';
@@ -8,13 +8,13 @@ export class InfoController {
   constructor(private readonly infoService: InfoService) {}
 
   @Get()
-  listAllEndpointsSorted() {
-    return this.infoService.listAllEndpointsSorted();
+  getSystemInfo() {
+    return this.infoService.getSystemInfo();
   }
 
   @Get('system')
-  getSystemInfo() {
-    return this.infoService.getSystemInfo();
+  listAllEndpointsSorted() {
+    return this.infoService.listAllEndpointsSorted();
   }
 
   @Get('time')
@@ -22,19 +22,17 @@ export class InfoController {
     return await this.infoService.getServerAndDatabaseTime();
   }
 
-  @Delete('resetDatabase')
-  resetDatabase() {
-    return this.infoService.resetDatabase();
-  }
-
   @Get('infoDatabase')
   getDatabaseInfo() {
     return this.infoService.getDatabaseInfo();
   }
 
-  @Get('entities')
-  getEntitiesInfo() {
-    return this.infoService.getEntitiesInfo();
+  @Delete('resetDatabase')
+  resetDatabase(@Req() request: Request) {
+    if (request.headers.authorization == process.env.DROPSCHEMA) {
+      return this.infoService.resetDatabase();
+    }
+    throw new UnauthorizedException('Unauthorized');
   }
 
   @Get('package.json')

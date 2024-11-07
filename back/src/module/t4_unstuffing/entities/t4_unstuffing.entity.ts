@@ -2,7 +2,13 @@
 
 import { ImageGroupEntity } from 'src/module/image/image-group.entity';
 import { ReportEntity } from 'src/module/report/entities/report.entity';
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity('T4Unstuffing')
 export class T4UnstuffingEntity {
@@ -18,6 +24,7 @@ export class T4UnstuffingEntity {
   @OneToMany(() => ImageGroupEntity, (imageGroup) => imageGroup.unstuffing, {
     cascade: true,
     eager: true,
+    nullable: true,
   })
   images_groups: ImageGroupEntity[];
 

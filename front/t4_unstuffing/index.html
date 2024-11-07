@@ -17,42 +17,45 @@
   </head>
   <body>
     <main class="container">
-      <article>
+      <article style="display: flex; justify-content: space-between">
         <a class="btn" href="/"><button>⬅️ Retroceder</button></a>
+        <button type="button" onclick="clearLocalStorage()" style="margin-left: auto; display: inline-block; background-color: red; border: none">Clear Local Storage</button>
       </article>
 
-      <h1>t4_unstuffing_container Create</h1>
+      <h1><span style="color: greenyellow">Create</span> t4_unstuffing_container</h1>
 
       <form id="reportForm" enctype="multipart/form-data">
         <!-- Select para seleccionar el mbl_code -->
-        <label for="mbl_code">Seleccionar MBL Code:</label>
+        <label for="mbl_code">Select MBL Code:</label>
         <select id="mbl_code" name="mbl_code" required onchange="saveToLocalStorage()">
-          <option value="">Selecciona un código</option>
+          <option value="">Select MBL Code</option>
         </select>
         <br /><br />
 
-        <label for="notes">Notas (una por línea):</label>
-        <textarea id="notes" name="notes" required oninput="autoResize(this); saveToLocalStorage()">Cada salto de línea es un nuevo elemento</textarea>
+        <label for="notes">Notes (one per line):</label>
+        <textarea id="notes" name="notes" required oninput="autoResize(this); saveToLocalStorage()">
+As soon as the doors of the containers were unsealed/opened, the cargo was observed secured and  in overall sound condition</textarea
+        >
         <br /><br />
 
-        <label for="foot_note">Nota al Pie:</label>
+        <label for="foot_note">Footnote:</label>
         <textarea id="foot_note" name="foot_note" required oninput="autoResize(this); saveToLocalStorage()">Roof panel scratched - refrigerated panel torn / dented.</textarea>
         <br /><br />
 
         <div id="imagesGroupContainer">
           <article class="images-group">
             <hr />
-            <h3>Grupo de Imágenes 1</h3>
+            <h3>Group of Images 1</h3>
             <input type="file" name="images_group_1" multiple required onchange="handleFileSelect(this, 1); saveToLocalStorage()" />
             <div id="preview_group_1" class="image-preview"></div>
             <br />
-            <label>Notas para las imágenes (una por línea):</label>
-            <textarea name="images_notes_1" oninput="autoResize(this); saveToLocalStorage()">Cada salto de línea es un nuevo elemento</textarea>
+            <label>Notes for images (one per line)::</label>
+            <textarea name="images_notes_1" oninput="autoResize(this); saveToLocalStorage()"></textarea>
             <hr />
           </article>
         </div>
 
-        <button type="button" onclick="addImageGroup()">Añadir otro grupo de imágenes</button>
+        <button type="button" onclick="addImageGroup()">Add another group of images</button>
         <br /><br />
 
         <button type="submit">Enviar</button>
@@ -129,12 +132,12 @@
 
           newGroup.innerHTML = `
             <hr />
-            <h3>Grupo de Imágenes ${groupCounter}</h3>
+            <h3>Group of Images ${groupCounter}</h3>
             <input type="file" name="images_group_${groupCounter}" multiple required onchange="handleFileSelect(this, ${groupCounter}); saveToLocalStorage()">
             <div id="preview_group_${groupCounter}" class="image-preview"></div>
             <br>
-            <label>Notas para las imágenes (una por línea):</label>
-            <textarea name="images_notes_${groupCounter}" oninput="autoResize(this); saveToLocalStorage()">note 1\nnote 2</textarea>
+            <label>Notes for images (one per line)::</label>
+            <textarea name="images_notes_${groupCounter}" oninput="autoResize(this); saveToLocalStorage()"></textarea>
             <hr />
           `;
 
@@ -190,13 +193,22 @@
             const fileInput = document.querySelector(`input[name='images_group_${groupIndex}']`);
             const files = fileInput.files;
 
+            // Comprimir y agregar las imágenes al formData
             for (let i = 0; i < files.length; i++) {
               const compressedBlob = await compressImage(files[i]);
               formData.append(`images_group_${groupIndex}`, compressedBlob, files[i].name);
             }
 
-            const notesInput = normalizeNewlines(document.querySelector(`textarea[name='images_notes_${groupIndex}']`).value).split("\n");
-            formData.append(`images_group_${groupIndex}_notes`, JSON.stringify(notesInput));
+            // Procesar las notas de imágenes
+            const notesInput = document.querySelector(`textarea[name='images_notes_${groupIndex}']`);
+            const notesValue = normalizeNewlines(notesInput.value).trim();
+
+            if (notesValue === "") {
+              formData.append(`images_group_${groupIndex}_notes`, null); // Enviar null si está vacío
+            } else {
+              const notesArray = notesValue.split("\n");
+              formData.append(`images_group_${groupIndex}_notes`, JSON.stringify(notesArray));
+            }
           }
         }
 
@@ -245,6 +257,13 @@
           const textareas = document.querySelectorAll("textarea");
           textareas.forEach((textarea) => autoResize(textarea));
         });
+      </script>
+      <script>
+        function clearLocalStorage() {
+          localStorage.removeItem("t4_unstuffing_data");
+          document.getElementById("reportForm").reset();
+          alert("Local storage cleared.");
+        }
       </script>
     </main>
   </body>

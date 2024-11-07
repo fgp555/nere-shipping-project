@@ -20,23 +20,23 @@ let InfoController = class InfoController {
     constructor(infoService) {
         this.infoService = infoService;
     }
-    listAllEndpointsSorted() {
-        return this.infoService.listAllEndpointsSorted();
-    }
     getSystemInfo() {
         return this.infoService.getSystemInfo();
+    }
+    listAllEndpointsSorted() {
+        return this.infoService.listAllEndpointsSorted();
     }
     async getServerAndDatabaseTime() {
         return await this.infoService.getServerAndDatabaseTime();
     }
-    resetDatabase() {
-        return this.infoService.resetDatabase();
-    }
     getDatabaseInfo() {
         return this.infoService.getDatabaseInfo();
     }
-    getEntitiesInfo() {
-        return this.infoService.getEntitiesInfo();
+    resetDatabase(request) {
+        if (request.headers.authorization == process.env.DROPSCHEMA) {
+            return this.infoService.resetDatabase();
+        }
+        throw new common_1.UnauthorizedException('Unauthorized');
     }
     getPackageInfo() {
         return this.infoService.getPackageInfo();
@@ -85,13 +85,13 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
-], InfoController.prototype, "listAllEndpointsSorted", null);
+], InfoController.prototype, "getSystemInfo", null);
 __decorate([
     (0, common_1.Get)('system'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
-], InfoController.prototype, "getSystemInfo", null);
+], InfoController.prototype, "listAllEndpointsSorted", null);
 __decorate([
     (0, common_1.Get)('time'),
     __metadata("design:type", Function),
@@ -99,23 +99,18 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], InfoController.prototype, "getServerAndDatabaseTime", null);
 __decorate([
-    (0, common_1.Delete)('resetDatabase'),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], InfoController.prototype, "resetDatabase", null);
-__decorate([
     (0, common_1.Get)('infoDatabase'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], InfoController.prototype, "getDatabaseInfo", null);
 __decorate([
-    (0, common_1.Get)('entities'),
+    (0, common_1.Delete)('resetDatabase'),
+    __param(0, (0, common_2.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
-], InfoController.prototype, "getEntitiesInfo", null);
+], InfoController.prototype, "resetDatabase", null);
 __decorate([
     (0, common_1.Get)('package.json'),
     __metadata("design:type", Function),
