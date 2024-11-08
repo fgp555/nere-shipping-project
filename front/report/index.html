@@ -205,20 +205,24 @@ given the great amount of pictures taken during this survey, few of them are sho
           <input type="text" id="cargo" name="cargo" value="Independent Cargo Surveyor" required onchange="saveToLocalStorage()" />
         </fieldset>
 
-        <button type="submit">Enviar</button>
+        <button type="submit">Send</button>
       </form>
 
       <script>
+        var counterContainerCode = 2;
+        var counterOther = 0;
+
         function addContainerCode() {
           const containerCodesSection = document.getElementById("containerCodesSection");
           const newInput = document.createElement("input");
           newInput.type = "text";
           newInput.name = "container_code[]";
           newInput.placeholder = "Código del contenedor";
-          newInput.value = "FSCU57267992";
+          newInput.value = `FSCU5726799${counterContainerCode} `;
           newInput.required = true;
           newInput.onchange = saveToLocalStorage;
           containerCodesSection.appendChild(newInput);
+          counterContainerCode++;
         }
 
         function saveToLocalStorage() {
@@ -361,6 +365,7 @@ given the great amount of pictures taken during this survey, few of them are sho
         });
 
         function addRelevantTime() {
+          counterOther++;
           const section = document.createElement("fieldset");
           section.className = "relevant-time";
           section.innerHTML = `
@@ -370,7 +375,7 @@ given the great amount of pictures taken during this survey, few of them are sho
           <input type="text" class="date" value="25-sep-24" required onchange="saveToLocalStorage()" >
 
           <label>Containers #</label>
-          <input type="text" class="container_code" value="FSCU5726799" required onchange="saveToLocalStorage()" >
+          <input type="text" class="container_code" value="FSCU5726799${counterOther}" required onchange="saveToLocalStorage()" >
 
           <label>Qty. of pkgs.</label>
           <input type="text" class="qty_of_pkgs" value="59" required onchange="saveToLocalStorage()" >
@@ -386,16 +391,16 @@ given the great amount of pictures taken during this survey, few of them are sho
         `;
           document.getElementById("relevantTimesSection").appendChild(section);
         }
-        addRelevantTime();
 
         function addSecuringSeal() {
+          // counter++;
           const section = document.createElement("fieldset");
           section.className = "securing-seal";
           section.innerHTML = `
           <hr>
           <h3>Securing Seal</h3>
           <label>Containers #</label>
-          <input type="text" class="seal_container_code" value="FSCU5726799" required onchange="saveToLocalStorage()" >
+          <input type="text" class="seal_container_code" value="FSCU5726799${counterOther}" required onchange="saveToLocalStorage()" >
 
           <label>Type</label>
           <input type="text" class="type" value="RF" required onchange="saveToLocalStorage()" >
@@ -411,7 +416,6 @@ given the great amount of pictures taken during this survey, few of them are sho
         `;
           document.getElementById("securingSealsSection").appendChild(section);
         }
-        addSecuringSeal();
 
         function autoResize(textarea) {
           textarea.style.height = "auto";
@@ -428,6 +432,12 @@ given the great amount of pictures taken during this survey, few of them are sho
           document.getElementById("reportForm").reset();
           alert("Local storage cleared and form reset");
         }
+
+        addRelevantTime();
+        addSecuringSeal();
+        addRelevantTime();
+        addSecuringSeal();
+        addContainerCode();
       </script>
     </main>
     <footer></footer>
