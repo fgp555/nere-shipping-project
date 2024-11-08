@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" />
     <script src="https://frankgp.com/component/stat.js" type="module"></script>
-    <link rel="stylesheet" href="/component/layout.css?2411_0014" />
-    <script src="/component/layout.js?2411_0014" defer></script>
     <title>Shipping App</title>
     <style>
       #mbl_code {
@@ -14,31 +12,42 @@
       }
     </style>
   </head>
-  <body>
+    <body>
     <script src="/component/loader.js"></script>
     <header></header>
 
     <main class="container">
-      <article style="display: flex; justify-content: space-between">
-        <a class="btn btn-back" onclick="window.history.back();"
-          ><button><i class="icon-arrow-left"></i> back</button></a
-        >
-      </article>
-
-      <h1>Select and<span style="color: greenyellow"> Download PDF</span></h1>
-
-      <p>To continue with the download or preview select the MBL code created in step 1</p>
+      <h2>Shipping App</h2>
       <label for="mbl_code">Select MBL Code:</label>
       <select id="mbl_code" name="mbl_code" required>
         <option value="">Select MBL Code</option>
       </select>
       <!-- <button onclick="mbl_code_consolelog()">mbl_code_consolelog</button> -->
-      <button onclick="downloadPDF()" class="contrast">Download PDF</button>
-      <button onclick="openInNewTab()" style="background-color: cornflowerblue">Preview</button>
+      <button onclick="openInNewTab()" class="contrast">Open</button>
+      <button onclick="downloadPDF()" style="background-color: cornflowerblue">Download PDF</button>
       <button onclick="deleteReport()" style="background-color: red; border: none">Delete</button>
 
       <br /><br />
 
+      <article role="group">
+        <h3>Report</h3>
+        <a role="button" class="contrast" href="/report/">create</a>
+        <a role="button"  href="/report/read.html">read</a>
+        <a role="button" class="secondary"href="/report/mbl_code.html">By mbl_code</a>
+        <a role="button" class="outline" href="/api/report/" target="_blank">API</a>
+      </article>
+      <article role="group">
+        <h3>Unstuffing</h3>
+        <a role="button" class="contrast" href="/t4_unstuffing">create</a>
+        <a role="button" href="/t4_unstuffing/read.html">read</a>
+        <a role="button" class="outline" href="/api/t4-unstuffing/" target="_blank">API</a>
+      </article>
+      <article role="group">
+        <h3>Damage</h3>
+        <a role="button" class="contrast" href="/t5_damage">create</a>
+        <a role="button" href="/t5_damage/read.html">read</a>
+        <a role="button" class="outline" href="/api/t5_damage/" target="_blank">API</a>
+      </article>
       <script>
         async function loadMblCodes() {
           try {

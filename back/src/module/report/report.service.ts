@@ -1,5 +1,8 @@
-import { ConflictException, Injectable } from '@nestjs/common';
-import { CreateReportDto } from './dto/create-report.dto';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { UpdateReportDto } from './dto/update-report.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ReportEntity } from './entities/report.entity';
@@ -29,7 +32,9 @@ export class ReportService {
   }
 
   async findOne(mbl_code: string) {
-    return await this.reportRepository.findOne({ where: { mbl_code } });
+    const report = await this.reportRepository.findOne({ where: { mbl_code } });
+    if (!report) throw new NotFoundException('Report not found');
+    return report;
   }
 
   async dowloadTest() {
@@ -55,7 +60,26 @@ export class ReportService {
     return `This action updates a #${id} report`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} report`;
+  async remove(mbl_code: string) {
+    // Busca el reporte junto con sus relaciones, para que TypeORM aplique la cascada
+    const report = await this.reportRepository.findOne({
+      where: { mbl_code: mbl_code },
+      relations: [
+        't0_header',
+        't1_details_shipment',
+        'T2_relevant_times',
+        't3_securing_seals',
+        't4_unstuffing',
+        't5_damage',
+        't6_footer',
+      ],
+    });
+
+    if (!report) {
+      throw new NotFoundException(`Report with ID ${mbl_code} not found`);
+    }
+
+    // Usa el método remove en lugar de delete para activar la eliminación en cascada
+    return await this.reportRepository.remove(report);
   }
 }

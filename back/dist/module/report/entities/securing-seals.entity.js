@@ -40,7 +40,9 @@ __decorate([
     __metadata("design:type", String)
 ], SecuringSeals.prototype, "others", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => report_entity_1.ReportEntity, (report) => report.t3_securing_seals),
+    (0, typeorm_1.ManyToOne)(() => report_entity_1.ReportEntity, (report) => report.t3_securing_seals, {
+        onDelete: 'CASCADE',
+    }),
     __metadata("design:type", report_entity_1.ReportEntity)
 ], SecuringSeals.prototype, "report", void 0);
 exports.SecuringSeals = SecuringSeals = __decorate([

@@ -36,7 +36,9 @@ __decorate([
     __metadata("design:type", Array)
 ], T5DamageEntity.prototype, "images_groups", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => report_entity_1.ReportEntity, (report) => report.t5_damage),
+    (0, typeorm_1.ManyToOne)(() => report_entity_1.ReportEntity, (report) => report.t5_damage, {
+        onDelete: 'CASCADE',
+    }),
     __metadata("design:type", report_entity_1.ReportEntity)
 ], T5DamageEntity.prototype, "report_mbl_code", void 0);
 exports.T5DamageEntity = T5DamageEntity = __decorate([

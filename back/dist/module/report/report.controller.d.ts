@@ -10,5 +10,5 @@ export declare class ReportController {
     dowloadTest(): Promise<string>;
     dowload(mbl_code: string): Promise<string>;
     update(id: string, updateReportDto: UpdateReportDto): string;
-    remove(id: string): string;
+    remove(mbl_code: string): Promise<import("./entities/report.entity").ReportEntity>;
 }

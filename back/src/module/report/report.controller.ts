@@ -50,8 +50,8 @@ export class ReportController {
     return this.reportService.update(+id, updateReportDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.reportService.remove(+id);
+  @Delete(':mbl_code')
+  remove(@Param('mbl_code') mbl_code: string) {
+    return this.reportService.remove(mbl_code);
   }
 }

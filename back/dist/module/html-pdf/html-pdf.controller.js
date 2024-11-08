@@ -91,23 +91,6 @@ let HtmlPdfController = class HtmlPdfController {
                 throw new common_1.NotFoundException('Report not found');
             const templatePath = path.join(__dirname, '../../../templates/mbl_code_data.ejs');
             const PROTOCOL_HOST = process.env.PROTOCOL_HOST || 'https://fpshippingsolutions.com';
-            const tempData = [
-                {
-                    id: 1,
-                    name: 'Product 1',
-                    image: 'http://localhost:3000/imgs/img1.jpg?1',
-                },
-                {
-                    id: 2,
-                    name: 'Product 2',
-                    image: 'http://localhost:3000/imgs/img1.jpg?2',
-                },
-                {
-                    id: 3,
-                    name: 'Product 3',
-                    image: 'http://localhost:3000/imgs/img1.jpg?3',
-                },
-            ];
             const htmlContent = await ejs.renderFile(templatePath, {
                 title: `Report ${mbl_code}`,
                 report: report,

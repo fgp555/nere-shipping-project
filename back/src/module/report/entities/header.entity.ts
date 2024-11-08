@@ -67,6 +67,8 @@ export class HeaderEntity {
   @Column({ type: 'text' })
   report_note: string;
 
-  @OneToOne(() => ReportEntity, (report) => report.t0_header)
+  @OneToOne(() => ReportEntity, (report) => report.t0_header, {
+    // onDelete: 'CASCADE',
+  })
   report: ReportEntity;
 }

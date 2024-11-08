@@ -21,11 +21,11 @@ __decorate([
     __metadata("design:type", Number)
 ], T4UnstuffingEntity.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.Column)('json'),
+    (0, typeorm_1.Column)('json', { nullable: true }),
     __metadata("design:type", Array)
 ], T4UnstuffingEntity.prototype, "notes", void 0);
 __decorate([
-    (0, typeorm_1.Column)('text'),
+    (0, typeorm_1.Column)('text', { nullable: true }),
     __metadata("design:type", String)
 ], T4UnstuffingEntity.prototype, "foot_note", void 0);
 __decorate([
@@ -37,7 +37,9 @@ __decorate([
     __metadata("design:type", Array)
 ], T4UnstuffingEntity.prototype, "images_groups", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => report_entity_1.ReportEntity, (report) => report.t4_unstuffing),
+    (0, typeorm_1.ManyToOne)(() => report_entity_1.ReportEntity, (report) => report.t4_unstuffing, {
+        onDelete: 'CASCADE',
+    }),
     __metadata("design:type", report_entity_1.ReportEntity)
 ], T4UnstuffingEntity.prototype, "report_mbl_code", void 0);
 exports.T4UnstuffingEntity = T4UnstuffingEntity = __decorate([

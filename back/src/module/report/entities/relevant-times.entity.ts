@@ -24,6 +24,8 @@ export class RelevantTimes {
   @Column({ nullable: true })
   time_used_to_survey: string;
 
-  @ManyToOne(() => ReportEntity, (report) => report.T2_relevant_times)
+  @ManyToOne(() => ReportEntity, (report) => report.T2_relevant_times, {
+    onDelete: 'CASCADE',
+  })
   report: ReportEntity;
 }

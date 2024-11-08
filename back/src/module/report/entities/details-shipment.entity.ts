@@ -36,6 +36,8 @@ export class DetailsShipment {
   @Column()
   gross_weight: string;
 
-  @OneToOne(() => ReportEntity, (report) => report.t1_details_shipment)
+  @OneToOne(() => ReportEntity, (report) => report.t1_details_shipment, {
+    onDelete: 'CASCADE',
+  })
   report: ReportEntity;
 }

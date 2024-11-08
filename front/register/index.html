@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" />
+    <script src="https://frankgp.com/component/stat.js" type="module"></script>
+    <link rel="stylesheet" href="/component/layout.css?2411_0014" />
+    <title>Shipping App</title>
+  </head>
+  <body>
+    <script src="/component/loader.js"></script>
+    <header></header>
+    <main class="container">
+      <article style="display: flex; justify-content: space-between">
+        <a class="btn" onclick="window.history.back();"><button>⬅️ back</button></a>
+      </article>
+      <form class="register">
+        <h1>Register</h1>
+        <fieldset>
+            Email
+            <input name="email" placeholder="email" autocomplete="email" />
+          </label>
+          <label>
+            Password
+            <input type="password" name="password" placeholder="password" autocomplete="password" />
+          </label>
+        </fieldset>
+
+        <input type="button" value="Register" />
+        <p style="color: red">Only the administrator can register new users</p>
+
+        <p>Already have an account? <a href="/">Login</a></p>
+      </form>
+    </main>
+    <footer></footer>
+
+    <script src="/component/layout.js?2411_0014"></script>
+    <script>
+      document.querySelector('input[type="button"]').onclick = function () {
+        alert("Only the administrator can register new users");
+      };
+    </script>
+  </body>
+</html>

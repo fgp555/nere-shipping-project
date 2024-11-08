@@ -15,10 +15,10 @@ export class T4UnstuffingEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column('json') // Cambia a json para almacenar el array
+  @Column('json', { nullable: true }) // Cambia a json para almacenar el array
   notes: string[];
 
-  @Column('text')
+  @Column('text', { nullable: true })
   foot_note: string;
 
   @OneToMany(() => ImageGroupEntity, (imageGroup) => imageGroup.unstuffing, {
@@ -28,6 +28,8 @@ export class T4UnstuffingEntity {
   })
   images_groups: ImageGroupEntity[];
 
-  @ManyToOne(() => ReportEntity, (report) => report.t4_unstuffing)
+  @ManyToOne(() => ReportEntity, (report) => report.t4_unstuffing, {
+    onDelete: 'CASCADE',
+  })
   report_mbl_code: ReportEntity;
 }

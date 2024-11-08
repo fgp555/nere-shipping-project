@@ -35,7 +35,10 @@ let ReportService = class ReportService {
         return this.reportRepository.find();
     }
     async findOne(mbl_code) {
-        return await this.reportRepository.findOne({ where: { mbl_code } });
+        const report = await this.reportRepository.findOne({ where: { mbl_code } });
+        if (!report)
+            throw new common_1.NotFoundException('Report not found');
+        return report;
     }
     async dowloadTest() {
         return `This action downloads a # report`;
@@ -53,8 +56,23 @@ let ReportService = class ReportService {
     update(id, updateReportDto) {
         return `This action updates a #${id} report`;
     }
-    remove(id) {
-        return `This action removes a #${id} report`;
+    async remove(mbl_code) {
+        const report = await this.reportRepository.findOne({
+            where: { mbl_code: mbl_code },
+            relations: [
+                't0_header',
+                't1_details_shipment',
+                'T2_relevant_times',
+                't3_securing_seals',
+                't4_unstuffing',
+                't5_damage',
+                't6_footer',
+            ],
+        });
+        if (!report) {
+            throw new common_1.NotFoundException(`Report with ID ${mbl_code} not found`);
+        }
+        return await this.reportRepository.remove(report);
     }
 };
 exports.ReportService = ReportService;

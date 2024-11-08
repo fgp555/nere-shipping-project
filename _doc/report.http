@@ -3,10 +3,7 @@
 GET http://localhost:3000/api/report
 
 ### Obtener un usuario por mbl_code 
-GET http://localhost:3000/api/report/ONEYHAME90065700
-
-### Obtener un usuario por ID
-GET http://localhost:3000/api/report/mbl_code/
+GET http://localhost:3000/api/report/ONEYHAME90065701
 
 ### Actualizar un usuario por ID
 PATCH http://localhost:3000/api/report/1
@@ -17,4 +14,4 @@ Content-Type: application/json
 }
 
 ### Eliminar un usuario por ID
-DELETE http://localhost:3000/api/report/1
+DELETE http://localhost:3000/api/report/ONEYHAME90065701

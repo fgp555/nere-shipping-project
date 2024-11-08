@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" />
+    <script src="https://frankgp.com/component/stat.js" type="module"></script>
+    <link rel="stylesheet" href="/component/layout.css?2411_0014" />
+    <title>Shipping App</title>
+  </head>
+  <body>
+    <script src="/component/loader.js"></script>
+    <header></header>
+    <main class="container">
+      <article style="display: flex; justify-content: space-between">
+        <!-- <a class="btn" onclick="window.history.back();"><button>⬅️ back</button></a> -->
+      </article>
+      <!-- <h1>Home</h1> -->
+      <h3>Wellcome <span id="name">User</span></h3>
+      <p>
+        This application is for generating PDF reports. To start creating a report you can press the "start" button at the bottom or "1" at the top, with either of the buttons
+        mentioned you can start
+      </p>
+      <article role="group">
+        <!-- <h3>Report</h3> -->
+        <a role="button" class="contrast" href="/report/">Start</a>
+        <a role="button" href="/pdf/"><span class="hide-mobile">Download</span> PDF</a>
+        <a role="button" class="outline" id="newUser" href="/register-private/">Register <span class="hide-mobile"> New Users</span> </a>
+        <!-- <a role="button" class="secondary" href="/report/mbl_code.html">By mbl_code</a> -->
+      </article>
+      <article>
+        <h3>Video Tutorial</h3>
+        <p>In this section there is a video tutorial that will help you better understand how the application works.(comming soon)</p>
+        <!-- ========== youtube_embed component... ========== -->
+        <youtube_embed data-url="https://youtu.be/oK3jROrz-CA"></youtube_embed>
+
+        <script src="https://frankgp.com/lib/youtube-embed.js"></script>
+        <!-- ========== youtube_embed component. ========== -->
+      </article>
+    </main>
+    <footer></footer>
+
+    <script src="/component/layout.js?2411_0014"></script>
+
+    <script>
+      if (!isAdmin) {
+        document.querySelector("#newUser").remove();
+      }
+      if (getItemUser) {
+        document.querySelector("#name").innerHTML = JSON.parse(getItemUser).email;
+      }
+    </script>
+  </body>
+</html>

@@ -3,8 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>t5_damage Create</title>
+    <title>Damage</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" />
+    <script src="https://frankgp.com/component/stat.js" type="module"></script>
+    <link rel="stylesheet" href="/component/layout.css?2411_0014" />
+    <script src="/component/layout.js?2411_0014" defer></script>
     <style>
       textarea {
         overflow: hidden;
@@ -17,15 +20,20 @@
     </style>
   </head>
   <body>
+    <script src="/component/loader.js"></script>
+    <header></header>
     <main class="container">
       <article style="display: flex; justify-content: space-between">
-        <a class="btn" href="/"><button>⬅️ Retroceder</button></a>
-        <button type="button" onclick="resetLocalStorage()" style="margin-left: auto; display: inline-block; background-color: red; border: none">Clear Local Storage</button>
+        <a class="btn btn-back" onclick="window.history.back();"
+          ><button><i class="icon-arrow-left"></i> back</button></a
+        >
+        <button type="button" onclick="resetLocalStorage()" style="margin-left: auto; display: inline-block; background-color: red; border: none">Reset form data</button>
       </article>
 
-      <h1><span style="color: greenyellow">Create</span> t5_damage</h1>
+      <h1><span style="color: greenyellow">Add </span> Damage</h1>
 
       <form id="damageForm" enctype="multipart/form-data">
+        <p>To continue select the MBL code created in step 1</p>
         <label for="mbl_code">Select MBL Code::</label>
         <select id="mbl_code" name="mbl_code" required oninput="saveToLocalStorage()">
           <option value="">Selecciona un código</option>
@@ -79,8 +87,12 @@ During the stripping operation, the following exceptions were noticed and/or rec
         <button type="button" onclick="addImageGroup()" class="secondary">Add another group of images</button>
         <br /><br />
 
-        <button type="submit" class="">Send</button>
+        <article role="group">
+          <button type="submit">Save</button>
+          <a role="button" class="contrast" href="/pdf/">Next to download</a>
+        </article>
       </form>
+      <p>save and go to the next step</p>
 
       <script>
         document.addEventListener("DOMContentLoaded", () => {
@@ -334,5 +346,6 @@ During the stripping operation, the following exceptions were noticed and/or rec
         }
       </script>
     </main>
+    <footer></footer>
   </body>
 </html>

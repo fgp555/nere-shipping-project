@@ -12,7 +12,7 @@ const pdf = require("html-pdf");
 let HtmlPdfService = class HtmlPdfService {
     async generatePdf(data) {
         const options = {
-            format: 'A3',
+            format: process.env.PDF_FORMAT || 'A3',
             border: {
                 top: '1in',
                 right: '1in',
@@ -35,10 +35,12 @@ let HtmlPdfService = class HtmlPdfService {
     }
     async generatePdfHeadFooter(data) {
         const options = {
-            format: 'A4',
+            format: process.env.PDF_FORMAT || 'A3',
             border: {
-                right: '0.3in',
-                left: '0.3in',
+                top: '1in',
+                right: '1in',
+                bottom: '1in',
+                left: '1in',
             },
             header: {
                 height: '1.7in',

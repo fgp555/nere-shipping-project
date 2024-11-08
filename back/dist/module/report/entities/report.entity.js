@@ -77,6 +77,7 @@ __decorate([
     (0, typeorm_1.OneToOne)(() => footer_entity_1.FooterEntity, (footer) => footer.report, {
         cascade: true,
         eager: true,
+        onDelete: 'SET NULL',
     }),
     (0, typeorm_1.JoinColumn)(),
     __metadata("design:type", footer_entity_1.FooterEntity)

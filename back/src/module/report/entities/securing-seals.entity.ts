@@ -21,6 +21,8 @@ export class SecuringSeals {
   @Column()
   others: string;
 
-  @ManyToOne(() => ReportEntity, (report) => report.t3_securing_seals)
+  @ManyToOne(() => ReportEntity, (report) => report.t3_securing_seals, {
+    onDelete: 'CASCADE',
+  })
   report: ReportEntity;
 }

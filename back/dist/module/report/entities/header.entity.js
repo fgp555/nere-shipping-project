@@ -100,7 +100,7 @@ __decorate([
     __metadata("design:type", String)
 ], HeaderEntity.prototype, "report_note", void 0);
 __decorate([
-    (0, typeorm_1.OneToOne)(() => report_entity_1.ReportEntity, (report) => report.t0_header),
+    (0, typeorm_1.OneToOne)(() => report_entity_1.ReportEntity, (report) => report.t0_header, {}),
     __metadata("design:type", report_entity_1.ReportEntity)
 ], HeaderEntity.prototype, "report", void 0);
 exports.HeaderEntity = HeaderEntity = __decorate([

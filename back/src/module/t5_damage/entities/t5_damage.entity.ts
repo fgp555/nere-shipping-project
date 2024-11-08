@@ -27,6 +27,8 @@ export class T5DamageEntity {
   })
   images_groups: T5ImageGroupEntity[];
 
-  @ManyToOne(() => ReportEntity, (report) => report.t5_damage)
+  @ManyToOne(() => ReportEntity, (report) => report.t5_damage, {
+    onDelete: 'CASCADE',
+  })
   report_mbl_code: ReportEntity;
 }

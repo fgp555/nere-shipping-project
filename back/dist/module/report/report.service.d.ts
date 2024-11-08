@@ -11,5 +11,5 @@ export declare class ReportService {
     download(mbl_code: string): Promise<string>;
     mbl_code(): Promise<any[]>;
     update(id: number, updateReportDto: UpdateReportDto): string;
-    remove(id: number): string;
+    remove(mbl_code: string): Promise<ReportEntity>;
 }

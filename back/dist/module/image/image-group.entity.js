@@ -32,7 +32,9 @@ __decorate([
     __metadata("design:type", Array)
 ], ImageGroupEntity.prototype, "images_notes", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => t4_unstuffing_entity_1.T4UnstuffingEntity, (report) => report.images_groups),
+    (0, typeorm_1.ManyToOne)(() => t4_unstuffing_entity_1.T4UnstuffingEntity, (report) => report.images_groups, {
+        onDelete: 'CASCADE',
+    }),
     __metadata("design:type", t4_unstuffing_entity_1.T4UnstuffingEntity)
 ], ImageGroupEntity.prototype, "unstuffing", void 0);
 exports.ImageGroupEntity = ImageGroupEntity = __decorate([

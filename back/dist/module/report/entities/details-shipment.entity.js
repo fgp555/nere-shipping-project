@@ -60,7 +60,9 @@ __decorate([
     __metadata("design:type", String)
 ], DetailsShipment.prototype, "gross_weight", void 0);
 __decorate([
-    (0, typeorm_1.OneToOne)(() => report_entity_1.ReportEntity, (report) => report.t1_details_shipment),
+    (0, typeorm_1.OneToOne)(() => report_entity_1.ReportEntity, (report) => report.t1_details_shipment, {
+        onDelete: 'CASCADE',
+    }),
     __metadata("design:type", report_entity_1.ReportEntity)
 ], DetailsShipment.prototype, "report", void 0);
 exports.DetailsShipment = DetailsShipment = __decorate([

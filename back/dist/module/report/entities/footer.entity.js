@@ -36,7 +36,7 @@ __decorate([
     __metadata("design:type", String)
 ], FooterEntity.prototype, "cargo", void 0);
 __decorate([
-    (0, typeorm_1.OneToOne)(() => report_entity_1.ReportEntity, (report) => report.t6_footer),
+    (0, typeorm_1.OneToOne)(() => report_entity_1.ReportEntity, (report) => report.t6_footer, {}),
     __metadata("design:type", report_entity_1.ReportEntity)
 ], FooterEntity.prototype, "report", void 0);
 exports.FooterEntity = FooterEntity = __decorate([

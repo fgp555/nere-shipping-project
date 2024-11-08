@@ -1,0 +1,32 @@
+### 
+GET https://fpshippingsolutions.com/api/info/
+
+### endpoints
+GET https://fpshippingsolutions.com/api/info/endpoints
+
+### system
+GET https://fpshippingsolutions.com/api/info/system
+
+### time
+GET https://fpshippingsolutions.com/api/info/time
+
+### infoDatabase
+GET https://fpshippingsolutions.com/api/info/infoDatabase
+
+### entities
+GET https://fpshippingsolutions.com/api/info/entities
+
+### package.json
+GET https://fpshippingsolutions.com/api/info/package.json
+
+### domain
+GET https://fpshippingsolutions.com/api/info/domain
+Content-Type: application/json
+Authorization: 1234
+
+### cookies
+GET https://fpshippingsolutions.com/api/info/cookies
+
+### resetDatabase
+DELETE https://fpshippingsolutions.com/api/info/resetDatabase
+Authorization: false

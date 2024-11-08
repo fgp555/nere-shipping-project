@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Crear Reporte</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" />
+    <script src="https://frankgp.com/component/stat.js" type="module"></script>
+    <link rel="stylesheet" href="/component/layout.css?2411_0014" />
+    <script src="/component/layout.js?2411_0014" defer></script>
     <style>
       textarea {
         overflow: hidden;
@@ -17,15 +20,18 @@
     </style>
   </head>
   <body>
+    <script src="/component/loader.js"></script>
     <header></header>
 
     <main class="container">
       <article style="display: flex; justify-content: space-between">
-        <a class="btn" href="/"><button>⬅️ Retroceder</button></a>
-        <button type="button" onclick="clearLocalStorage()" style="margin-left: auto; display: inline-block; background-color: red; border: none">Clear Local Storage</button>
+        <a class="btn btn-back" onclick="window.history.back();"
+          ><button><i class="icon-arrow-left"></i> back</button></a
+        >
+        <button type="button" onclick="clearLocalStorage()" style="margin-left: auto; display: inline-block; background-color: red; border: none">Reset form data</button>
       </article>
 
-      <h1><span style="color: greenyellow">Create</span> Report</h1>
+      <h1><span style="color: greenyellow">Add info</span> Report</h1>
 
       <form id="reportForm">
         <fieldset>
@@ -120,7 +126,7 @@ given the great amount of pictures taken during this survey, few of them are sho
 
         <!-- 1.-Details of the shipment: -->
         <fieldset>
-          <h2 class="title_h2">1.-Details of the shipment:</h2>
+          <h2 class="title_h2">Details of the shipment:</h2>
           <label for="vessel">Vessel:</label>
           <input type="text" id="vessel" name="vessel" value="XIN CHANG SHA" required onchange="saveToLocalStorage()" />
 
@@ -167,7 +173,7 @@ given the great amount of pictures taken during this survey, few of them are sho
 
         <!-- 2.-Relevant times: -->
         <fieldset id="relevantTimesSection">
-          <h2 class="title_h2">2.-Relevant times:</h2>
+          <h2 class="title_h2">Relevant times:</h2>
           <!-- <button type="button" onclick="addRelevantTime()">Añadir Tiempo</button> -->
         </fieldset>
 
@@ -179,7 +185,7 @@ given the great amount of pictures taken during this survey, few of them are sho
 
         <!-- 3.-Securing seals: -->
         <fieldset id="securingSealsSection">
-          <h2 class="title_h2">3.-Securing seals:</h2>
+          <h2 class="title_h2">Securing seals:</h2>
           <!-- <button type="button" onclick="addSecuringSeal()">Añadir Sello</button> -->
         </fieldset>
 
@@ -191,7 +197,7 @@ given the great amount of pictures taken during this survey, few of them are sho
 
         <!-- 6.-The weather: -->
         <fieldset>
-          <h2 class="title_h2">6.-The weather:</h2>
+          <h2 class="title_h2">The weather:</h2>
           <label for="weather_status">State of the Climate:</label>
           <input type="text" id="weather_status" name="weather_status" value="Hot/cloudy" required onchange="saveToLocalStorage()" />
 
@@ -204,10 +210,12 @@ given the great amount of pictures taken during this survey, few of them are sho
           <label for="cargo">Cargo:</label>
           <input type="text" id="cargo" name="cargo" value="Independent Cargo Surveyor" required onchange="saveToLocalStorage()" />
         </fieldset>
-
-        <button type="submit">Send</button>
+        <article role="group">
+          <button type="submit">Save</button>
+          <a role="button" class="contrast" href="/t4_unstuffing/">Next to step 2</a>
+        </article>
       </form>
-
+      <p>save and go to the next step</p>
       <script>
         var counterContainerCode = 2;
         var counterOther = 0;

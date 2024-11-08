@@ -25,6 +25,7 @@ export class ReportEntity {
   @OneToOne(() => HeaderEntity, (header) => header.report, {
     cascade: true,
     eager: true,
+    // onDelete: 'CASCADE',
   })
   @JoinColumn()
   t0_header: HeaderEntity;
@@ -67,6 +68,7 @@ export class ReportEntity {
   @OneToOne(() => FooterEntity, (footer) => footer.report, {
     cascade: true,
     eager: true,
+    onDelete: 'SET NULL',
   })
   @JoinColumn()
   t6_footer: FooterEntity;

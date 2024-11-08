@@ -44,7 +44,9 @@ __decorate([
     __metadata("design:type", String)
 ], RelevantTimes.prototype, "time_used_to_survey", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => report_entity_1.ReportEntity, (report) => report.T2_relevant_times),
+    (0, typeorm_1.ManyToOne)(() => report_entity_1.ReportEntity, (report) => report.T2_relevant_times, {
+        onDelete: 'CASCADE',
+    }),
     __metadata("design:type", report_entity_1.ReportEntity)
 ], RelevantTimes.prototype, "report", void 0);
 exports.RelevantTimes = RelevantTimes = __decorate([

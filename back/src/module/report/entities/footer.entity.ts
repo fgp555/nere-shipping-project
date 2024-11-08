@@ -18,6 +18,10 @@ export class FooterEntity {
   @Column()
   cargo: string;
 
-  @OneToOne(() => ReportEntity, (report) => report.t6_footer)
+  @OneToOne(() => ReportEntity, (report) => report.t6_footer, {
+    // cascade: true,
+    // eager: true,
+    // onDelete: 'CASCADE',
+  })
   report: ReportEntity;
 }

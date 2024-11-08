@@ -1,0 +1,71 @@
+@import url("https://frankgp.com/icon/icomoon/style.css");
+
+* {
+  box-sizing: border-box;
+  /* border: 1px dashed #0808; */
+}
+
+header {
+  text-align: center;
+}
+
+footer {
+  text-align: center;
+}
+
+.container form:where(.login, .register) {
+  max-width: 20em;
+  margin: 1em auto;
+}
+
+.logout {
+  margin-left: auto;
+  display: inline-block;
+  background-color: red;
+  border: none;
+  opacity: 0.9;
+}
+
+.logout:hover {
+  opacity: 1;
+}
+
+.nav a.active {
+  border-bottom: 6px solid greenyellow;
+}
+
+#toggle-password {
+  position: absolute;
+  right: 0em;
+  top: 57%;
+  font-size: 1.2em;
+  opacity: 0.5;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+
+#toggle-password:focus {
+  outline: none; /* Quita el contorno de enfoque */
+  border: none; /* Opcional: Quita el borde */
+  /* background-color: #f9f9f9; Ejemplo: Cambiar color de fondo */
+}
+
+.btn-back > button {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* === Mobile... === */
+@media (max-width: 40rem) {
+  .hide-mobile {
+    display: none;
+  }
+}
+/* === Mobile... === */
+
+.container {
+  max-width: 40rem;
+}

@@ -32,7 +32,7 @@
       }
       .containers_reporte_foot {
         text-align: justify;
-        max-width: 50rem;
+        max-width: 60rem;
         margin: 1em auto;
       }
       .containers_reporte_foot .note {
@@ -78,7 +78,7 @@
         background-color: #f9f9f9;
       }
       .table {
-        max-width: 50rem;
+        max-width: 60rem;
         margin: 3em auto 1em;
       }
       ol {
@@ -248,14 +248,18 @@
           <!-- <hr> -->
           <br>
           <h3 class="title_h3">4.-Unstuffing of container:</h3>
+
           <% report.t4_unstuffing.forEach(unstuff => { %>
-          <br>
-          <hr>
-          <ol style="list-style-type: upper-roman; margin-left: 2em">
-            <% unstuff.notes.forEach(note => { %>
-            <li><%= note %></li>
-            <% }); %>
-          </ol>
+            <br>
+            <hr>
+            <% let notesArray = Array.isArray(unstuff.notes) ? unstuff.notes : JSON.parse(unstuff.notes); %> <!-- Convertir solo si no es un arreglo -->
+            <ol style="list-style-type: upper-roman; margin-left: 2em">
+              <% notesArray.forEach(note => { %>
+                <li><%= note %></li>
+              <% }); %>
+            </ol>
+
+          
 
           <% unstuff.images_groups.forEach(group => { %>
           <span class="image-preview">

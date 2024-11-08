@@ -41,8 +41,8 @@ let ReportController = class ReportController {
     update(id, updateReportDto) {
         return this.reportService.update(+id, updateReportDto);
     }
-    remove(id) {
-        return this.reportService.remove(+id);
+    remove(mbl_code) {
+        return this.reportService.remove(mbl_code);
     }
 };
 exports.ReportController = ReportController;
@@ -94,8 +94,8 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ReportController.prototype, "update", null);
 __decorate([
-    (0, common_1.Delete)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.Delete)(':mbl_code'),
+    __param(0, (0, common_1.Param)('mbl_code')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
