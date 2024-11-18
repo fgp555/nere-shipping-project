@@ -28,8 +28,7 @@ let ReportService = class ReportService {
             },
         });
         if (existingReport)
-            throw new common_1.ConflictException('El reporte ya existe');
-        createReportDto.user = 1;
+            throw new common_1.ConflictException('The MBL code already exists');
         return await this.reportRepository.save(createReportDto);
     }
     findAll() {
@@ -53,6 +52,9 @@ let ReportService = class ReportService {
             .select('report.mbl_code')
             .getRawMany();
         return reports;
+    }
+    async mbl_code_userId(userId) {
+        return 'mbl_code_userId';
     }
     update(id, updateReportDto) {
         return `This action updates a #${id} report`;

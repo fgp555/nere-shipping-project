@@ -29,6 +29,11 @@ export class ReportController {
   mbl_code() {
     return this.reportService.mbl_code();
   }
+  
+  @Get('mbl_code/:userId')
+  mbl_code_userId(@Param('userId') userId : string) {
+    return this.reportService.mbl_code_userId(userId);
+  }
 
   @Get(':mbl_code')
   findOne(@Param('mbl_code') mbl_code: string) {

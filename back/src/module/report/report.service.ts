@@ -7,6 +7,7 @@ import { UpdateReportDto } from './dto/update-report.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ReportEntity } from './entities/report.entity';
 import { Repository } from 'typeorm';
+import { UserEntity } from '../user/entities/user.entity';
 
 @Injectable()
 export class ReportService {
@@ -22,8 +23,9 @@ export class ReportService {
       },
     });
 
-    if (existingReport) throw new ConflictException('El reporte ya existe');
-    createReportDto.user = 1;
+    if (existingReport)
+      throw new ConflictException('The MBL code already exists');
+    // createReportDto.user = 1;
     return await this.reportRepository.save(createReportDto);
   }
 
@@ -54,6 +56,10 @@ export class ReportService {
       .getRawMany();
 
     return reports;
+  }
+
+  async mbl_code_userId(userId: string) {
+    return 'mbl_code_userId';
   }
 
   update(id: number, updateReportDto: UpdateReportDto) {

@@ -1,8 +1,15 @@
-import { Controller, Post, Body, UnauthorizedException } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  UnauthorizedException,
+  UseGuards,
+} from '@nestjs/common';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { UserService } from '../user/user.service';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import { AuthGuard } from './auth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -12,6 +19,7 @@ export class AuthController {
   ) {}
 
   @Post('signup')
+  @UseGuards(AuthGuard)
   async signup(@Body() createAuthDto: CreateAuthDto) {
     const foundEmail = await this.userService.findOneEmail(createAuthDto.email);
 

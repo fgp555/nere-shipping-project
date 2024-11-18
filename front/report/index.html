@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" />
     <script src="https://frankgp.com/component/stat.js" type="module"></script>
     <link rel="stylesheet" href="/component/layout.css?2411_0014" />
-    <script src="/component/layout.js?2411_0014" defer></script>
     <style>
       textarea {
         overflow: hidden;
@@ -216,26 +215,88 @@ given the great amount of pictures taken during this survey, few of them are sho
         </article>
       </form>
       <p>save and go to the next step</p>
-      <script>
-        var counterContainerCode = 2;
-        var counterOther = 0;
+    </main>
+    <footer></footer>
+    <script src="/component/layout.js?2411_0014"></script>
+    <script>
+      var counterContainerCode = 2;
+      var counterOther = 0;
 
-        function addContainerCode() {
-          const containerCodesSection = document.getElementById("containerCodesSection");
-          const newInput = document.createElement("input");
-          newInput.type = "text";
-          newInput.name = "container_code[]";
-          newInput.placeholder = "Código del contenedor";
-          newInput.value = `FSCU5726799${counterContainerCode} `;
-          newInput.required = true;
-          newInput.onchange = saveToLocalStorage;
-          containerCodesSection.appendChild(newInput);
-          counterContainerCode++;
+      function addContainerCode() {
+        const containerCodesSection = document.getElementById("containerCodesSection");
+        const newInput = document.createElement("input");
+        newInput.type = "text";
+        newInput.name = "container_code[]";
+        newInput.placeholder = "Código del contenedor";
+        newInput.value = `FSCU5726799${counterContainerCode} `;
+        newInput.required = true;
+        newInput.onchange = saveToLocalStorage;
+        containerCodesSection.appendChild(newInput);
+        counterContainerCode++;
+      }
+
+      function saveToLocalStorage() {
+        const formData = {
+          mbl_code: document.getElementById("mbl_code").value,
+          header_name: document.getElementById("header_name").value,
+          header_address: document.getElementById("header_address").value,
+          header_mobile: document.getElementById("header_mobile").value,
+          header_email: document.getElementById("header_email").value,
+          report_date: document.getElementById("report_date").value,
+          cliente_senores: document.getElementById("cliente_senores").value,
+          cliente_empresa: document.getElementById("cliente_empresa").value,
+          cliente_deposito: document.getElementById("cliente_deposito").value,
+          cliente_postal: document.getElementById("cliente_postal").value,
+          operador_area: document.getElementById("operador_area").value,
+          operador_responsables1: document.getElementById("operador_responsables1").value,
+          operador_responsables2: document.getElementById("operador_responsables2").value,
+          report_mv: document.getElementById("report_mv").value,
+          containers_reporte: document.getElementById("containers_reporte").value,
+          containers_leyenda: document.getElementById("containers_leyenda").value,
+          containers_code: document.getElementById("containers_code").value,
+          containers_descripcion: document.getElementById("containers_descripcion").value,
+          containers_destino: document.getElementById("containers_destino").value,
+          report_description: document.getElementById("report_description").value,
+          report_note: document.getElementById("report_note").value,
+          vessel: document.getElementById("vessel").value,
+          voyage: document.getElementById("voyage").value,
+          pol: document.getElementById("pol").value,
+          shipper: document.getElementById("shipper").value,
+          pod: document.getElementById("pod").value,
+          consignee: document.getElementById("consignee").value,
+          qty_of_pkgs: document.getElementById("qty_of_pkgs").value,
+          goods: document.getElementById("goods").value,
+          gross_weight: document.getElementById("gross_weight").value,
+          note: document.getElementById("note").value,
+          weather_status: document.getElementById("weather_status").value,
+          legend: document.getElementById("legend").value,
+          who_signs: document.getElementById("who_signs").value,
+          cargo: document.getElementById("cargo").value,
+        };
+        localStorage.setItem("reportFormData", JSON.stringify(formData));
+      }
+
+      window.onload = function () {
+        const savedData = JSON.parse(localStorage.getItem("reportFormData"));
+        if (savedData) {
+          Object.keys(savedData).forEach((id) => {
+            if (document.getElementById(id)) {
+              document.getElementById(id).value = savedData[id];
+            }
+          });
         }
+      };
 
-        function saveToLocalStorage() {
-          const formData = {
-            mbl_code: document.getElementById("mbl_code").value,
+      // ==========  ==========
+      document.getElementById("reportForm").addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        // Obtén los valores de todos los inputs `container_code[]` y crea un array
+        const containerCodes = Array.from(document.querySelectorAll("input[name='container_code[]']")).map((input) => input.value);
+        const formData = {
+          mbl_code: document.getElementById("mbl_code").value,
+          user: getParseData?.id,
+          t0_header: {
             header_name: document.getElementById("header_name").value,
             header_address: document.getElementById("header_address").value,
             header_mobile: document.getElementById("header_mobile").value,
@@ -251,13 +312,16 @@ given the great amount of pictures taken during this survey, few of them are sho
             report_mv: document.getElementById("report_mv").value,
             containers_reporte: document.getElementById("containers_reporte").value,
             containers_leyenda: document.getElementById("containers_leyenda").value,
-            containers_code: document.getElementById("containers_code").value,
+            containers_code: containerCodes, // Aquí se asigna el array de códigos
             containers_descripcion: document.getElementById("containers_descripcion").value,
             containers_destino: document.getElementById("containers_destino").value,
             report_description: document.getElementById("report_description").value,
             report_note: document.getElementById("report_note").value,
+          },
+          t1_details_shipment: {
             vessel: document.getElementById("vessel").value,
             voyage: document.getElementById("voyage").value,
+            mbl_code: document.getElementById("mbl_code").value, // Asegúrate de que esté incluido aquí también
             pol: document.getElementById("pol").value,
             shipper: document.getElementById("shipper").value,
             pod: document.getElementById("pod").value,
@@ -266,117 +330,56 @@ given the great amount of pictures taken during this survey, few of them are sho
             goods: document.getElementById("goods").value,
             gross_weight: document.getElementById("gross_weight").value,
             note: document.getElementById("note").value,
+          },
+          T2_relevant_times: Array.from(document.querySelectorAll(".relevant-time")).map((section) => ({
+            date: section.querySelector(".date").value,
+            container_code: section.querySelector(".container_code").value,
+            qty_of_pkgs: section.querySelector(".qty_of_pkgs").value,
+            start: section.querySelector(".start").value,
+            complete: section.querySelector(".complete").value,
+            time_used_to_survey: section.querySelector(".time_used_to_survey").value,
+          })),
+          t3_securing_seals: Array.from(document.querySelectorAll(".securing-seal")).map((section) => ({
+            container_code: section.querySelector(".seal_container_code").value,
+            type: section.querySelector(".type").value,
+            wwas_safety_seals: section.querySelector(".safety_seal").value,
+            argentinean_customs_seal: section.querySelector(".customs_seal").value,
+            others: section.querySelector(".others").value,
+          })),
+          t6_footer: {
             weather_status: document.getElementById("weather_status").value,
             legend: document.getElementById("legend").value,
             who_signs: document.getElementById("who_signs").value,
             cargo: document.getElementById("cargo").value,
-          };
-          localStorage.setItem("reportFormData", JSON.stringify(formData));
-        }
-
-        window.onload = function () {
-          const savedData = JSON.parse(localStorage.getItem("reportFormData"));
-          if (savedData) {
-            Object.keys(savedData).forEach((id) => {
-              if (document.getElementById(id)) {
-                document.getElementById(id).value = savedData[id];
-              }
-            });
-          }
+          },
         };
 
-        // ==========  ==========
-        document.getElementById("reportForm").addEventListener("submit", async (e) => {
-          e.preventDefault();
+        try {
+          const response = await fetch("/api/report", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(formData),
+          });
 
-          // Obtén los valores de todos los inputs `container_code[]` y crea un array
-          const containerCodes = Array.from(document.querySelectorAll("input[name='container_code[]']")).map((input) => input.value);
-
-          const formData = {
-            mbl_code: document.getElementById("mbl_code").value,
-            t0_header: {
-              header_name: document.getElementById("header_name").value,
-              header_address: document.getElementById("header_address").value,
-              header_mobile: document.getElementById("header_mobile").value,
-              header_email: document.getElementById("header_email").value,
-              report_date: document.getElementById("report_date").value,
-              cliente_senores: document.getElementById("cliente_senores").value,
-              cliente_empresa: document.getElementById("cliente_empresa").value,
-              cliente_deposito: document.getElementById("cliente_deposito").value,
-              cliente_postal: document.getElementById("cliente_postal").value,
-              operador_area: document.getElementById("operador_area").value,
-              operador_responsables1: document.getElementById("operador_responsables1").value,
-              operador_responsables2: document.getElementById("operador_responsables2").value,
-              report_mv: document.getElementById("report_mv").value,
-              containers_reporte: document.getElementById("containers_reporte").value,
-              containers_leyenda: document.getElementById("containers_leyenda").value,
-              containers_code: containerCodes, // Aquí se asigna el array de códigos
-              containers_descripcion: document.getElementById("containers_descripcion").value,
-              containers_destino: document.getElementById("containers_destino").value,
-              report_description: document.getElementById("report_description").value,
-              report_note: document.getElementById("report_note").value,
-            },
-            t1_details_shipment: {
-              vessel: document.getElementById("vessel").value,
-              voyage: document.getElementById("voyage").value,
-              mbl_code: document.getElementById("mbl_code").value, // Asegúrate de que esté incluido aquí también
-              pol: document.getElementById("pol").value,
-              shipper: document.getElementById("shipper").value,
-              pod: document.getElementById("pod").value,
-              consignee: document.getElementById("consignee").value,
-              qty_of_pkgs: document.getElementById("qty_of_pkgs").value,
-              goods: document.getElementById("goods").value,
-              gross_weight: document.getElementById("gross_weight").value,
-              note: document.getElementById("note").value,
-            },
-            T2_relevant_times: Array.from(document.querySelectorAll(".relevant-time")).map((section) => ({
-              date: section.querySelector(".date").value,
-              container_code: section.querySelector(".container_code").value,
-              qty_of_pkgs: section.querySelector(".qty_of_pkgs").value,
-              start: section.querySelector(".start").value,
-              complete: section.querySelector(".complete").value,
-              time_used_to_survey: section.querySelector(".time_used_to_survey").value,
-            })),
-            t3_securing_seals: Array.from(document.querySelectorAll(".securing-seal")).map((section) => ({
-              container_code: section.querySelector(".seal_container_code").value,
-              type: section.querySelector(".type").value,
-              wwas_safety_seals: section.querySelector(".safety_seal").value,
-              argentinean_customs_seal: section.querySelector(".customs_seal").value,
-              others: section.querySelector(".others").value,
-            })),
-            t6_footer: {
-              weather_status: document.getElementById("weather_status").value,
-              legend: document.getElementById("legend").value,
-              who_signs: document.getElementById("who_signs").value,
-              cargo: document.getElementById("cargo").value,
-            },
-          };
-
-          try {
-            const response = await fetch("/api/report", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(formData),
-            });
-
-            if (response.ok) {
-              alert("Reporte enviado exitosamente");
-            } else {
-              const errorData = await response.json(); // Obtiene los detalles del error
-              console.error("Error en la respuesta:", errorData); // Imprime detalles del error en consola
-              alert(`Error al enviar el reporte: ${errorData.message || "conflicto de datos"}`);
-            }
-          } catch (error) {
-            console.error("Error:", error);
-            alert("Error al enviar el reporte.");
+          if (response.ok) {
+            alert("Reporte enviado exitosamente");
+          } else {
+            const errorData = await response.json(); // Obtiene los detalles del error
+            console.error("Error en la respuesta:", errorData); // Imprime detalles del error en consola
+            alert(`Error al enviar el reporte: ${errorData.message || "conflicto de datos"}`);
+            document.getElementById("mbl_code").focus();
           }
-        });
+        } catch (error) {
+          console.error("Error:", error);
+          alert("Error al enviar el reporte.");
+        }
+      });
 
-        function addRelevantTime() {
-          counterOther++;
-          const section = document.createElement("fieldset");
-          section.className = "relevant-time";
-          section.innerHTML = `
+      function addRelevantTime() {
+        counterOther++;
+        const section = document.createElement("fieldset");
+        section.className = "relevant-time";
+        section.innerHTML = `
           <hr>
           <h3>Relevant Times</h3>
           <label>Date:</label>
@@ -397,14 +400,14 @@ given the great amount of pictures taken during this survey, few of them are sho
           <label>Time used to survey</label>
           <input type="text" class="time_used_to_survey">
         `;
-          document.getElementById("relevantTimesSection").appendChild(section);
-        }
+        document.getElementById("relevantTimesSection").appendChild(section);
+      }
 
-        function addSecuringSeal() {
-          // counter++;
-          const section = document.createElement("fieldset");
-          section.className = "securing-seal";
-          section.innerHTML = `
+      function addSecuringSeal() {
+        // counter++;
+        const section = document.createElement("fieldset");
+        section.className = "securing-seal";
+        section.innerHTML = `
           <hr>
           <h3>Securing Seal</h3>
           <label>Containers #</label>
@@ -422,32 +425,30 @@ given the great amount of pictures taken during this survey, few of them are sho
           <label>Others</label>
           <input type="text" class="others" value="None">
         `;
-          document.getElementById("securingSealsSection").appendChild(section);
-        }
+        document.getElementById("securingSealsSection").appendChild(section);
+      }
 
-        function autoResize(textarea) {
-          textarea.style.height = "auto";
-          textarea.style.height = textarea.scrollHeight + "px";
-        }
+      function autoResize(textarea) {
+        textarea.style.height = "auto";
+        textarea.style.height = textarea.scrollHeight + "px";
+      }
 
-        document.addEventListener("DOMContentLoaded", function () {
-          const textareas = document.querySelectorAll("textarea");
-          textareas.forEach((textarea) => autoResize(textarea));
-        });
+      document.addEventListener("DOMContentLoaded", function () {
+        const textareas = document.querySelectorAll("textarea");
+        textareas.forEach((textarea) => autoResize(textarea));
+      });
 
-        function clearLocalStorage() {
-          localStorage.removeItem("reportFormData");
-          document.getElementById("reportForm").reset();
-          alert("Local storage cleared and form reset");
-        }
+      function clearLocalStorage() {
+        localStorage.removeItem("reportFormData");
+        document.getElementById("reportForm").reset();
+        alert("Local storage cleared and form reset");
+      }
 
-        addRelevantTime();
-        addSecuringSeal();
-        addRelevantTime();
-        addSecuringSeal();
-        addContainerCode();
-      </script>
-    </main>
-    <footer></footer>
+      addRelevantTime();
+      addSecuringSeal();
+      addRelevantTime();
+      addSecuringSeal();
+      addContainerCode();
+    </script>
   </body>
 </html>

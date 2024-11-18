@@ -8,29 +8,44 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserSeederService = void 0;
 const common_1 = require("@nestjs/common");
 const auth_controller_1 = require("../auth/auth.controller");
+const typeorm_1 = require("@nestjs/typeorm");
+const user_entity_1 = require("./entities/user.entity");
+const typeorm_2 = require("typeorm");
 let UserSeederService = class UserSeederService {
-    constructor(userService) {
+    constructor(userRepository, userService) {
+        this.userRepository = userRepository;
         this.userService = userService;
         this.seed();
     }
     async seed() {
         const userDemo = {
-            name: 'user',
+            name: 'Admin Demo',
             email: 'admin@gmail.com',
             password: 'P4ssWord@123',
             isAdmin: true,
         };
-        await this.userService.signup(userDemo);
-        console.log('seeder user successfully');
+        const existUser = await this.userRepository.find();
+        if (existUser.length == 0) {
+            await this.userService.signup(userDemo);
+            console.log('seeder user successfully');
+        }
+        else {
+            console.log('user already exist');
+        }
     }
 };
 exports.UserSeederService = UserSeederService;
 exports.UserSeederService = UserSeederService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [auth_controller_1.AuthController])
+    __param(0, (0, typeorm_1.InjectRepository)(user_entity_1.UserEntity)),
+    __metadata("design:paramtypes", [typeorm_2.Repository,
+        auth_controller_1.AuthController])
 ], UserSeederService);
 //# sourceMappingURL=user.seeder.js.map

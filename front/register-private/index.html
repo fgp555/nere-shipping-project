@@ -13,22 +13,24 @@
     <header></header>
     <main class="container">
       <article style="display: flex; justify-content: space-between">
-        <a class="btn btn-back" onclick="window.history.back();"><button><i class="icon-arrow-left"></i> back</button></a>
+        <a class="btn btn-back" onclick="window.history.back();"
+          ><button><i class="icon-arrow-left"></i> back</button></a
+        >
       </article>
       <form class="register" autocomplete="off">
         <h1>Register</h1>
         <fieldset>
           <label>
             Name
-            <input name="name" placeholder="name" />
+            <input name="name" placeholder="name" value="Pepe" required />
           </label>
           <label>
             Email
-            <input name="email" placeholder="email" autocomplete="off" />
+            <input name="email" placeholder="email" value="pepe@gmail.com" required />
           </label>
           <label style="position: relative">
             Password
-            <input type="password" name="password" id="password" placeholder="password" autocomplete="current-password" />
+            <input type="password" name="password" id="password" placeholder="password" value="P4ssWord@123" required />
             <span type="button" id="toggle-password"><i class="icon-eye"></i></span>
           </label>
           <label for="role-select"
@@ -41,14 +43,174 @@
           </label>
         </fieldset>
 
-        <input type="submit" value="Register" />
-        <p>Already have an account? <a href="/">Login</a></p>
+        <input type="button" id="registerButton" value="Register" />
+        <!-- <p>Already have an account? <a href="/">Login</a></p> -->
       </form>
+
+      <article>
+        <br />
+        <br />
+        <h2 class="title">List of users</h2>
+        <hr />
+        <section class="user_container"></section>
+      </article>
     </main>
     <footer></footer>
     <script src="/component/layout.js?2411_0014"></script>
     <script>
-      document.getElementById("role-select").value = "2"; // Establece "User" como seleccionado
+      if (!isAdmin) window.location.href = "/dashboard";
+
+      document.getElementById("role-select").value = "2";
+
+      // Fetch the list of users
+      const getUsers = () => {
+        fetch(`${currentDomain}/api/user`, {
+          headers: {
+            Authorization: `Bearer ${getParseData?.token}`, // Ensure token is available
+          },
+        })
+          .then(async (response) => {
+            if (!response.ok) {
+              const errorData = await response.json();
+              throw new Error(`${errorData.message}`);
+            }
+            return response.json();
+          })
+          .then((data) => {
+            // Call function to render the table after getting user data
+            renderUserTable(data);
+          })
+          .catch((error) => {
+            console.error("Get user error:", error.message);
+            alert(`${error.message}`);
+          });
+      };
+
+      // Function to render the user table dynamically
+      const renderUserTable = (users) => {
+        const container = document.querySelector(".user_container");
+
+        if (!container) {
+          console.error("User container not found!");
+          return;
+        }
+
+        // Clear any previous content in the container
+        container.innerHTML = "";
+
+        // Create the table structure
+        const table = document.createElement("table");
+        table.classList.add("user-table");
+
+        // Create the table header
+        const header = document.createElement("thead");
+        header.innerHTML = `
+    <tr>
+      <th class="hide-mobile">Name</th>
+      <th>Email</th>
+      <th class="hide-mobile">Role</th>
+      <th>Delete</th>
+    </tr>
+  `;
+        table.appendChild(header);
+
+        // Create the table body and populate with user data
+        const body = document.createElement("tbody");
+        users.forEach((user) => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+      <td class="hide-mobile">${user.name}</td>
+      <td>${user.email}</td>
+      <td class="hide-mobile">${user.isAdmin ? "Admin" : "User"}</td>
+      <td><button class="delete-btn" data-user-id="${user.id}"><i class="icon-trash"></i></button></td>
+    `;
+          body.appendChild(row);
+        });
+        table.appendChild(body);
+
+        // Append the table to the container
+        container.appendChild(table);
+
+        // Add event listeners for delete buttons
+        const deleteButtons = document.querySelectorAll(".delete-btn");
+        deleteButtons.forEach((button) => {
+          button.addEventListener("click", (e) => {
+            const userId = e.target.getAttribute("data-user-id");
+            deleteUser(userId);
+          });
+        });
+      };
+
+      // Function to handle user deletion
+      const deleteUser = (userId) => {
+        // Confirm before deleting
+        const confirmDelete = confirm("Are you sure you want to delete this user?");
+        if (!confirmDelete) return;
+
+        fetch(`${currentDomain}/api/user/${userId}`, {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${getParseData?.token}`, // Add token for authorization
+          },
+        })
+          .then(async (response) => {
+            if (!response.ok) {
+              const errorData = await response.json();
+              throw new Error(`${errorData.message}`);
+            }
+            alert("User deleted successfully!");
+            getUsers(); // Refresh the user list after deletion
+          })
+          .catch((error) => {
+            console.error("Delete user error:", error.message);
+            alert(`Error deleting user: ${error.message}`);
+          });
+      };
+
+      // Call the function to fetch and display users
+      getUsers();
+
+      document.querySelector("#registerButton").onclick = function () {
+        const form = document.querySelector(".register");
+        const formData = new FormData(form);
+        const formObject = Object.fromEntries(formData.entries());
+
+        // Check the role selection and modify the formObject if necessary
+        const roleSelect = document.querySelector("#role-select");
+        if (roleSelect.value === "1") {
+          // If "Admin" is selected, set isAdmin to true
+          formObject.isAdmin = true;
+        } else {
+          // Otherwise, set isAdmin to false (or remove it if not needed)
+          formObject.isAdmin = false;
+        }
+
+        fetch(`${currentDomain}/api/auth/signup`, {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+            Authorization: `Bearer: ${getParseData?.token}`,
+          },
+          body: JSON.stringify(formObject),
+        })
+          .then(async (response) => {
+            if (!response.ok) {
+              const errorData = await response.json();
+              throw new Error(`${errorData.message}`);
+            }
+            return response.json();
+          })
+          .then((data) => {
+            console.log("Registration successful:", data);
+            alert("Registration successful!");
+            getUsers();
+            // location.reload();
+          })
+          .catch((error) => {
+            console.error("Registration error:", error.message);
+            alert(`${error.message}`);
+          });
+      };
 
       // Lógica para mostrar/ocultar la contraseña
       document.getElementById("toggle-password").addEventListener("click", function () {

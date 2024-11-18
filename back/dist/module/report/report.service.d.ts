@@ -10,6 +10,7 @@ export declare class ReportService {
     dowloadTest(): Promise<string>;
     download(mbl_code: string): Promise<string>;
     mbl_code(): Promise<any[]>;
+    mbl_code_userId(userId: string): Promise<string>;
     update(id: number, updateReportDto: UpdateReportDto): string;
     remove(mbl_code: string): Promise<ReportEntity>;
 }

@@ -5,9 +5,10 @@
 ###
 POST http://localhost:3000/api/auth/signup
 Content-Type: application/json
+Authorization: {{token}}
 
 {
-    "name": "user 101",
+    "name": "User Demo",
     "email": "user@gmail.com",
     "password": "P4ssWord@123",
     "isAdmin": false
@@ -37,6 +38,10 @@ Authorization: {{token}}
 
 ###
 GET http://localhost:3000/api/user/1
+Authorization: {{token}}
+
+###
+GET http://localhost:3000/api/user/findByMBL/1
 Authorization: {{token}}
 
 ###

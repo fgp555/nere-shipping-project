@@ -25,14 +25,14 @@
         <!-- <h3>Report</h3> -->
         <a role="button" class="contrast" href="/report/">Start</a>
         <a role="button" href="/pdf/"><span class="hide-mobile">Download</span> PDF</a>
-        <a role="button" class="outline" id="newUser" href="/register-private/">Register <span class="hide-mobile"> New Users</span> </a>
+        <a role="button" class="outline" id="newUser" href="/register-private/"> <span class="hide-mobile">Register </span> Users</a>
         <!-- <a role="button" class="secondary" href="/report/mbl_code.html">By mbl_code</a> -->
       </article>
       <article>
         <h3>Video Tutorial</h3>
         <p>In this section there is a video tutorial that will help you better understand how the application works.(comming soon)</p>
         <!-- ========== youtube_embed component... ========== -->
-        <youtube_embed data-url="https://youtu.be/oK3jROrz-CA"></youtube_embed>
+        <youtube_embed data-url="https://youtu.be/DY9lwTE08aw"></youtube_embed>
 
         <script src="https://frankgp.com/lib/youtube-embed.js"></script>
         <!-- ========== youtube_embed component. ========== -->
@@ -46,8 +46,8 @@
       if (!isAdmin) {
         document.querySelector("#newUser").remove();
       }
-      if (getItemUser) {
-        document.querySelector("#name").innerHTML = JSON.parse(getItemUser).email;
+      if (getParseData) {
+        document.querySelector("#name").innerHTML = getParseData.name;
       }
     </script>
   </body>

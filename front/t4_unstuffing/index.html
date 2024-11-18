@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" />
     <script src="https://frankgp.com/component/stat.js" type="module"></script>
     <link rel="stylesheet" href="/component/layout.css?2411_0014" />
-    <script src="/component/layout.js?2411_0014" defer></script>
     <style>
       textarea {
         overflow: hidden;
@@ -73,75 +72,82 @@ As soon as the doors of the containers were unsealed/opened, the cargo was obser
       <p>save and go to the next step</p>
 
       <canvas id="canvas" style="display: none"></canvas>
+    </main>
+    <footer></footer>
+    <script src="/component/layout.js?2411_0014" defer></script>
 
-      <script>
-        document.addEventListener("DOMContentLoaded", () => {
-          loadMblCodes();
-          loadFromLocalStorage();
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        loadMblCodes();
+        loadFromLocalStorage();
+      });
+
+      async function loadMblCodes() {
+        try {
+          const response = await fetch(`/api/user/findByMBL/${getParseData.id}`, {
+            headers: {
+              Authorization: `Bearer: ${getParseData?.token}`,
+            },
+          });
+          if (response.ok) {
+            const reports = await response.json();
+            const select = document.getElementById("mbl_code");
+
+            reports.forEach((report) => {
+              const option = document.createElement("option");
+              option.value = report.mbl_code;
+              option.textContent = report.mbl_code;
+              select.appendChild(option);
+            });
+          } else {
+            console.error("Error al obtener los códigos MBL");
+          }
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      }
+
+      let groupCounter = 1;
+      const MAX_WIDTH = 500;
+
+      function saveToLocalStorage() {
+        const formData = {
+          mbl_code: document.getElementById("mbl_code").value,
+          notes: document.getElementById("notes").value,
+          foot_note: document.getElementById("foot_note").value,
+        };
+
+        const imageGroups = document.querySelectorAll(".images-group");
+        formData.imagesGroups = Array.from(imageGroups).map((group, index) => {
+          const notes = group.querySelector(`textarea[name='images_notes_${index + 1}']`).value;
+          return { notes };
         });
 
-        async function loadMblCodes() {
-          try {
-            const response = await fetch("/api/report/mbl_code");
-            if (response.ok) {
-              const reports = await response.json();
-              const select = document.getElementById("mbl_code");
+        localStorage.setItem("t4_unstuffing_data", JSON.stringify(formData));
+      }
 
-              reports.forEach((report) => {
-                const option = document.createElement("option");
-                option.value = report.report_mbl_code;
-                option.textContent = report.report_mbl_code;
-                select.appendChild(option);
-              });
-            } else {
-              console.error("Error al obtener los códigos MBL");
-            }
-          } catch (error) {
-            console.error("Error:", error);
-          }
-        }
-
-        let groupCounter = 1;
-        const MAX_WIDTH = 500;
-
-        function saveToLocalStorage() {
-          const formData = {
-            mbl_code: document.getElementById("mbl_code").value,
-            notes: document.getElementById("notes").value,
-            foot_note: document.getElementById("foot_note").value,
-          };
+      function loadFromLocalStorage() {
+        const savedData = JSON.parse(localStorage.getItem("t4_unstuffing_data"));
+        if (savedData) {
+          document.getElementById("mbl_code").value = savedData.mbl_code || "";
+          document.getElementById("notes").value = savedData.notes || "";
+          document.getElementById("foot_note").value = savedData.foot_note || "";
 
           const imageGroups = document.querySelectorAll(".images-group");
-          formData.imagesGroups = Array.from(imageGroups).map((group, index) => {
-            const notes = group.querySelector(`textarea[name='images_notes_${index + 1}']`).value;
-            return { notes };
+          savedData.imagesGroups.forEach((groupData, index) => {
+            const notesInput = imageGroups[index].querySelector(`textarea[name='images_notes_${index + 1}']`);
+            if (notesInput) notesInput.value = groupData.notes || "";
           });
-
-          localStorage.setItem("t4_unstuffing_data", JSON.stringify(formData));
         }
+      }
 
-        function loadFromLocalStorage() {
-          const savedData = JSON.parse(localStorage.getItem("t4_unstuffing_data"));
-          if (savedData) {
-            document.getElementById("mbl_code").value = savedData.mbl_code || "";
-            document.getElementById("notes").value = savedData.notes || "";
-            document.getElementById("foot_note").value = savedData.foot_note || "";
+      function addImageGroup() {
+        groupCounter++;
+        const container = document.getElementById("imagesGroupContainer");
+        const newGroup = document.createElement("article");
+        newGroup.className = "images-group";
 
-            const imageGroups = document.querySelectorAll(".images-group");
-            savedData.imagesGroups.forEach((groupData, index) => {
-              const notesInput = imageGroups[index].querySelector(`textarea[name='images_notes_${index + 1}']`);
-              if (notesInput) notesInput.value = groupData.notes || "";
-            });
-          }
-        }
-
-        function addImageGroup() {
-          groupCounter++;
-          const container = document.getElementById("imagesGroupContainer");
-          const newGroup = document.createElement("article");
-          newGroup.className = "images-group";
-
-          newGroup.innerHTML = `
+        newGroup.innerHTML = `
             <hr />
             <h3>Group of Images ${groupCounter}</h3>
             <input type="file" name="images_group_${groupCounter}" multiple required onchange="handleFileSelect(this, ${groupCounter}); saveToLocalStorage()">
@@ -152,131 +158,129 @@ As soon as the doors of the containers were unsealed/opened, the cargo was obser
             <hr />
           `;
 
-          container.appendChild(newGroup);
-        }
+        container.appendChild(newGroup);
+      }
 
-        function handleFileSelect(input, groupIndex) {
-          const previewContainer = document.getElementById(`preview_group_${groupIndex}`);
-          previewContainer.innerHTML = "";
+      function handleFileSelect(input, groupIndex) {
+        const previewContainer = document.getElementById(`preview_group_${groupIndex}`);
+        previewContainer.innerHTML = "";
 
-          Array.from(input.files).forEach((file) => {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-              const img = document.createElement("img");
-              img.src = e.target.result;
-              img.style.width = "auto";
-              img.style.height = "200px";
-              img.style.margin = "5px";
-              previewContainer.appendChild(img);
-            };
-            reader.readAsDataURL(file);
-          });
-        }
+        Array.from(input.files).forEach((file) => {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            const img = document.createElement("img");
+            img.src = e.target.result;
+            img.style.width = "auto";
+            img.style.height = "200px";
+            img.style.margin = "5px";
+            previewContainer.appendChild(img);
+          };
+          reader.readAsDataURL(file);
+        });
+      }
 
-        async function compressImage(file) {
-          return new Promise((resolve) => {
-            const img = new Image();
-            img.src = URL.createObjectURL(file);
-            img.onload = () => {
-              let width = img.width;
-              let height = img.height;
+      async function compressImage(file) {
+        return new Promise((resolve) => {
+          const img = new Image();
+          img.src = URL.createObjectURL(file);
+          img.onload = () => {
+            let width = img.width;
+            let height = img.height;
 
-              if (width > MAX_WIDTH) {
-                height = Math.floor((MAX_WIDTH / width) * height);
-                width = MAX_WIDTH;
-              }
-
-              const canvas = document.getElementById("canvas");
-              canvas.width = width;
-              canvas.height = height;
-              const ctx = canvas.getContext("2d");
-              ctx.drawImage(img, 0, 0, width, height);
-
-              canvas.toBlob((blob) => resolve(blob), "image/jpeg", 0.8);
-            };
-          });
-        }
-
-        async function prepareCompressedFiles(formData) {
-          const imagesGroups = document.querySelectorAll(".images-group");
-
-          for (let groupIndex = 1; groupIndex <= imagesGroups.length; groupIndex++) {
-            const fileInput = document.querySelector(`input[name='images_group_${groupIndex}']`);
-            const files = fileInput.files;
-
-            // Comprimir y agregar las imágenes al formData
-            for (let i = 0; i < files.length; i++) {
-              const compressedBlob = await compressImage(files[i]);
-              formData.append(`images_group_${groupIndex}`, compressedBlob, files[i].name);
+            if (width > MAX_WIDTH) {
+              height = Math.floor((MAX_WIDTH / width) * height);
+              width = MAX_WIDTH;
             }
 
-            // Procesar las notas de imágenes
-            const notesInput = document.querySelector(`textarea[name='images_notes_${groupIndex}']`);
-            const notesValue = normalizeNewlines(notesInput.value).trim();
+            const canvas = document.getElementById("canvas");
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0, width, height);
 
-            if (notesValue === "") {
-              formData.append(`images_group_${groupIndex}_notes`, null); // Enviar null si está vacío
-            } else {
-              const notesArray = notesValue.split("\n");
-              formData.append(`images_group_${groupIndex}_notes`, JSON.stringify(notesArray));
-            }
+            canvas.toBlob((blob) => resolve(blob), "image/jpeg", 0.8);
+          };
+        });
+      }
+
+      async function prepareCompressedFiles(formData) {
+        const imagesGroups = document.querySelectorAll(".images-group");
+
+        for (let groupIndex = 1; groupIndex <= imagesGroups.length; groupIndex++) {
+          const fileInput = document.querySelector(`input[name='images_group_${groupIndex}']`);
+          const files = fileInput.files;
+
+          // Comprimir y agregar las imágenes al formData
+          for (let i = 0; i < files.length; i++) {
+            const compressedBlob = await compressImage(files[i]);
+            formData.append(`images_group_${groupIndex}`, compressedBlob, files[i].name);
+          }
+
+          // Procesar las notas de imágenes
+          const notesInput = document.querySelector(`textarea[name='images_notes_${groupIndex}']`);
+          const notesValue = normalizeNewlines(notesInput.value).trim();
+
+          if (notesValue === "") {
+            formData.append(`images_group_${groupIndex}_notes`, null); // Enviar null si está vacío
+          } else {
+            const notesArray = notesValue.split("\n");
+            formData.append(`images_group_${groupIndex}_notes`, JSON.stringify(notesArray));
           }
         }
+      }
 
-        function normalizeNewlines(text) {
-          return text.replace(/\n{2,}/g, "\n").trim();
-        }
+      function normalizeNewlines(text) {
+        return text.replace(/\n{2,}/g, "\n").trim();
+      }
 
-        document.getElementById("reportForm").addEventListener("submit", async (e) => {
-          e.preventDefault();
+      document.getElementById("reportForm").addEventListener("submit", async (e) => {
+        e.preventDefault();
 
-          const formData = new FormData();
-          const notes = normalizeNewlines(document.getElementById("notes").value).split("\n");
-          const foot_note = normalizeNewlines(document.getElementById("foot_note").value);
-          const mbl_code = document.getElementById("mbl_code").value;
+        const formData = new FormData();
+        const notes = normalizeNewlines(document.getElementById("notes").value).split("\n");
+        const foot_note = normalizeNewlines(document.getElementById("foot_note").value);
+        const mbl_code = document.getElementById("mbl_code").value;
 
-          formData.append("notes", JSON.stringify(notes));
-          formData.append("foot_note", foot_note);
-          formData.append("mbl_code", mbl_code);
+        formData.append("notes", JSON.stringify(notes));
+        formData.append("foot_note", foot_note);
+        formData.append("mbl_code", mbl_code);
 
-          await prepareCompressedFiles(formData);
+        await prepareCompressedFiles(formData);
 
-          try {
-            const response = await fetch("/api/t4-unstuffing/upload", {
-              method: "POST",
-              body: formData,
-            });
+        try {
+          const response = await fetch("/api/t4-unstuffing/upload", {
+            method: "POST",
+            body: formData,
+          });
 
-            if (response.ok) {
-              alert("Informe subido exitosamente.");
-              // localStorage.removeItem("t4_unstuffing_data"); // Limpiar localStorage al enviar
-            } else {
-              alert("Error al subir el informe.");
-            }
-          } catch (error) {
-            console.error("Error:", error);
-            alert("Error al enviar el informe.");
+          if (response.ok) {
+            alert("Informe subido exitosamente.");
+            // localStorage.removeItem("t4_unstuffing_data"); // Limpiar localStorage al enviar
+          } else {
+            alert("Error al subir el informe.");
           }
-        });
-
-        function autoResize(textarea) {
-          textarea.style.height = "auto";
-          textarea.style.height = textarea.scrollHeight + "px";
+        } catch (error) {
+          console.error("Error:", error);
+          alert("Error al enviar el informe.");
         }
+      });
 
-        document.addEventListener("DOMContentLoaded", function () {
-          const textareas = document.querySelectorAll("textarea");
-          textareas.forEach((textarea) => autoResize(textarea));
-        });
-      </script>
-      <script>
-        function clearLocalStorage() {
-          localStorage.removeItem("t4_unstuffing_data");
-          document.getElementById("reportForm").reset();
-          alert("Local storage cleared.");
-        }
-      </script>
-    </main>
-    <footer></footer>
+      function autoResize(textarea) {
+        textarea.style.height = "auto";
+        textarea.style.height = textarea.scrollHeight + "px";
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const textareas = document.querySelectorAll("textarea");
+        textareas.forEach((textarea) => autoResize(textarea));
+      });
+    </script>
+    <script>
+      function clearLocalStorage() {
+        localStorage.removeItem("t4_unstuffing_data");
+        document.getElementById("reportForm").reset();
+        alert("Local storage cleared.");
+      }
+    </script>
   </body>
 </html>

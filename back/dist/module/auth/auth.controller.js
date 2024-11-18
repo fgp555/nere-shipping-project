@@ -18,6 +18,7 @@ const create_auth_dto_1 = require("./dto/create-auth.dto");
 const user_service_1 = require("../user/user.service");
 const bcrypt = require("bcrypt");
 const jwt_1 = require("@nestjs/jwt");
+const auth_guard_1 = require("./auth.guard");
 let AuthController = class AuthController {
     constructor(userService, jwtService) {
         this.userService = userService;
@@ -53,6 +54,7 @@ let AuthController = class AuthController {
 exports.AuthController = AuthController;
 __decorate([
     (0, common_1.Post)('signup'),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_auth_dto_1.CreateAuthDto]),

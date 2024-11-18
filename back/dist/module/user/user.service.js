@@ -30,6 +30,15 @@ let UserService = class UserService {
     async findOne(id) {
         return await this.userRepository.findOneBy({ id });
     }
+    async findByMBL(id) {
+        const userSelect = await this.userRepository
+            .createQueryBuilder('user')
+            .leftJoinAndSelect('user.report_mbl_code', 'report')
+            .select(['user.id', 'user.name', 'user.email', 'report.mbl_code'])
+            .where('user.id = :id', { id })
+            .getOne();
+        return userSelect.report_mbl_code;
+    }
     async findOneEmail(email) {
         return await this.userRepository
             .createQueryBuilder('user')

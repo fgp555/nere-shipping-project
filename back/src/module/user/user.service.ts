@@ -24,6 +24,17 @@ export class UserService {
     return await this.userRepository.findOneBy({ id });
   }
 
+  async findByMBL(id: any) {
+    const userSelect = await this.userRepository
+      .createQueryBuilder('user')
+      .leftJoinAndSelect('user.report_mbl_code', 'report')
+      .select(['user.id', 'user.name', 'user.email', 'report.mbl_code']) // Select only the mbl_code
+      .where('user.id = :id', { id })
+      .getOne(); // Fetch a single user with their associated mbl_code
+
+    return userSelect.report_mbl_code;
+  }
+
   async findOneEmail(email: string) {
     return await this.userRepository
       .createQueryBuilder('user')

@@ -29,6 +29,9 @@ let ReportController = class ReportController {
     mbl_code() {
         return this.reportService.mbl_code();
     }
+    mbl_code_userId(userId) {
+        return this.reportService.mbl_code_userId(userId);
+    }
     findOne(mbl_code) {
         return this.reportService.findOne(mbl_code);
     }
@@ -65,6 +68,13 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], ReportController.prototype, "mbl_code", null);
+__decorate([
+    (0, common_1.Get)('mbl_code/:userId'),
+    __param(0, (0, common_1.Param)('userId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], ReportController.prototype, "mbl_code_userId", null);
 __decorate([
     (0, common_1.Get)(':mbl_code'),
     __param(0, (0, common_1.Param)('mbl_code')),

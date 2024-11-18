@@ -28,6 +28,11 @@ export class UserController {
     return this.userService.findOne(+id);
   }
 
+  @Get('findByMBL/:id')
+  findByMBL(@Param('id') id: string) {
+    return this.userService.findByMBL(+id);
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.userService.update(+id, updateUserDto);

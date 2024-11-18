@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" />
     <script src="https://frankgp.com/component/stat.js" type="module"></script>
     <link rel="stylesheet" href="/component/layout.css?2411_0014" />
-    <script src="/component/layout.js?2411_0014" defer></script>
     <title>Shipping App</title>
     <style>
       #mbl_code {
@@ -33,141 +32,159 @@
         <option value="">Select MBL Code</option>
       </select>
       <!-- <button onclick="mbl_code_consolelog()">mbl_code_consolelog</button> -->
-      <button onclick="downloadPDF()" class="contrast">Download PDF</button>
+      <button onclick="downloadPDF()" class="contrast" id="button_download">Download PDF</button>
       <button onclick="openInNewTab()" style="background-color: cornflowerblue">Preview</button>
       <button onclick="deleteReport()" style="background-color: red; border: none">Delete</button>
 
       <br /><br />
+    </main>
+    <footer></footer>
+    <script src="/component/layout.js?2411_0014"></script>
 
-      <script>
-        async function loadMblCodes() {
+    <script>
+      async function loadMblCodes() {
+        try {
+          const response = await fetch(`/api/user/findByMBL/${getParseData.id}`, {
+            headers: {
+              Authorization: `Bearer: ${getParseData?.token}`,
+            },
+          });
+          if (response.ok) {
+            const reports = await response.json();
+            const select = document.getElementById("mbl_code");
+
+            reports.forEach((report) => {
+              const option = document.createElement("option");
+              option.value = report.mbl_code;
+              option.textContent = report.mbl_code;
+              select.appendChild(option);
+            });
+          } else {
+            console.error("Error al obtener los códigos MBL");
+          }
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      }
+      loadMblCodes();
+
+      const mbl_code_consolelog = async () => {
+        const select = document.getElementById("mbl_code");
+        const mbl_code = select.value;
+
+        if (mbl_code) {
+          // Verifica que se haya seleccionado un código
           try {
-            const response = await fetch("/api/report/mbl_code");
-            if (response.ok) {
-              const reports = await response.json();
-              const select = document.getElementById("mbl_code");
+            const response = await fetch(`/api/report/${mbl_code}`);
+            const data = await response.json();
+            console.log("data", data);
 
-              reports.forEach((report) => {
-                const option = document.createElement("option");
-                option.value = report.report_mbl_code;
-                option.textContent = report.report_mbl_code;
-                select.appendChild(option);
-              });
+            if (response.ok) {
+              console.log("Informe obtenido exitosamente.");
             } else {
-              console.error("Error al obtener los códigos MBL");
+              console.log("Error al obtener el informe.");
             }
           } catch (error) {
             console.error("Error:", error);
           }
+        } else {
+          console.log("Por favor, selecciona un código MBL.");
         }
-        loadMblCodes();
+      };
 
-        const mbl_code_consolelog = async () => {
-          const select = document.getElementById("mbl_code");
-          const mbl_code = select.value;
+      async function downloadPDF() {
+        const button = document.querySelector("#button_download"); // Selecciona el botón
+        const select = document.getElementById("mbl_code");
+        const mbl_code = select.value;
 
-          if (mbl_code) {
-            // Verifica que se haya seleccionado un código
-            try {
-              const response = await fetch(`/api/report/${mbl_code}`);
-              const data = await response.json();
-              console.log("data", data);
+        // Verificar si se ha seleccionado un código MBL
+        if (!mbl_code) {
+          alert("Por favor, selecciona un código MBL.");
+          return; // Detener la ejecución de la función si no se selecciona un código
+        }
 
-              if (response.ok) {
-                console.log("Informe obtenido exitosamente.");
-              } else {
-                console.log("Error al obtener el informe.");
-              }
-            } catch (error) {
-              console.error("Error:", error);
-            }
-          } else {
-            console.log("Por favor, selecciona un código MBL.");
-          }
-        };
+        // Cambiar el texto del botón a "Loading..."
+        button.textContent = "Downloading...";
+        button.classList.add("loading"); // Añadir clase de opacidad
+        button.disabled = true; // Opcional: Desactivar el botón para evitar múltiples clics
 
-        async function downloadPDF() {
-          const select = document.getElementById("mbl_code");
-          const mbl_code = select.value;
+        try {
+          const response = await fetch(`/api/html-pdf/download/${mbl_code}`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/pdf",
+            },
+          });
 
-          // Verificar si se ha seleccionado un código MBL
-          if (!mbl_code) {
-            alert("Por favor, selecciona un código MBL.");
-            return; // Detener la ejecución de la función si no se selecciona un código
+          if (!response.ok) {
+            throw new Error("Error al descargar el PDF");
           }
 
+          const blob = await response.blob();
+          const url = window.URL.createObjectURL(blob);
+
+          // Crear un enlace temporal para descargar el archivo
+          const link = document.createElement("a");
+          link.href = url;
+          link.download = `${mbl_code}.pdf`;
+          document.body.appendChild(link);
+          link.click();
+
+          // Limpiar después de la descarga
+          document.body.removeChild(link);
+          window.URL.revokeObjectURL(url);
+        } catch (error) {
+          console.error("Error al descargar el PDF:", error);
+          alert("Hubo un error al intentar descargar el PDF.");
+        } finally {
+          // Restaurar el texto y habilitar el botón nuevamente
+          button.textContent = "Download PDF";
+          button.classList.remove("loading"); // Eliminar clase de opacidad
+          button.disabled = false; // Habilitar el botón nuevamente
+          // location.reload();
+        }
+      }
+
+      async function deleteReport() {
+        const select = document.getElementById("mbl_code");
+        const mbl_code = select.value;
+
+        if (!mbl_code) {
+          alert("Por favor, selecciona un código MBL.");
+          return;
+        }
+
+        if (confirm("¿Estás seguro de que deseas eliminar este informe? Esta acción no se puede deshacer.")) {
           try {
-            const response = await fetch(`/api/html-pdf/download/${mbl_code}`, {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/pdf",
-              },
+            const response = await fetch(`/api/report/${mbl_code}`, {
+              method: "DELETE",
             });
 
             if (!response.ok) {
-              throw new Error("Error al descargar el PDF");
+              throw new Error("Error al eliminar el informe");
             }
 
-            const blob = await response.blob();
-            const url = window.URL.createObjectURL(blob);
-
-            // Crear un enlace temporal para descargar el archivo
-            const link = document.createElement("a");
-            link.href = url;
-            link.download = `${mbl_code}.pdf`;
-            document.body.appendChild(link);
-            link.click();
-
-            // Limpiar después de la descarga
-            document.body.removeChild(link);
-            window.URL.revokeObjectURL(url);
+            alert("Informe eliminado correctamente.");
+            loadMblCodes(); // Recargar los códigos MBL después de eliminar
           } catch (error) {
-            console.error("Error al descargar el PDF:", error);
+            console.error("Error al eliminar el informe:", error);
           }
         }
+      }
 
-        async function deleteReport() {
-          const select = document.getElementById("mbl_code");
-          const mbl_code = select.value;
+      function openInNewTab() {
+        const select = document.getElementById("mbl_code");
+        const mbl_code = select.value;
 
-          if (!mbl_code) {
-            alert("Por favor, selecciona un código MBL.");
-            return;
-          }
-
-          if (confirm("¿Estás seguro de que deseas eliminar este informe? Esta acción no se puede deshacer.")) {
-            try {
-              const response = await fetch(`/api/report/${mbl_code}`, {
-                method: "DELETE",
-              });
-
-              if (!response.ok) {
-                throw new Error("Error al eliminar el informe");
-              }
-
-              alert("Informe eliminado correctamente.");
-              loadMblCodes(); // Recargar los códigos MBL después de eliminar
-            } catch (error) {
-              console.error("Error al eliminar el informe:", error);
-            }
-          }
+        if (!mbl_code) {
+          alert("Por favor, selecciona un código MBL.");
+          return;
         }
 
-        function openInNewTab() {
-          const select = document.getElementById("mbl_code");
-          const mbl_code = select.value;
-
-          if (!mbl_code) {
-            alert("Por favor, selecciona un código MBL.");
-            return;
-          }
-
-          // Construye la URL y ábrela en una nueva pestaña
-          const url = `/api/html-pdf/render/${mbl_code}`;
-          window.open(url, "_blank");
-        }
-      </script>
-    </main>
-    <footer></footer>
+        // Construye la URL y ábrela en una nueva pestaña
+        const url = `/api/html-pdf/render/${mbl_code}`;
+        window.open(url, "_blank");
+      }
+    </script>
   </body>
 </html>

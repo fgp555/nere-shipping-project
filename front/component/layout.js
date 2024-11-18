@@ -1,9 +1,11 @@
-const isAuthenticated = !!localStorage.getItem("user");
+var currentDomain = window.location.origin || "http://localhost:3000"; // Use current domain or fallback
 
-const getItemUser = localStorage.getItem("user");
-if (getItemUser) console.log("userGetItem", JSON.parse(getItemUser));
-const isAdmin = getItemUser ? JSON.parse(getItemUser).isAdmin : false;
-if (isAdmin) console.log("isAdmin", isAdmin);
+const getParseData = JSON.parse(localStorage.getItem("data"));
+if (getParseData) console.log("getParseData", getParseData);
+const isAuthenticated = !!localStorage.getItem("data");
+
+const isAdmin = getParseData ? getParseData.isAdmin : false;
+if (getParseData) console.log("isAdmin", isAdmin);
 
 const currentPath = window.location.pathname;
 
@@ -58,6 +60,7 @@ if (logoutButton) {
   logoutButton.addEventListener("click", (event) => {
     event.preventDefault(); // Previene la redirección predeterminada
     localStorage.removeItem("user"); // Elimina al usuario del almacenamiento local
+    localStorage.removeItem("data"); // Elimina al usuario del almacenamiento local
     window.location.href = "/"; // Redirige a la página principal
   });
 }
