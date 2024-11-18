@@ -18,6 +18,9 @@ const report_module_1 = require("./module/report/report.module");
 const t5_damage_module_1 = require("./module/t5_damage/t5_damage.module");
 const html_pdf_module_1 = require("./module/html-pdf/html-pdf.module");
 const info_module_1 = require("./info/info.module");
+const user_module_1 = require("./module/user/user.module");
+const auth_module_1 = require("./module/auth/auth.module");
+const jwt_1 = require("@nestjs/jwt");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -32,11 +35,18 @@ exports.AppModule = AppModule = __decorate([
                 inject: [config_1.ConfigService],
                 useFactory: (configService) => configService.get('typeorm'),
             }),
+            jwt_1.JwtModule.register({
+                global: true,
+                signOptions: { expiresIn: '10d' },
+                secret: process.env.JWT_SECRET,
+            }),
             t4_unstuffing_module_1.T4UnstuffingModule,
             report_module_1.ReportModule,
             t5_damage_module_1.T5DamageModule,
             html_pdf_module_1.HtmlPdfModule,
             info_module_1.InfoModule,
+            user_module_1.UserModule,
+            auth_module_1.AuthModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

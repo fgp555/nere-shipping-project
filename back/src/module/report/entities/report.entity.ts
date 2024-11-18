@@ -4,6 +4,7 @@ import {
   Column,
   Entity,
   JoinColumn,
+  ManyToOne,
   OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
@@ -13,6 +14,7 @@ import { DetailsShipment } from './details-shipment.entity';
 import { RelevantTimes } from './relevant-times.entity';
 import { SecuringSeals } from './securing-seals.entity';
 import { FooterEntity } from './footer.entity';
+import { UserEntity } from 'src/module/user/entities/user.entity';
 
 @Entity('reports')
 export class ReportEntity {
@@ -72,4 +74,9 @@ export class ReportEntity {
   })
   @JoinColumn()
   t6_footer: FooterEntity;
+
+  @ManyToOne(() => UserEntity, (report) => report.report_mbl_code, {
+    onDelete: 'CASCADE',
+  })
+  user: UserEntity;
 }

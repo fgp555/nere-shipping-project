@@ -7,7 +7,7 @@ const config_1 = require("@nestjs/config");
 (0, dotenv_1.config)({ path: '.env' });
 console.info('dropSchema: ', process.env.DROPSCHEMA);
 console.info('DB_TYPE: ', process.env.DB_TYPE);
-console.info("DB_DATABASE: ", process.env.DB_DATABASE);
+console.info('DB_DATABASE: ', process.env.DB_DATABASE);
 const typeOrmConfig = {
     type: process.env.DB_TYPE || 'mysql',
     host: process.env.DB_HOST || 'localhost',

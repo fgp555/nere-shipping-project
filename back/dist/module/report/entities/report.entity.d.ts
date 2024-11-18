@@ -5,6 +5,7 @@ import { DetailsShipment } from './details-shipment.entity';
 import { RelevantTimes } from './relevant-times.entity';
 import { SecuringSeals } from './securing-seals.entity';
 import { FooterEntity } from './footer.entity';
+import { UserEntity } from 'src/module/user/entities/user.entity';
 export declare class ReportEntity {
     id: number;
     mbl_code: string;
@@ -15,4 +16,5 @@ export declare class ReportEntity {
     t4_unstuffing: T4UnstuffingEntity[];
     t5_damage: T5DamageEntity[];
     t6_footer: FooterEntity;
+    user: UserEntity;
 }

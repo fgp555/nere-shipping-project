@@ -29,6 +29,7 @@ let ReportService = class ReportService {
         });
         if (existingReport)
             throw new common_1.ConflictException('El reporte ya existe');
+        createReportDto.user = 1;
         return await this.reportRepository.save(createReportDto);
     }
     findAll() {

@@ -18,6 +18,7 @@ const details_shipment_entity_1 = require("./details-shipment.entity");
 const relevant_times_entity_1 = require("./relevant-times.entity");
 const securing_seals_entity_1 = require("./securing-seals.entity");
 const footer_entity_1 = require("./footer.entity");
+const user_entity_1 = require("../../user/entities/user.entity");
 let ReportEntity = class ReportEntity {
 };
 exports.ReportEntity = ReportEntity;
@@ -82,6 +83,12 @@ __decorate([
     (0, typeorm_1.JoinColumn)(),
     __metadata("design:type", footer_entity_1.FooterEntity)
 ], ReportEntity.prototype, "t6_footer", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => user_entity_1.UserEntity, (report) => report.report_mbl_code, {
+        onDelete: 'CASCADE',
+    }),
+    __metadata("design:type", user_entity_1.UserEntity)
+], ReportEntity.prototype, "user", void 0);
 exports.ReportEntity = ReportEntity = __decorate([
     (0, typeorm_1.Entity)('reports')
 ], ReportEntity);

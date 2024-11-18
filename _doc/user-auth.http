@@ -1,0 +1,60 @@
+@token=Bearer: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlkIjoxLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsImlhdCI6MTczMTg5MjA2MSwiZXhwIjoxNzMyNzU2MDYxfQ.xmMMqF7RLAodN6fc7WkmNtyAM8ymNWGyH4q2YY6NZLg
+@token_user=Bearer: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImlkIjoyLCJlbWFpbCI6InVzZXJAZ21haWwuY29tIiwiaWF0IjoxNzMxODkzNjU5LCJleHAiOjE3MzI3NTc2NTl9.-HQemWKbFIIDSALbyhd9rnCPcdBwygkfp7JqV3KLL3Y
+
+
+###
+POST http://localhost:3000/api/auth/signup
+Content-Type: application/json
+
+{
+    "name": "user 101",
+    "email": "user@gmail.com",
+    "password": "P4ssWord@123",
+    "isAdmin": false
+}
+
+###
+POST http://localhost:3000/api/auth/signin
+Content-Type: application/json
+
+{
+    "email": "admin@gmail.com",
+    "password": "P4ssWord@123"
+}
+
+###
+POST http://localhost:3000/api/auth/signin
+Content-Type: application/json
+
+{
+    "email": "user@gmail.com",
+    "password": "P4ssWord@123"
+}
+
+###
+GET http://localhost:3000/api/user
+Authorization: {{token}}
+
+###
+GET http://localhost:3000/api/user/1
+Authorization: {{token}}
+
+###
+GET http://localhost:3000/api/user/2
+Authorization: {{token_user}}
+
+###
+PATCH http://localhost:3000/api/user/1
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+    "name": "Update name",
+    "email": "email",
+    "password": "password"
+}
+
+###
+DELETE  http://localhost:3000/api/user/1
+Authorization: {{token}}
+

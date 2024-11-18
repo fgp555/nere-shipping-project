@@ -23,7 +23,7 @@ export class ReportService {
     });
 
     if (existingReport) throw new ConflictException('El reporte ya existe');
-
+    createReportDto.user = 1;
     return await this.reportRepository.save(createReportDto);
   }
 
