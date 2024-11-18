@@ -101,3 +101,20 @@ button.loading {
     opacity: 1;
   }
 }
+/* ========== data-theme... ========== */
+#themeToggleButton {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  /* background-color: #007bff; */
+  /* color: #fff; */
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  background-color: var(--pico-background-color);
+  color: var(--pico-color);
+}
+
+/* ========== data-theme. ========== */
